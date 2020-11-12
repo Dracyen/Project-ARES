@@ -1,54 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-public class AiDrive : MonoBehaviour
+public class Follow : MonoBehaviour
 {
-   public GameObject[] Objectives;
+    Vector3 targetPos;
+    public GameObject[] Objectives;
     GameObject target;
-    public int index = 0;
+    int index = 0;
     bool Add = true;
+    AiDrive car;
     // Start is called before the first frame update
     void Start()
     {
-        int rand = UnityEngine.Random.Range(0, 3);
-        if (rand == 0)
-        {
-            Objectives = GameObject.FindGameObjectsWithTag("TargetToAi");
-        }
-        if (rand == 1)
-        {
-            Objectives = GameObject.FindGameObjectsWithTag("TargetToAi1");
-        }
-        if (rand == 2)
-        {
-            Objectives = GameObject.FindGameObjectsWithTag("TargetToAi2");
-        }
-        
+        car = GameObject.FindGameObjectWithTag("Player").GetComponent<AiDrive>();
+        Objectives = GameObject.FindGameObjectsWithTag("TargetToAi");
         target = Objectives[index];
     }
 
     // Update is called once per frame
     void Update()
     {
+        index = car.index;
         target = Objectives[index];
         //Debug.Log(transform.position);
         Debug.Log(target.transform.position);
-       
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, UnityEngine.Random.Range(0.015f, 0.025f));
+        targetPos = new Vector3(target.transform.position.x - 10, target.transform.position.y + 10, target.transform.position.z - 10);
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, UnityEngine.Random.Range(0.015f, 0.025f));
         //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(target.transform.position), Time.time * 0.03f);
-        transform.LookAt(target.transform);
-        
+        transform.LookAt(car.transform);
 
-        if(Vector3.Distance(transform.position,target.transform.position) < 0.5)
+
+        if (Vector3.Distance(transform.position, target.transform.position) < 0.5)
         {
             if (Add)
             {
                 index++;
                 target = Objectives[index];
                 Add = false;
-            }   
+            }
         }
         if (Vector3.Distance(transform.position, target.transform.position) > 1)
         {
