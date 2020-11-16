@@ -13,6 +13,8 @@ public class DriveV2 : MonoBehaviour
     public float reset_multiplier;
     public bool curving = false;
 
+    public float original_Angle = 180;
+
     void Update()
     {
         if (Input.GetKey(KeyCode.A))
@@ -48,13 +50,8 @@ public class DriveV2 : MonoBehaviour
             curving = true;
         }
 
-        v_Body.transform.eulerAngles = new Vector3(v_Body.transform.eulerAngles.x, 359, v_Body.transform.eulerAngles.z);
-
-        if (v_Body.transform.rotation.eulerAngles.y > 360 - max_curvuture)
+        if (v_Body.transform.rotation.eulerAngles.y > original_Angle - max_curvuture)
             v_Body.transform.Rotate(0, multiplier * -(Time.deltaTime), 0, Space.Self);
-
-        //Debug.Log(v_Body.transform.rotation.eulerAngles.y);
-        Debug.Log("Curve");
     }
 
     void CurveRight()
@@ -64,25 +61,25 @@ public class DriveV2 : MonoBehaviour
             curving = true;
         }
 
-        if (v_Body.transform.rotation.eulerAngles.y < max_curvuture)
+        if (v_Body.transform.rotation.eulerAngles.y < original_Angle + max_curvuture)
             v_Body.transform.Rotate(0, multiplier * Time.deltaTime, 0, Space.Self);
     }
 
     void ResetCurve()
     {
-        if (v_Body.transform.rotation.eulerAngles.y > 0 && v_Body.transform.rotation.eulerAngles.y < 60)
+        if (v_Body.transform.rotation.eulerAngles.y > original_Angle && v_Body.transform.rotation.eulerAngles.y < original_Angle + 80)
         {
             v_Body.transform.Rotate(0, -1 * reset_multiplier * Time.deltaTime, 0, Space.Self);
         }
 
-        if (v_Body.transform.rotation.eulerAngles.y < 360 && v_Body.transform.rotation.eulerAngles.y > 300)
+        if (v_Body.transform.rotation.eulerAngles.y < original_Angle && v_Body.transform.rotation.eulerAngles.y > original_Angle - 80)
         {
             v_Body.transform.Rotate(0, 1 * reset_multiplier * Time.deltaTime, 0, Space.Self);
         }
         
-        if (v_Body.transform.rotation.eulerAngles.y < 1 && v_Body.transform.rotation.eulerAngles.y > 359)
+        if (v_Body.transform.rotation.eulerAngles.y < original_Angle + 1 && v_Body.transform.rotation.eulerAngles.y > original_Angle - 1)
         {
-            v_Body.transform.eulerAngles = new Vector3(v_Body.transform.eulerAngles.x, 0, v_Body.transform.eulerAngles.z);
+            v_Body.transform.eulerAngles = new Vector3(v_Body.transform.eulerAngles.x, 180, v_Body.transform.eulerAngles.z);
         }
     }
 }
