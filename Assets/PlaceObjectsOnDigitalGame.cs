@@ -12,20 +12,25 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
     public GameObject[] ObjectsToPlace;
     public GameObject YourCar;
     public GameObject AICAR;
-    int distance = 10;
+    bool rightAndUp = true;
+    int distance = 9;
+
+    public int direction = 1;
     // Start is called before the first frame update
     void Awake()
     {
-
-        for( int i = 0; i < 10; i++)
+        
+        Instantiate(ObjectsToPlace[3], new Vector3(0, 0, 0), Quaternion.identity);
+        for ( int i = 0; i < 10; i++)
         {
-            Instantiate(ObjectsToPlace[3], new Vector3(0,0,0), Quaternion.identity);
+            
             rand = (int) Random.Range(0, 10);
-            if(last == 0)
+            
+            if (last == 0)
             {
                 if(rand < 5)
                 {
-                    newPos = lastPos + new Vector3(0, 0, distance);
+                    newPos = lastPos + new Vector3(0, 0, distance * direction);
                     Instantiate(ObjectsToPlace[0], newPos, Quaternion.identity);
                     lastPos = newPos;
                     lastStreat = 0;
@@ -33,8 +38,8 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
                 }
                 else
                 {
-                    newPos = lastPos + new Vector3(0, 0, distance);
-                    Instantiate(ObjectsToPlace[2], lastPos + new Vector3(0, 0, distance), Quaternion.Euler(0,90,0));
+                    newPos = lastPos + new Vector3(0, 0, distance * direction);
+                    Instantiate(ObjectsToPlace[2], lastPos + new Vector3(0, 0, distance * direction), Quaternion.Euler(0,90,0));
                     lastPos = newPos;
                     last = 2;
                 }
@@ -43,7 +48,7 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
             {
                 if (lastStreat == 0)
                 {
-                    newPos = lastPos + new Vector3(distance, 0, 0);
+                    newPos = lastPos + new Vector3(distance * direction, 0, 0);
                     Instantiate(ObjectsToPlace[1], newPos, Quaternion.identity);
                     lastPos = newPos;
                     lastStreat = 1;
@@ -51,7 +56,7 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
                 }
                 else
                 {
-                    newPos = lastPos + new Vector3(0, 0, distance);
+                    newPos = lastPos + new Vector3(0, 0, distance * direction);
                     Instantiate(ObjectsToPlace[0], newPos, Quaternion.identity);
                     lastPos = newPos;
                     lastStreat = 0;
@@ -62,7 +67,7 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
             {
                 if (rand < 5)
                 {
-                    newPos = lastPos + new Vector3(distance, 0, 0);
+                    newPos = lastPos + new Vector3(distance * direction, 0, 0);
                     Instantiate(ObjectsToPlace[1], newPos, Quaternion.identity);
                     lastPos = newPos;
                     lastStreat = 1;
@@ -70,7 +75,7 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
                 }
                 else
                 {
-                    newPos = lastPos + new Vector3(distance, 0, 0);
+                    newPos = lastPos + new Vector3(distance * direction, 0, 0);
                     Instantiate(ObjectsToPlace[2], newPos, Quaternion.Euler(0, -90, 0));
                     lastPos = newPos;
                     last = 2;

@@ -26,9 +26,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     }
     public void Place()
     {
-        place = false;
-        placementIndicator.SetActive(false);
-        PlaceObject();
+        
 
     }
    
@@ -36,7 +34,12 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         UpdatePlacementPose();
         UpdatePlacementIndicator();
-
+        if(placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            place = false;
+            placementIndicator.SetActive(false);
+            PlaceObject();
+        }
         
         if(!place)
         {

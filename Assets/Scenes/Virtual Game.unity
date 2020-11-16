@@ -292,13 +292,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1578784624}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.08, y: 4.53, z: 0}
+  m_LocalRotation: {x: 0.09818185, y: 0.6198878, z: -0.121789634, w: 0.7689387}
+  m_LocalPosition: {x: -5, y: 3.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 17.577, y: 77.139, z: -3.944}
 --- !u!114 &1578784628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,6 +348,7 @@ MonoBehaviour:
   - {fileID: 2705967932903600141, guid: 046f5991cb3d1fe4193f6c9f8492a328, type: 3}
   YourCar: {fileID: 8755146802677226394, guid: ae41e9733d4f48b4aa072924126604c1, type: 3}
   AICAR: {fileID: 5429487462594385719, guid: a06638e16bcc4ea4d98825db19097bdd, type: 3}
+  direction: 1
 --- !u!4 &1647081714
 Transform:
   m_ObjectHideFlags: 0
