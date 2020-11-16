@@ -13,14 +13,17 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
     public GameObject YourCar;
     public GameObject AICAR;
     bool rightAndUp = true;
-    int distance = 9;
-
+    float distance = 4.5f;
+    Vector3 startPos;
     public int direction = 1;
     // Start is called before the first frame update
     void Awake()
     {
         
-        Instantiate(ObjectsToPlace[3], new Vector3(0, 0, 0), Quaternion.identity);
+        startPos = transform.position;
+        lastPos = startPos;
+
+        Instantiate(ObjectsToPlace[3], new Vector3(0, 0, 0) + startPos, Quaternion.identity);
         for ( int i = 0; i < 10; i++)
         {
             
@@ -83,10 +86,10 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
             }
 
         }
-        Instantiate(YourCar, new Vector3(0, 0.5f, -1), Quaternion.Euler(0,90,0));
-        for (int i = 0; i < 5; i++)
+        Instantiate(YourCar, new Vector3(0, 0.5f, -1) + startPos, Quaternion.Euler(0,90,0));
+        for (int i = 0; i < 3; i++)
         {
-            Instantiate(AICAR, new Vector3(0, 0.5f, i), Quaternion.identity);
+            Instantiate(AICAR, new Vector3(0, 0.5f, i) + startPos, Quaternion.identity);
         }
     }
 
