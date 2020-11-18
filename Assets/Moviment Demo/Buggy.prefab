@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 8755146802677226392}
   - component: {fileID: 8755146802677226395}
   - component: {fileID: 6889133383962362056}
+  - component: {fileID: 754702403048918637}
   m_Layer: 0
   m_Name: Buggy
   m_TagString: Untagged
@@ -91,7 +92,7 @@ BoxCollider:
   m_GameObject: {fileID: 8755146802677226394}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.44, y: 0.26727355, z: 0.610672}
   m_Center: {x: 0.011726379, y: 0.13909477, z: 0}
@@ -130,6 +131,20 @@ MonoBehaviour:
   curving: 0
   original_Angle: 180
   reset_Margin: 1
+--- !u!136 &754702403048918637
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8755146802677226394}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.15
+  m_Height: 0.6
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.12, z: 0}
 --- !u!1001 &8755146801829201246
 PrefabInstance:
   m_ObjectHideFlags: 0
