@@ -21,69 +21,18 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
     int IndividualTracksIndex = 0;
 
     int trackLenght;
-    int[] course = new int[50];
+    public int[] course = new int[40];
+    ReadInput Input;
     // Start is called before the first frame update
     void Awake()
     {
+        course = new int[40];
+        Input = GameObject.FindGameObjectWithTag("Input").GetComponent<ReadInput>();
+        course = Input.Results;
         // rand = 0 mantem a reta como esta
         // rand = 1 curva (1,-1)  quando vertical vira pra esquerda quando horizontal vira pra cima
         // rand = 2 curva (2,-2)  quando vertical vira pra direita quando horizontal vira pra baixo
         trackLenght = course.Length + 1;
-
-        /*for(int i = 0; i< course.Length; i++)
-        {
-            course[i] = 0;
-            if(i % 4 == 0 && i > 1)
-            {
-                course[i] = 1;
-            }
-        }*/
-
-        course[0] = 0;
-        course[1] = 0;
-        course[2] = 0;
-        course[3] = 0;
-
-        course[4] = 0;
-        course[5] = 0;
-        course[6] = 0;
-        course[7] = 0;
-
-        course[8] = 0;
-        course[9] = 0;
-        course[10] = 0;
-        course[11] = 0;
-
-        course[12] = 0;
-        course[13] = 0;
-        course[14] = 0;
-        course[15] = 0;
-
-        course[16] = 0;
-        course[17] = 0;
-        course[18] = 0;
-
-        course[19] = 0;
-        course[20] = 0;
-        course[21] = 0;
-        course[22] = 0;
-
-        course[23] = 0;
-        course[24] = 0;
-        course[25] = 0;
-        course[26] = 0;
-
-        course[27] = 0;
-        course[28] = 0;
-        course[29] = 0;
-
-
-
-
-
-
-
-
 
 
         IndividualTracks = new GameObject[trackLenght];
@@ -96,7 +45,7 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
         decifre();
 
 
-        Instantiate(YourCar, new Vector3(0, 0.5f, -1) + startPos, Quaternion.Euler(0,90,0));
+        Instantiate(YourCar, new Vector3(0, 0.5f, -1) + startPos, Quaternion.Euler(0, 90, 0));
         for (int i = 0; i < 3; i++)
         {
             Instantiate(AICAR, new Vector3(0, 0.5f, i) + startPos, Quaternion.identity);
@@ -105,38 +54,67 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
     }
 
     // Update is called once per frame
-    void ColocarCurvaDe90(int direcao,Vector3 toAdd, int ultimaReta)
+    void ColocarCurvaDe90(int direcao, Vector3 toAdd, int ultimaReta)
     {
         //Debug.Log("PreCurva " + direction);
         //Debug.Log("Curva direcao " + direcao);
-        if(direcao == 1 || direcao == -1)
+        //Debug.Log("ultimaReta " + ultimaReta);
+
+        if (direcao == 1 || direcao == -1)
         {
-            if(direction == -1)
+            if (direction == -1)
             {
                 direcao = 0;
             }
+            if (ultimaReta == 1)
+            {
+                direcao = -1;
+            }
+            if (direction == -1)
+            {
+                if (ultimaReta == 1)
+                {
+                    direcao = 0;
+                }
+            }
+
             direction = 1;
         }
-        if(direcao == 2 || direcao == -2)
+
+        if (direcao == 2 || direcao == -2)
         {
-            if(direction == 1)
+            if (direction == 1)
             {
-                direcao = -2;
-            }
-            if(direction == -1)
-            {
-                if(ultimaReta == 1)
+                if (ultimaReta == 0)
                 {
+                    Debug.Log(direcao);
+                    direcao = 2;
+                }
+                if (ultimaReta == 1)
+                {
+                    Debug.Log("d-2");
+                    direcao = -2;
+                }
+
+            }
+
+            if (direction == -1)
+            {
+                if (ultimaReta == 1)
+                {
+                    Debug.Log("d1");
                     direcao = 1;
                 }
-                if(ultimaReta == 0)
+                if (ultimaReta == 0)
                 {
+                    Debug.Log("d-1");
                     direcao = -1;
                 }
             }
             direction = -1;
         }
-        //Debug.Log("Curva direcao Pos Ajuste " + direcao);
+
+        //Debug.Log("Curva direcao Pos Ajuste " + direction);
         newPos = lastPos + toAdd;
         IndividualTracks[IndividualTracksIndex] = Instantiate(ObjectsToPlace[2], newPos, Quaternion.Euler(0, 90 * direcao, 0));
         IndividualTracksIndex++;
@@ -168,15 +146,15 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
 
     void CheckForOverLaps()
     {
-        for(int i = 0; i < IndividualTracks.Length; i++)
+        for (int i = 0; i < IndividualTracks.Length; i++)
         {
 
             for (int z = 0; z < IndividualTracks.Length; z++)
             {
-                
-                if (IndividualTracks[i].transform.position == IndividualTracks[z].transform.position && i!=z)
+
+                if (IndividualTracks[i].transform.position == IndividualTracks[z].transform.position && i != z)
                 {
-                    
+
                 }
             }
 
@@ -187,7 +165,7 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
     {
         for (int i = 0; i < course.Length; i++)
         {
-            
+
             //rand = (int) Random.Range(0, 10);
             rand = course[i];
 
@@ -198,7 +176,7 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
                 // Instancia a "distance" de distancia uma nova pista horizontal
                 if (rand == 0)
                 {
-                   
+
                     ColocarHorizontais(direction, new Vector3(0, 0, distance * direction));
                 }
                 // Instancia a "distance" de distancia uma nova curva de 90
@@ -206,12 +184,12 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
                 {
                     if (rand == 1)
                     {
-                        
+
                         ColocarCurvaDe90(1, new Vector3(0, 0, distance * direction), lastStreat);
                     }
                     if (rand == 2)
                     {
-                       
+
                         ColocarCurvaDe90(2, new Vector3(0, 0, distance * direction), lastStreat);
                     }
                 }
@@ -224,12 +202,12 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
 
                 if (lastStreat == 0)
                 {
-                    
+
                     ColocarVerticais(direction, new Vector3(distance * direction, 0, 0));
                 }
                 else if (lastStreat == 1)
                 {
-                    
+
                     ColocarHorizontais(direction, new Vector3(0, 0, distance * direction));
                 }
             }
@@ -242,7 +220,7 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
 
                 if (rand == 0)
                 {
-                   
+
                     ColocarVerticais(direction, new Vector3(distance * direction, 0, 0));
 
                 }
@@ -251,12 +229,12 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
                 {
                     if (rand == 1)
                     {
-                        
+
                         ColocarCurvaDe90(-1, new Vector3(distance * direction, 0, 0), lastStreat);
                     }
                     if (rand == 2)
                     {
-                        
+
                         ColocarCurvaDe90(-2, new Vector3(distance * direction, 0, 0), lastStreat);
                     }
                 }

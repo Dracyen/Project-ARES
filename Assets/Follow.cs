@@ -13,16 +13,16 @@ public class Follow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        car = GameObject.FindGameObjectWithTag("Player").GetComponent<AiDrive>();
+        //car = GameObject.FindGameObjectWithTag("Player").GetComponent<AiDrive>();
         Objectives = GameObject.FindGameObjectsWithTag("TargetToAi");
-        target = Objectives[index];
+        //target = Objectives[index];
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        index = car.index;
+        //index = car.index;
         target = Objectives[index];
         //Debug.Log(transform.position);
         Debug.Log(target.transform.position);
