@@ -198,7 +198,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775b8939807678e458c0e0dbac792f3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Body: {fileID: 107266756}
   v_Body: {fileID: 1132053507}
   curvature: 0
   max_curvuture: 30
@@ -206,6 +205,7 @@ MonoBehaviour:
   reset_multiplier: 300
   curving: 0
   original_Angle: 180
+  reset_Margin: 1
 --- !u!1 &629324026
 GameObject:
   m_ObjectHideFlags: 0
