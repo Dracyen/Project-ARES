@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DriveV2 : MonoBehaviour
+public class VisualDrift : MonoBehaviour
 {
-    public GameObject m_Body;
     public GameObject v_Body;
 
     public float curvature = 0;
@@ -12,74 +11,79 @@ public class DriveV2 : MonoBehaviour
     public float multiplier;
     public float reset_multiplier;
     public bool curving = false;
-
     public float original_Angle = 180;
+    public float reset_Margin = 1;
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
-        {
-            CurveLeft();
-        }
-        
-        if (Input.GetKey(KeyCode.D))
-        {
-            CurveRight();
-        }
-
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        if (Input.touches.Length > 0)
         {
             curving = true;
-        }
 
-        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
+            if (Input.touches[0].position.x < Screen.width / 2)
+            {
+                CurveLeft();
+            }
+
+            if (Input.touches[0].position.x > Screen.width / 2)
+            {
+                CurveRight();
+            }
+        }
+        else
         {
             curving = false;
         }
         
-        if(!curving)
+        /*
+        curving = false;
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            curving = true;
+            CurveRight();
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            curving = true;
+            CurveLeft();
+        }
+
+        if (!curving)
         {
             ResetCurve();
         }
+        */
     }
 
     void CurveLeft()
     {
-        if (curving != true)
-        {
-            curving = true;
-        }
-
         if (v_Body.transform.rotation.eulerAngles.y > original_Angle - max_curvuture)
             v_Body.transform.Rotate(0, multiplier * -(Time.deltaTime), 0, Space.Self);
     }
 
     void CurveRight()
     {
-        if (curving != true)
-        {
-            curving = true;
-        }
-
         if (v_Body.transform.rotation.eulerAngles.y < original_Angle + max_curvuture)
             v_Body.transform.Rotate(0, multiplier * Time.deltaTime, 0, Space.Self);
     }
 
     void ResetCurve()
     {
-        if (v_Body.transform.rotation.eulerAngles.y > original_Angle && v_Body.transform.rotation.eulerAngles.y < original_Angle + 80)
+        if (v_Body.transform.rotation.eulerAngles.y > original_Angle + reset_Margin && v_Body.transform.rotation.eulerAngles.y < original_Angle + 80)
         {
             v_Body.transform.Rotate(0, -1 * reset_multiplier * Time.deltaTime, 0, Space.Self);
         }
 
-        if (v_Body.transform.rotation.eulerAngles.y < original_Angle && v_Body.transform.rotation.eulerAngles.y > original_Angle - 80)
+        if (v_Body.transform.rotation.eulerAngles.y < original_Angle - reset_Margin && v_Body.transform.rotation.eulerAngles.y > original_Angle - 80)
         {
             v_Body.transform.Rotate(0, 1 * reset_multiplier * Time.deltaTime, 0, Space.Self);
         }
-        
-        if (v_Body.transform.rotation.eulerAngles.y < original_Angle + 1 && v_Body.transform.rotation.eulerAngles.y > original_Angle - 1)
+
+        if (v_Body.transform.rotation.eulerAngles.y < original_Angle + reset_Margin && v_Body.transform.rotation.eulerAngles.y > original_Angle - reset_Margin)
         {
-            v_Body.transform.eulerAngles = new Vector3(v_Body.transform.eulerAngles.x, 180, v_Body.transform.eulerAngles.z);
+            v_Body.transform.eulerAngles = new Vector3(v_Body.transform.eulerAngles.x, original_Angle, v_Body.transform.eulerAngles.z);
         }
     }
 }
