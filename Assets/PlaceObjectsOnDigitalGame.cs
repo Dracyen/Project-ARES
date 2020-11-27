@@ -21,13 +21,14 @@ public class PlaceObjectsOnDigitalGame : MonoBehaviour
     int IndividualTracksIndex = 0;
 
     int trackLenght;
-    public int[] course = new int[40];
+    public int[] course;
     ReadInput Input;
     // Start is called before the first frame update
     void Awake()
     {
-        course = new int[40];
+        
         Input = GameObject.FindGameObjectWithTag("Input").GetComponent<ReadInput>();
+        course = new int[Input.numOfTracks];
         course = Input.Results;
         // rand = 0 mantem a reta como esta
         // rand = 1 curva (1,-1)  quando vertical vira pra esquerda quando horizontal vira pra cima
