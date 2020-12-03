@@ -11,8 +11,8 @@ public class ARTapToPlaceObject : MonoBehaviour
     public GameObject placementIndicator;
     public GameObject[] ObjectToPlace;
     public int ObjectToBePlaced = 0;
-    
 
+    public bool StartARInteraction = false;
     //private ARSessionOrigin arOrigin;
     private Pose PlacementPose;
     private ARRaycastManager aRRaycastManager;
@@ -32,9 +32,10 @@ public class ARTapToPlaceObject : MonoBehaviour
    
     void Update()
     {
+
         UpdatePlacementPose();
         UpdatePlacementIndicator();
-        if(placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && place)
+        if(StartARInteraction && placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && place)
         {
             place = false;
             placementIndicator.SetActive(false);

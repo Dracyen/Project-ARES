@@ -5,9 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ARTEST.unity
     guid: 675bccb49b34dab47887aeb81571a413
+  - enabled: 0
+    path: Assets/Scenes/Virtual Game.unity
+    guid: a2be5c795e168bd44b10506b90330b00
+  - enabled: 1
+    path: Assets/Scenes/AR_PlusTrack.unity
+    guid: 7ef2e927e64eab146bcf35d7110d693a
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 660073953ebacae4abbef9de77ffbc14,
       type: 2}

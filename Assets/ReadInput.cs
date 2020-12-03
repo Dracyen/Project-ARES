@@ -11,11 +11,11 @@ public class ReadInput : MonoBehaviour
     public int width;
     public int height;
 
-    
+    public Slider SubDiv;
 
     public int[] Results;
 
-    public ADD put;
+    public ARTapToPlaceObject put;
     [Range(10,20)]
     public int subDivisions;
     public GameObject Dots;
@@ -29,28 +29,11 @@ public class ReadInput : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-
+        put = FindObjectOfType<ARTapToPlaceObject>();
         width = Screen.width;
         height = Screen.height;
 
-        trackDrawing = new GameObject[subDivisions * subDivisions];
-        
-        //Debug.Log("TESTE1");
-        for (int x = (width / subDivisions); x < width - (width / subDivisions) * 2; x += width / subDivisions)
-        {
-            for (int y = (height / subDivisions); y < height - (height / subDivisions) * 2; y += height / subDivisions)
-            {
-
-                trackDrawing[indexDots] = Instantiate(Dots, new Vector3(x+(width / subDivisions)/2, y + (height / subDivisions) / 2, 1), Quaternion.identity, Canvas);
-                trackDrawing[indexDots].transform.localScale = new Vector3((width / subDivisions) - 1, (height / subDivisions)-1, 1);
-                if(x < (width - (width / subDivisions) * 2) - 1)
-                {
-                    indexDots++;
-                }
-                
-                
-            }
-        }
+        DrawGrid();
     }
 
     void Start()
@@ -64,7 +47,7 @@ public class ReadInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        /*if (Input.GetButtonDown("Fire1"))
         {
             if (index == 0)
             {
@@ -89,13 +72,20 @@ public class ReadInput : MonoBehaviour
             }
   
 
-        }
+        }*/
 
         // Debug.Log("Click");
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             FarDots();
         }
+        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            Positions[index] = Input.GetTouch(0).position;
+            changeColor(Positions[index], trackDrawing);
+            index++;
+        }
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -220,8 +210,8 @@ public class ReadInput : MonoBehaviour
             }
 
         }
-       
-        put.Place();
+
+        
     }
 
 
@@ -345,5 +335,47 @@ public class ReadInput : MonoBehaviour
             
         }
     }
+
+    public void Create()
+    {
+        Debug.Log("Click");
+        Read();
+        canvas.SetActive(false);
+        put.StartARInteraction = true;
+    }
+
+    public void DrawGrid()
+    {
+        subDivisions = (int)SubDiv.value;
+
+        if (trackDrawing != null)
+        {
+            for(int i = 0; i< trackDrawing.Length; i++)
+            {
+                Destroy(trackDrawing[i]);
+            }
+        }
+
+        trackDrawing = new GameObject[subDivisions * subDivisions];
+
+        //Debug.Log("TESTE1");
+        for (int x = (width / subDivisions); x < width - (width / subDivisions) * 2; x += width / subDivisions)
+        {
+            for (int y = (height / subDivisions); y < height - (height / subDivisions) * 2; y += height / subDivisions)
+            {
+
+                trackDrawing[indexDots] = Instantiate(Dots, new Vector3(x + (width / subDivisions) / 2, y + (height / subDivisions) / 2, 1), Quaternion.identity, Canvas);
+                trackDrawing[indexDots].transform.localScale = new Vector3((width / subDivisions) - 1, (height / subDivisions) - 1, 1);
+                if (x < (width - (width / subDivisions) * 2) - 1)
+                {
+                    indexDots++;
+                }
+
+
+            }
+        }
+    }
+
+    
 }
 

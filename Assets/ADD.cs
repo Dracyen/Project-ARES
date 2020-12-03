@@ -8,7 +8,8 @@ public class ADD : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        //Instantiate(track, new Vector3(10, 10, 10), Quaternion.identity);
+
+        Instantiate(track, new Vector3(10, 10, 10), Quaternion.identity);
     }
 
     // Update is called once per frame
