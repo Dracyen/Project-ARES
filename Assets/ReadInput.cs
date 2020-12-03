@@ -7,7 +7,7 @@ public class ReadInput : MonoBehaviour
 {
     public GameObject canvas;
     public Vector2[] Positions;
-    int index = 0;
+    public int index = 0;
     public int width;
     public int height;
 
@@ -16,7 +16,7 @@ public class ReadInput : MonoBehaviour
     public int[] Results;
 
     public ADD put;
-
+    [Range(10,20)]
     public int subDivisions;
     public GameObject Dots;
 
@@ -24,7 +24,7 @@ public class ReadInput : MonoBehaviour
 
     GameObject[] trackDrawing;
     public int indexDots = 0;
-
+    [Range(10, 100)]
     public int numOfTracks;
     // Start is called before the first frame update
     private void Awake()
@@ -109,7 +109,7 @@ public class ReadInput : MonoBehaviour
         width = Screen.width;
         height = Screen.height;
 
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.KeypadEnter))
         {
 
             Debug.Log("Click");
@@ -220,7 +220,7 @@ public class ReadInput : MonoBehaviour
             }
 
         }
-
+       
         put.Place();
     }
 
