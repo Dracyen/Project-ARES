@@ -4,40 +4,52 @@ using UnityEngine;
 
 public class TrackSlot : MonoBehaviour
 {
-    enum State { EMPTY, READY, FULL }
+    enum State { EMPTY, FULL }
 
-    State CurrentState = State.EMPTY;
+    State CurrentState;
 
     bool hasPiece = false;
 
     GameObject Piece;
 
+    public SlotSize _mesh;
+
     TrackSlot()
     {
         hasPiece = false;
+        CurrentState = State.EMPTY;
     }
 
-    void ClickAction(/*outerPiece*/)
+    public void ClickAction(Object piece)
     {
         if(hasPiece)
         {
-            //Ask to delete
+            DeletePiece();
         }
         else
         {
-            //PlacePiece()
+            PlacePiece(piece);
         }
 
+        Debug.Log(piece.name);
     }
 
-    void PlacePiece()
+    public void SetPosition(float coordX, float coordY)
     {
+        transform.localPosition = new Vector3(coordX, transform.position.y, coordY);
 
+        CurrentState = State.EMPTY;
+    }
+
+    void PlacePiece(Object piece)
+    {
+        CurrentState = State.FULL;
     }
 
     void DeletePiece()
     {
         Destroy(Piece);
         hasPiece = false;
+        CurrentState = State.EMPTY;
     }
 }
