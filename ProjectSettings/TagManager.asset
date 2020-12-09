@@ -8,6 +8,9 @@ TagManager:
   - TargetToAi1
   - TargetToAi2
   - Input
+  - Undefined
+  - PointA
+  - PointB
   layers:
   - Default
   - TransparentFX
