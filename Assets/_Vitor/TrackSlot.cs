@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class TrackSlot : MonoBehaviour
 {
-    enum State { EMPTY, FULL }
+    public enum State { EMPTY, READY, FULL }
 
-    State CurrentState;
+    public string Sufix = "(Clone)";
+
+    public State CurrentState { get; private set; }
+
+    public TrackBuilder Grid;
 
     bool hasPiece = false;
 
     GameObject Piece;
 
-    public SlotSize _mesh;
+    public SlotSize Slot;
 
     TrackSlot()
     {
@@ -20,18 +24,39 @@ public class TrackSlot : MonoBehaviour
         CurrentState = State.EMPTY;
     }
 
-    public void ClickAction(Object piece)
+    public void ClickAction(Object piece, int button)
     {
-        if(hasPiece)
+        if (CurrentState == State.FULL)
         {
-            DeletePiece();
-        }
-        else
-        {
-            PlacePiece(piece);
-        }
+            switch (button)
+            {
+                case 0:
+                    if (hasPiece)
+                        RotatePiece();
+                    break;
 
-        Debug.Log(piece.name);
+                case 1:
+                    if (hasPiece)
+                        DeletePiece();
+                    break;
+            }
+        }
+        else if (CurrentState == State.READY)
+        {
+            if (piece.name == "Inicio")
+            {
+                if (!Grid.hasStart)
+                {
+                    Grid.SwitchStart();
+
+                    PlacePiece(piece);
+                }
+            }
+            else
+            {
+                PlacePiece(piece);
+            }
+        }
     }
 
     public void SetPosition(float coordX, float coordY)
@@ -43,13 +68,38 @@ public class TrackSlot : MonoBehaviour
 
     void PlacePiece(Object piece)
     {
+        Debug.Log("Place");
+
+        Slot.mesh.gameObject.SetActive(false);
+        Piece = (GameObject)Instantiate(piece, transform);
+        hasPiece = true;
         CurrentState = State.FULL;
+    }
+
+    void RotatePiece() //Needs Work
+    {
+        Debug.Log("Rotate");
+
+        Piece.transform.Rotate(new Vector3(0, 90, 0), Space.Self);
     }
 
     void DeletePiece()
     {
+        Debug.Log("Delete");
+
+        if(Piece.name == "Inicio" + Sufix)
+        {
+            Grid.SwitchStart();
+        }
+
         Destroy(Piece);
+        Slot.mesh.gameObject.SetActive(true);
         hasPiece = false;
-        CurrentState = State.EMPTY;
+        CurrentState = State.READY;
+    }
+
+    public void SetReady()
+    {
+        CurrentState = State.READY;
     }
 }

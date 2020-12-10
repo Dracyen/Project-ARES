@@ -236,8 +236,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95c06f87b6c34ad4385b397c498342db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 5391505265976070815, guid: 1a7054d40bd98974e9da5bc6c8350baa, type: 3}
-  slotSize: 5
+  prefab: {fileID: 5391505265976070815, guid: 1a7054d40bd98974e9da5bc6c8350baa, type: 3}
+  slotSize: 4.5
   gridSize: 10
 --- !u!4 &112188632
 Transform:

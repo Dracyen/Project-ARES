@@ -43,7 +43,26 @@ public class TrackPicker : MonoBehaviour
 
                     _target = rayHit.collider.gameObject.GetComponent<TrackSlot>();
 
-                    _target.ClickAction(_prefabs[_selected]);
+                    _target.ClickAction(_prefabs[_selected], 0);
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            RaycastHit rayHit;
+
+            if (Physics.Raycast(ray, out rayHit, 100.0f))
+            {
+                if (rayHit.collider.tag == "Slot")
+                {
+                    TrackSlot _target;
+
+                    _target = rayHit.collider.gameObject.GetComponent<TrackSlot>();
+
+                    _target.ClickAction(_prefabs[_selected], 1);
                 }
             }
         }
