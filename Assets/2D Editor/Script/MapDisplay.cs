@@ -43,7 +43,7 @@ public class MapDisplay : MonoBehaviour
         width = Screen.height - HeightOffset * 2;
         height = Screen.height - HeightOffset * 2;
         
-       // DrawGrid();
+       DeleteGrid();
     }
 
     // Update is called once per frame
@@ -115,10 +115,13 @@ public class MapDisplay : MonoBehaviour
         }
             // A track is beeing placed in the seleceted pos
         tile.Add(Instantiate(Selected.image, posToPlace, Quaternion.identity, posRef));
-        tile[tileTracksIndex].transform.localScale = new Vector3((width / GridSize - 1) * Scale, (height / GridSize - 1) * Scale, 1);
         tileTracks.Add(new Tile());
-        
-        
+        Vector3 TileScale = tileTracks[tileTracksIndex].Scale;
+        tile[tileTracksIndex].transform.localScale = new Vector3((width / GridSize - 1) * Scale * TileScale.x, (height / GridSize - 1) * Scale * TileScale.y, 1 * TileScale.z);
+
+       
+
+
         if (tileTracksIndex > 0)
         {
             // Debug.Log("UsingExit");
@@ -140,13 +143,38 @@ public class MapDisplay : MonoBehaviour
         {
             if(touchPos == tileTracks[i].entrancePos)
             {
-                //tileTracks[i] has been selected in the grid for change
-                tileTracks[i].BeSelected();
-
-                tile[i].transform.rotation = Quaternion.Euler( tileTracks[i].rot);
+                if(i < tileTracks.Count - 1)
+                {
+                    ClearTrackFromTouchPos(i);
+                }
+                else if(i == tileTracks.Count - 1)
+                {
+                    //tileTracks[i] has been selected in the grid for change
+                    SpinLastTrack(i);
+                }
+                
             }
         }
     }
+    void ClearTrackFromTouchPos(int i)
+    {
+        Debug.Log("Not the Last");
+        for (int z = tileTracks.Count - 1; z > i; z--)
+        {
+            Destroy(tile[z]);
+            tile.Remove(tile[z]);
+            tileTracks.Remove(tileTracks[z]);
+            tileTracksIndex--;
+        }
+    }
+    void SpinLastTrack(int i)
+    {
+        tileTracks[i].BeSelected();
+        
+        tile[i].transform.localScale = new Vector3(Mathf.Abs(tile[i].transform.localScale.x) * tileTracks[i].Scale.x, Mathf.Abs(tile[i].transform.localScale.y) * tileTracks[i].Scale.y, Mathf.Abs(tile[i].transform.localScale.z) * tileTracks[i].Scale.z);
+        tile[i].transform.rotation = Quaternion.Euler(tileTracks[i].rot);
+    }
+
     public void GiveListToGenerate()
     {
         FindObjectOfType<MapGenerator>().Generate3DTrack(tileTracks);

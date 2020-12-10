@@ -517,6 +517,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 61551184}
   m_CullTransparentMesh: 0
+--- !u!1 &103383194
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 103383196}
+  - component: {fileID: 103383195}
+  m_Layer: 0
+  m_Name: PlaceCars
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &103383195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103383194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33066ddae11a4264faacfdc07d586dad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerCar: {fileID: 8755146802677226394, guid: ae41e9733d4f48b4aa072924126604c1,
+    type: 3}
+  AiCar: {fileID: 5429487462594385719, guid: a06638e16bcc4ea4d98825db19097bdd, type: 3}
+  numOfAiCars: 7
+  CarSlots: []
+--- !u!4 &103383196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103383194}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 945.56635, y: 522.90924, z: -70.327835}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &122399567
 GameObject:
   m_ObjectHideFlags: 0
@@ -2862,13 +2910,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 858743902}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.11933979, y: 0.6969635, z: -0.11933979, w: 0.6969635}
+  m_LocalPosition: {x: 568.7, y: 40.6, z: 592.27}
+  m_LocalScale: {x: 8, y: 8, z: 8}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 19.433, y: 90, z: 0}
 --- !u!1 &917355254
 GameObject:
   m_ObjectHideFlags: 0
@@ -4829,7 +4877,7 @@ MonoBehaviour:
   - name: Final
     index: 4
     image: {fileID: 3760826244208730850, guid: 71b4987aa373a154f9bb6bc22f347175, type: 3}
-    version3D: {fileID: 5812613237353723050, guid: 934b4c19adbf00d41a1b5aaa1449f12b,
+    version3D: {fileID: 3565114116249693840, guid: b47ec0ce35474514fbfcddedd5256ae2,
       type: 3}
     SizeX: 1
     SizeY: 1
@@ -4849,8 +4897,22 @@ MonoBehaviour:
     isCurve: 0
     changeAxis: 0
     rotationOutput: 3
+  - name: CurvaSmooth
+    index: 6
+    image: {fileID: 80608662429215978, guid: cafa00ac627a71141acc6e843f0d8461, type: 3}
+    version3D: {fileID: 3473180575934333357, guid: 30f274d7292e45440b6771807a06ecc7,
+      type: 3}
+    SizeX: 2
+    SizeY: 2
+    StepX: 1
+    StepY: 2
+    isCurve: 1
+    changeAxis: 1
+    rotationOutput: 3
   posRef: {fileID: 649030784}
   scale: {x: 0, y: 0, z: 0}
+  isLoop: 0
+  numOfLapsOfTheTrack: 2
 --- !u!4 &1818433655
 Transform:
   m_ObjectHideFlags: 0
@@ -5078,6 +5140,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 103383195}
+        m_TargetAssemblyTypeName: PlaceCars, Assembly-CSharp
+        m_MethodName: DistributeCars
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

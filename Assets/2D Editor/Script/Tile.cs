@@ -11,6 +11,7 @@ public class Tile
     public RotationState rotation = RotationState.Left;
     public RotationState outPutRot;
     public Vector3 rot;
+    public Vector3 Scale = new Vector3(1,1,1);
 
     public Vector2 entrancePos;
     public Vector2 exitPos;
@@ -24,6 +25,7 @@ public class Tile
     Transform pointB;
 
     public bool isCurved;
+    bool ToSpinOrNotToSpin = false;
 
     public MapGenerator.TrackTile originalInfo;
 
@@ -63,7 +65,7 @@ public class Tile
     {
         if (!isCurved)
         {
-            Debug.Log("Last Rotation: " + rotAnterior);
+            //Debug.Log("Last Rotation: " + rotAnterior);
             rotation = rotAnterior;
             outPutRot = rotation;
         }
@@ -125,7 +127,7 @@ public class Tile
         }
 
         RotateTile();
-        Debug.Log("Used rotation: " + rotation);
+        //Debug.Log("Used rotation: " + rotation);
         AjustStep(rotation);
         ExitPos();
     }
@@ -136,7 +138,7 @@ public class Tile
         {
             if (CurrRotation == RotationState.Up)
             {
-                step = new Vector2(originalInfo.StepX, originalInfo.StepY);
+                step = new Vector2(-originalInfo.StepX, originalInfo.StepY);
             }
             if (CurrRotation == RotationState.Right)
             {
@@ -148,7 +150,7 @@ public class Tile
             }
             if (CurrRotation == RotationState.Left)
             {
-                step = new Vector2(-originalInfo.StepY, originalInfo.StepX);
+                step = new Vector2(-originalInfo.StepY, -originalInfo.StepX);
             }
         }
         else
@@ -171,26 +173,31 @@ public class Tile
             }
         }
         
-        Debug.Log("Step: " + step);
+        //Debug.Log("Step: " + step);
     }
     void RotateTile()
     {
-        if (rotation == RotationState.Up)
-        {
-            rot = new Vector3(0, 0, -90);
-        }
-        if (rotation == RotationState.Right)
-        {
-            rot = new Vector3(0, 0, -180);
-        }
-        if (rotation == RotationState.Down)
-        {
-            rot = new Vector3(0, 0, -270);
-        }
-        if (rotation == RotationState.Left)
-        {
-            rot = new Vector3(0, 0, 0);
-        }
+        
+       
+
+            if (rotation == RotationState.Up)
+            {
+                rot = new Vector3(0, 0, -90);
+            }
+            if (rotation == RotationState.Right)
+            {
+                rot = new Vector3(0, 0, -180);
+            }
+            if (rotation == RotationState.Down)
+            {
+                rot = new Vector3(0, 0, -270);
+            }
+            if (rotation == RotationState.Left)
+            {
+                rot = new Vector3(0, 0, 0);
+            }
+        
+        
     }
     public void FillGrid()
     {
@@ -199,80 +206,174 @@ public class Tile
     public void BeSelected()
     {
         if (isCurved)
-        {
-            Spin();
+        {            
+          Spin(); 
         }
        
     }
+    public void AjustScaleToSpin()
+    {
+        if (rotation == RotationState.Up)
+        {
+            Scale = new Vector3(Scale.x * -1, 1, 1);
+
+        }
+        else if (rotation == RotationState.Right)
+        {
+            Scale = new Vector3(Scale.x * -1, 1, 1);
+        }
+        else if (rotation == RotationState.Down)
+        {
+            Debug.Log("When rotation is Down Scale is: " + Scale.x);
+            Scale = new Vector3(Scale.x * -1, 1, 1);
+            Debug.Log("When rotation is Down Scale is: " + Scale.x);
+        }
+        else if (rotation == RotationState.Left)
+        {
+            Scale = new Vector3(Scale.x * -1, 1,1);
+        }
+
+        if (rotation == RotationState.Up)//Not Ok
+        {
+            Debug.Log("U");
+            step = new Vector2(originalInfo.StepY, -originalInfo.StepX);
+        }
+        if (rotation == RotationState.Right)//Not Ok
+        {
+            Debug.Log("R");
+            step = new Vector2(-originalInfo.StepX, -originalInfo.StepY);
+        }
+        if (rotation == RotationState.Down)//OK
+        {
+            Debug.Log("D");
+            step = new Vector2(-originalInfo.StepY, originalInfo.StepX);
+        }
+        if (rotation == RotationState.Left)//ok
+        {
+            Debug.Log("L");
+            step = new Vector2(originalInfo.StepX, originalInfo.StepY);
+        }
+    }
+
     public void Spin()
     {
-        Debug.Log("Spin");
+
         if (originalInfo.changeAxis)
         {
+            
             // se ultimo output foi Up curva 90 so pode ser Down ou Rigth
             // se ultimo output foi Left curva 90 so pode ser left ou Down
             // se ultimo output foi Right curva 90 so pode ser UP ou Rigth
             // se ultimo output foi Down curva 90 so pode ser Up ou left
             if (rotAnterior == RotationState.Up)
             {
-                rotation = RotationState.Down;
-                outPutRot = RotationState.Right;
-
-                //rotation = RotationState.Right;
-                //outPutRot = RotationState.Left;
+                if (!ToSpinOrNotToSpin)
+                {
+                    rotation = RotationState.Down;
+                    outPutRot = RotationState.Right;
+                    ToSpinOrNotToSpin = true;
+                }
                 
+                else if (ToSpinOrNotToSpin) 
+                {
+                    rotation = RotationState.Right;
+                    outPutRot = RotationState.Left;
+                    ToSpinOrNotToSpin = false;
+                }
+
+
             }
             else if (rotAnterior == RotationState.Right)
             {
-                rotation = RotationState.Right;
-                outPutRot = RotationState.Down;
-                //rotation = RotationState.Up;
-                //outPutRot = RotationState.Up;
+                if (!ToSpinOrNotToSpin)
+                {
+                    rotation = RotationState.Right;
+                    outPutRot = RotationState.Down;
+                    ToSpinOrNotToSpin = true;
+                }
+                else if(ToSpinOrNotToSpin)
+                {
+                    rotation = RotationState.Up;
+                    outPutRot = RotationState.Up;
+                    ToSpinOrNotToSpin = false;
+                }
+
             }
             else if (rotAnterior == RotationState.Down)
             {
-                rotation = RotationState.Up;
-                outPutRot = RotationState.Left;
-                Debug.Log("now is Up");
-                //rotation = RotationState.Left;
-                //outPutRot = RotationState.Right;
+                if (!ToSpinOrNotToSpin)
+                {
+                    rotation = RotationState.Up;
+                    outPutRot = RotationState.Left;
+                    ToSpinOrNotToSpin = true;
+                }
+                else if(ToSpinOrNotToSpin)
+                {
+                    rotation = RotationState.Left;
+                    outPutRot = RotationState.Right;
+                    ToSpinOrNotToSpin = false;
+                }
+
+
             }
             else if (rotAnterior == RotationState.Left)
             {
-                rotation = RotationState.Left;
-                outPutRot = RotationState.Up;
-                //AjustStep(RotationState.Up);
-                //rotation = RotationState.Down;
-                //outPutRot = RotationState.Down;
-            }
-            if (rotation == RotationState.Up)
-            {
-                step = new Vector2(originalInfo.StepY, originalInfo.StepX);
-            }
-            if (rotation == RotationState.Right)
-            {
+                if (!ToSpinOrNotToSpin)
+                {
+                    rotation = RotationState.Left;
+                    outPutRot = RotationState.Up;
+                    ToSpinOrNotToSpin = true;
+                }
+                else if(ToSpinOrNotToSpin)
+                {
+                    rotation = RotationState.Down;
+                    outPutRot = RotationState.Down;
+                    ToSpinOrNotToSpin = false;
+                }
                 
-                step = new Vector2(originalInfo.StepX, -originalInfo.StepY);
             }
-            if (rotation == RotationState.Down)
+            if (size.x == 1 || size.y == 1)
             {
-                step = new Vector2(-originalInfo.StepY, -originalInfo.StepX);
+                if (rotation == RotationState.Up)
+                {
+                    step = new Vector2(originalInfo.StepY, originalInfo.StepX);
+                }
+                if (rotation == RotationState.Right)
+                {
+
+                    step = new Vector2(originalInfo.StepX, -originalInfo.StepY);
+                }
+                if (rotation == RotationState.Down)
+                {
+                    step = new Vector2(-originalInfo.StepY, -originalInfo.StepX);
+                }
+                if (rotation == RotationState.Left)
+                {
+                    step = new Vector2(originalInfo.StepX, originalInfo.StepY);
+                }
             }
-            if (rotation == RotationState.Left)
-            {
-                step = new Vector2(originalInfo.StepX, originalInfo.StepY);
-            }
+               
         }
         else 
         { 
 
         }
-        Debug.Log(rotation);
-        RotateTile();
+        //Debug.Log(rotation);
+        if (size.x > 1 || size.y > 1)
+        {
+            AjustScaleToSpin();
+        }
+        else
+        {
+            RotateTile();
+        }
+        
         ExitPos();
     }
     void ExitPos()
     {
+       
+        Debug.Log(rotation);
         exitPos.x = entrancePos.x + (GameObject.FindObjectOfType<MapDisplay>().Step * step.x);
         exitPos.y = entrancePos.y + (GameObject.FindObjectOfType<MapDisplay>().Step * step.y);
     }

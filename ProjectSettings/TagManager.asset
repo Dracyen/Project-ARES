@@ -9,6 +9,7 @@ TagManager:
   - TargetToAi2
   - Input
   - Slot
+  - Start
   layers:
   - Default
   - TransparentFX
