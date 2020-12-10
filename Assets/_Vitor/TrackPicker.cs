@@ -67,4 +67,9 @@ public class TrackPicker : MonoBehaviour
             }
         }
     }
+
+    public void SwitchPiece(int piece)
+    {
+
+    }
 }
