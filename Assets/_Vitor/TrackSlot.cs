@@ -41,9 +41,9 @@ public class TrackSlot : MonoBehaviour
                     break;
             }
         }
-        else if (CurrentState == State.READY)
+        else if (CurrentState == State.READY && button != 1)
         {
-            if (piece.name == "Inicio")
+            if (piece.name == "Start")
             {
                 if (!Grid.hasStart)
                 {
@@ -87,7 +87,7 @@ public class TrackSlot : MonoBehaviour
     {
         Debug.Log("Delete");
 
-        if(Piece.name == "Inicio" + Sufix)
+        if(Piece.name == "Start" + Sufix)
         {
             Grid.SwitchStart();
         }

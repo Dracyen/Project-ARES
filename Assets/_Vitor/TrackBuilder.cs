@@ -8,6 +8,8 @@ public class TrackBuilder : MonoBehaviour
 
     public float slotSize = 5;
 
+    public int offset = 20;
+
     [Space(10)]
 
     [Range(10, 20)]
@@ -63,8 +65,8 @@ public class TrackBuilder : MonoBehaviour
         {
             for (int y = 0; y < sizeY; y++)
             {
-                float SlotX = ((gridSize * slotSize) / gridSize * x) - (gridSize * slotSize + 20) / 2;
-                float SlotY = ((gridSize * slotSize) / gridSize * y) - (gridSize * slotSize + 20) / 2;
+                float SlotX = ((gridSize * slotSize + offset) / gridSize * x) - (gridSize * slotSize + offset) / 2;
+                float SlotY = ((gridSize * slotSize + offset) / gridSize * y) - (gridSize * slotSize + offset) / 2;
 
                 _objects[index].SetActive(true);
 

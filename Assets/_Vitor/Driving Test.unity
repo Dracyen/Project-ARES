@@ -237,7 +237,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 5391505265976070815, guid: 1a7054d40bd98974e9da5bc6c8350baa, type: 3}
-  slotSize: 4.5
+  slotSize: 7.5
+  offset: 20
   gridSize: 10
 --- !u!4 &112188632
 Transform:
@@ -267,9 +268,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _display: {fileID: 1522851979}
   _prefabs:
-  - {fileID: 2705967932903600141, guid: 046f5991cb3d1fe4193f6c9f8492a328, type: 3}
-  - {fileID: 6874820461896925259, guid: bfef00514e9f2d04c80197dcf7538925, type: 3}
-  - {fileID: 8980295001154855827, guid: 88f872b54dafc7e4a86c051a1a3c5711, type: 3}
+  - {fileID: 7965392357200382029, guid: dbc1b1c10ec0701418b281d09d75ebfc, type: 3}
+  - {fileID: 8282875009937098695, guid: 269a83279ba46a0408fd6013a4489d57, type: 3}
+  - {fileID: 506970670809920713, guid: 9ce71de0f3c5fe44096d53063c461f36, type: 3}
 --- !u!1 &207213799
 GameObject:
   m_ObjectHideFlags: 0
