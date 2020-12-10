@@ -33,7 +33,7 @@ public class UiManager : MonoBehaviour
             if(i< MapInfo.tiles.Length)
             {
                 trackButtons[i].image.sprite = MapInfo.tiles[i + OffSet].image.GetComponent<Image>().sprite;
-                Debug.Log(MapInfo.tiles[i + OffSet].name);
+
             }
             else
             {

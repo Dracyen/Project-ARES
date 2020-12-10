@@ -17,6 +17,9 @@ public class MapGenerator : MonoBehaviour
     public Vector3 scale;
 
     public int[,] posIndex;
+
+    public bool isLoop = false;
+    public int numOfLapsOfTheTrack;
     // Start is called before the first frame update
     void Start()
     {
@@ -90,10 +93,20 @@ public class MapGenerator : MonoBehaviour
         for(int i = 0; i < tiles.Count; i++)
         {
             GameObject Instanc;
-            Quaternion rotation = Quaternion.Euler(new Vector3(0, tiles[i].rot.z, 0));
+            float rotationToPlace;
+            rotationToPlace = tiles[i].rot.z;
+            if (tiles[i].rot.z == 0) 
+            {
+                rotationToPlace = 180; 
+            }
+            else if (tiles[i].rot.z == -180) 
+            {
+                rotationToPlace = 0; 
+            }
+            Quaternion rotation = Quaternion.Euler(new Vector3(0, rotationToPlace, 0));
 
             Instanc = Instantiate(tiles[i].originalInfo.version3D, new Vector3(tiles[i].entrancePos.x, 0, tiles[i].entrancePos.y), rotation);
-            Instanc.transform.localScale = new Vector3(8, 8, 8);
+            Instanc.transform.localScale = new Vector3(tiles[i].Scale.x * 8, tiles[i].Scale.y * 8, tiles[i].Scale.z * 8);
         }
     }
 }
