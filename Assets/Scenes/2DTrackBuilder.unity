@@ -8779,7 +8779,7 @@ MonoBehaviour:
   - name: Reta1
     index: 4
     image: {fileID: 7582861696774792756, guid: b028ca7a94b26344daca08740c5622a7, type: 3}
-    version3D: {fileID: 8282875009937098695, guid: 269a83279ba46a0408fd6013a4489d57,
+    version3D: {fileID: 3565114116249693840, guid: 9c70e3bb4768f1e43a0f61720d1ef90e,
       type: 3}
     SizeX: 1
     SizeY: 1
