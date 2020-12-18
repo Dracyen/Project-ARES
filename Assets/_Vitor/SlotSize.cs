@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class SlotSize : MonoBehaviour
 {
-    public BoxCollider _collider;
+    public BoxCollider collider;
 
-    public Transform _mesh;
+    public Transform mesh;
 
-    public void Resize(float _size)
+    public void Resize(float size)
     { 
-        _mesh.localScale = new Vector3(_size, transform.localScale.y, _size);
+        mesh.localScale = new Vector3(size, transform.localScale.y, size);
     
-        _collider = gameObject.GetComponent<BoxCollider>();
-        _collider.size = new Vector3(_size, _collider.size.y, _size);
+        collider = gameObject.GetComponent<BoxCollider>();
+        collider.size = new Vector3(size, collider.size.y, size);
     }
 }

@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 923a08219a1e9ba48aa2d9dc1876b90c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mesh: {fileID: 5079832375570168223}
+  Slot: {fileID: 5079832375570168223}
 --- !u!114 &5079832375570168223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,8 +72,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 940d5a0b122400c4ab4e4672e31379b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collider: {fileID: 8290187424497987785}
-  _mesh: {fileID: 5391505266521232269}
+  collider: {fileID: 8290187424497987785}
+  mesh: {fileID: 5391505266521232269}
 --- !u!1 &5391505266521232369
 GameObject:
   m_ObjectHideFlags: 0
