@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Virtual Game.unity
     guid: a2be5c795e168bd44b10506b90330b00
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/AR_PlusTrack.unity
     guid: 7ef2e927e64eab146bcf35d7110d693a
   m_configObjects:

@@ -13,63 +13,34 @@ public class TrackPicker : MonoBehaviour
     
     private void Update()
     {
-        if(Input.GetKeyUp(KeyCode.Space))
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+        RaycastHit rayHit;
+    }
+
+    public void InteractPiece(int option)
+    {
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+        RaycastHit rayHit;
+
+        if (Physics.Raycast(ray, out rayHit, 100.0f))
         {
-            if (_selected < _prefabs.Length - 1)
+            if (rayHit.collider.tag == "Slot")
             {
-                _selected++;
+                TrackSlot _target;
 
-                _display.text = _selected.ToString();
-            }
-            else
-            {
-                _selected = 0;
+                _target = rayHit.collider.gameObject.GetComponent<TrackSlot>();
 
-                _display.text = _selected.ToString();
-            }
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            RaycastHit rayHit;
-
-            if (Physics.Raycast(ray, out rayHit, 100.0f))
-            {
-                if (rayHit.collider.tag == "Slot")
-                {
-                    TrackSlot _target;
-
-                    _target = rayHit.collider.gameObject.GetComponent<TrackSlot>();
-
-                    _target.ClickAction(_prefabs[_selected], 0);
-                }
-            }
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            RaycastHit rayHit;
-
-            if (Physics.Raycast(ray, out rayHit, 100.0f))
-            {
-                if (rayHit.collider.tag == "Slot")
-                {
-                    TrackSlot _target;
-
-                    _target = rayHit.collider.gameObject.GetComponent<TrackSlot>();
-
-                    _target.ClickAction(_prefabs[_selected], 1);
-                }
+                _target.ClickAction(_prefabs[_selected], option);
             }
         }
     }
 
     public void SwitchPiece(int piece)
     {
+        _selected = piece;
 
+        _display.text = _selected.ToString();
     }
 }

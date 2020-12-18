@@ -65,20 +65,15 @@ public class TrackBuilder : MonoBehaviour
         {
             for (int y = 0; y < sizeY; y++)
             {
-                float SlotX = ((gridSize * slotSize + offset) / gridSize * x) - (gridSize * slotSize + offset) / 2;
-                float SlotY = ((gridSize * slotSize + offset) / gridSize * y) - (gridSize * slotSize + offset) / 2;
+                float SlotX = ((gridSize * slotSize + offset * gridSize) / gridSize * x) - (gridSize * slotSize + offset * gridSize) / 2;
+                float SlotY = ((gridSize * slotSize + offset * gridSize) / gridSize * y) - (gridSize * slotSize + offset * gridSize) / 2;
 
                 _objects[index].SetActive(true);
 
                 SlotGrid[x, y] = _objects[index].GetComponent<TrackSlot>();
 
                 SlotGrid[x, y].SetPosition(SlotX, SlotY);
-                /*
-                if(SlotGrid[x, y].CurrentState == TrackSlot.State.FULL)
-                {
-                    SlotGrid[x, y].Slot.mesh.gameObject.SetActive(true);
-                }
-                */
+                
                 SlotGrid[x, y].Slot.Resize(slotSize);
 
                 SlotGrid[x, y].SetReady();
