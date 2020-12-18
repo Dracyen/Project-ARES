@@ -30,8 +30,9 @@ public class AiDrive : MonoBehaviour
         //Debug.Log(transform.position);
         //Debug.Log(target.transform.position);
        
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, UnityEngine.Random.Range(0.045f, 0.055f));
+        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, UnityEngine.Random.Range(0.45f, 0.55f));
         //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(target.transform.position), Time.time * 0.03f);
+        
         transform.LookAt(target.transform);
         
 

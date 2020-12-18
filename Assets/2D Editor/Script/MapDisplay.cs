@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class MapDisplay : MonoBehaviour
 {
+    public int[] TestIndex;
+    public Tile[] TestTileTracks;
+
     public int GridSize;
     public GameObject[,] Grid;
 
@@ -33,9 +36,20 @@ public class MapDisplay : MonoBehaviour
     public Vector2 directionFlow = new Vector2(1,0);
 
     Vector2 lasPosUsedInGrid;
+    MapGenerator MapInfo;
+
+    bool canBePlaced = true;
+
+    public GameObject erroScreen;
+    public GameObject LoopScreen;
+
+    public string trackName;
+    public InputField inputName;
+    public InputField inputNameLoad;
     // Start is called before the first frame update
     void Start()
     {
+        MapInfo = FindObjectOfType<MapGenerator>();
         directionFlow = new Vector2(1, 1);
         tile = new List<GameObject>();
         tileTracks = new List<Tile>();
@@ -77,7 +91,7 @@ public class MapDisplay : MonoBehaviour
             
         }
         GridSize = (int)Size.value;
-        FindObjectOfType<MapGenerator>().UpdateGrid(GridSize);
+        MapInfo.UpdateGrid(GridSize);
         DrawGrid();
     }
     public int Step;
@@ -112,29 +126,76 @@ public class MapDisplay : MonoBehaviour
         {
             posToPlace.x = tileTracks[tileTracksIndex - 1].exitPos.x;
             posToPlace.y = tileTracks[tileTracksIndex - 1].exitPos.y;
+            
         }
+        for (int i = 0; i< tileTracksIndex; i++)
+        {
+            //Debug.Log("posToPlace " + posToPlace);
+            //Debug.Log("tile[i].transform.position " + tile[i].transform.position);
+            if (posToPlace == tile[i].transform.position && Selected.name != "Final")
+            { 
+                    canBePlaced = false;
+                erroScreen.SetActive(true);
+                break;
+                
+            }
+            else
+            {
+                canBePlaced = true;
+            }           
+        }
+
+        
+        if (canBePlaced)
+        {
             // A track is beeing placed in the seleceted pos
-        tile.Add(Instantiate(Selected.image, posToPlace, Quaternion.identity, posRef));
-        tileTracks.Add(new Tile());
-        Vector3 TileScale = tileTracks[tileTracksIndex].Scale;
-        tile[tileTracksIndex].transform.localScale = new Vector3((width / GridSize - 1) * Scale * TileScale.x, (height / GridSize - 1) * Scale * TileScale.y, 1 * TileScale.z);
+            tile.Add(Instantiate(Selected.image, posToPlace, Quaternion.identity, posRef));
+            tileTracks.Add(new Tile());
+            Vector3 TileScale = tileTracks[tileTracksIndex].Scale;
 
-       
+            tile[tileTracksIndex].transform.localScale = new Vector3((width / GridSize - 1) * Scale * TileScale.x, (height / GridSize - 1) * Scale * TileScale.y, 1 * TileScale.z);
 
 
-        if (tileTracksIndex > 0)
-        {
-            // Debug.Log("UsingExit");
-            //tileTracks[tileTracksIndex].AddTile(tileTracks[tileTracksIndex - 1].exitPos, Selected, directionFlow, tileTracks[tileTracksIndex - 1].rotation, tileTracks[tileTracksIndex - 1].originalInfo.isCurve);
-            tileTracks[tileTracksIndex].AddTile(Selected, tileTracks[tileTracksIndex - 1]);
+
+
+            if (tileTracksIndex > 0)
+            {
+                // Debug.Log("UsingExit");
+                //tileTracks[tileTracksIndex].AddTile(tileTracks[tileTracksIndex - 1].exitPos, Selected, directionFlow, tileTracks[tileTracksIndex - 1].rotation, tileTracks[tileTracksIndex - 1].originalInfo.isCurve);
+                tileTracks[tileTracksIndex].AddTile(Selected, tileTracks[tileTracksIndex - 1]);
+            }
+            else
+            {
+               
+                tileTracks[tileTracksIndex].AddFirstTile(new Vector2(posToPlace.x, posToPlace.y), Selected, directionFlow, Tile.RotationState.Left, false);
+                
+            }
+            tile[tileTracksIndex].transform.rotation = Quaternion.Euler(tileTracks[tileTracksIndex].rot);
+            //SpinLastTrack(tileTracksIndex);
+            //Debug.Log(TileScale + "Instance");
+            if (Selected.name == "Final")
+            {
+                
+                for (int i = 0; i < tileTracksIndex; i++)
+                {
+                    if (posToPlace == tile[i].transform.position && tileTracks[tileTracksIndex].outPutRot != tileTracks[i].rotation)
+                    {
+                        erroScreen.SetActive(true);
+                        Debug.Log("Clear");
+                        ClearTrackFromTouchPos(tileTracksIndex-1);
+                    }
+                }
+                if (tile[tileTracksIndex].transform.position == tile[0].transform.position)
+                {
+                    MapInfo.isLoop = true;
+                    LoopScreen.SetActive(true);
+                }
+            }
+
+            tileTracksIndex++;
+            //canBePlaced = true;
         }
-        else
-        {
-            tileTracks[tileTracksIndex].AddFirstTile(new Vector2(posToPlace.x, posToPlace.y), Selected, directionFlow, Tile.RotationState.Left, false);
-        }
-        tile[tileTracksIndex].transform.rotation = Quaternion.Euler(tileTracks[tileTracksIndex].rot);
-        tileTracksIndex++;
-
+        FindObjectOfType<UiManager>().ShowTabs();
     }
 
     public void trackTaped(Vector2 touchPos)
@@ -174,9 +235,30 @@ public class MapDisplay : MonoBehaviour
         tile[i].transform.localScale = new Vector3(Mathf.Abs(tile[i].transform.localScale.x) * tileTracks[i].Scale.x, Mathf.Abs(tile[i].transform.localScale.y) * tileTracks[i].Scale.y, Mathf.Abs(tile[i].transform.localScale.z) * tileTracks[i].Scale.z);
         tile[i].transform.rotation = Quaternion.Euler(tileTracks[i].rot);
     }
+    public void SaveTrack()
+    {
+        SaveSystem.SaveTrack(this, trackName, FindObjectOfType<MapGenerator>());
+    }
+    public void LoadTrack()
+    {
+        Save data = SaveSystem.LoadTracks(trackName);
 
+        TestIndex = data.index;
+        //TestTileTracks = data.TracksToBeSaved;
+    }
     public void GiveListToGenerate()
     {
+        
         FindObjectOfType<MapGenerator>().Generate3DTrack(tileTracks);
+    }
+    public void TrackNameInput()
+    {
+        trackName = inputName.text;
+        Debug.Log(trackName);
+    }
+    public void TrackNameInputLoad()
+    {
+        trackName = inputNameLoad.text;
+        Debug.Log(trackName);
     }
 }

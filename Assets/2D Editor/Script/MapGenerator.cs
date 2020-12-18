@@ -20,10 +20,15 @@ public class MapGenerator : MonoBehaviour
 
     public bool isLoop = false;
     public int numOfLapsOfTheTrack;
+
+    float GridSize;
+
+    GameObject[] Tracks3D;
+    
     // Start is called before the first frame update
     void Start()
     {
-        
+        numOfLapsOfTheTrack = 0;
     }
 
     // Update is called once per frame
@@ -39,9 +44,10 @@ public class MapGenerator : MonoBehaviour
         hasChoosenPos = true;
         if (hasChoosenTrack)
         {
-            Place();
+           // Place();
             
         }
+        Place();
     }
     public void Place()
     {
@@ -51,6 +57,11 @@ public class MapGenerator : MonoBehaviour
             //Debug.Log("Place");
             hasChoosenTrack = false;
             FindObjectOfType<MapDisplay>().Place(Selected, posToPlace, posRef);
+        }
+        if(FindObjectOfType<MapDisplay>().tileTracksIndex < 1)
+        {
+            FindObjectOfType<MapDisplay>().Place(tiles[0], posToPlace, posRef);
+            
         }
     }
     public void SelectTrack(TrackTile selected)
@@ -82,20 +93,23 @@ public class MapGenerator : MonoBehaviour
         public bool isCurve;
         public bool changeAxis;
         public Tile.RotationState rotationOutput;
+        public UiManager.Tabs Category;
     }
 
     public void UpdateGrid(int size)
     {
         posIndex = new int[size, size];
+        GridSize = size;
     }
     public void Generate3DTrack(List<Tile> tiles)
     {
-        for(int i = 0; i < tiles.Count; i++)
+        Tracks3D = new GameObject[tiles.Count];
+        for (int i = 0; i < tiles.Count; i++)
         {
             GameObject Instanc;
             float rotationToPlace;
             rotationToPlace = tiles[i].rot.z;
-            if (tiles[i].rot.z == 0) 
+            if (tiles[i].rot.z == 0 ) 
             {
                 rotationToPlace = 180; 
             }
@@ -106,7 +120,52 @@ public class MapGenerator : MonoBehaviour
             Quaternion rotation = Quaternion.Euler(new Vector3(0, rotationToPlace, 0));
 
             Instanc = Instantiate(tiles[i].originalInfo.version3D, new Vector3(tiles[i].entrancePos.x, 0, tiles[i].entrancePos.y), rotation);
-            Instanc.transform.localScale = new Vector3(tiles[i].Scale.x * 8, tiles[i].Scale.y * 8, tiles[i].Scale.z * 8);
+            Tracks3D[i] = Instanc;
+            Instanc.transform.localScale = new Vector3(tiles[i].Scale.x * (80f / GridSize), tiles[i].Scale.y * (80f / GridSize), tiles[i].Scale.z * (80f / GridSize));
+        }
+        FindObjectOfType<PlaceCars>().DistributeCars();
+    }
+    public void GenerateSaved3DTrack()
+    {
+        Save data = SaveSystem.LoadTracks(FindObjectOfType<MapDisplay>().trackName);
+        isLoop = data.isLoop;
+        numOfLapsOfTheTrack = data.numOfLaps;
+        GameObject verson3D = null;
+        Tracks3D = new GameObject[data.numOfTiles];
+        for (int i = 0; i < data.numOfTiles; i++)
+        {
+            GameObject Instanc;
+            float rotationToPlace;
+            rotationToPlace = data.rotacaoEmZdeCadaTile[i];
+            if (data.rotacaoEmZdeCadaTile[i] == 0)
+            {
+                rotationToPlace = 180;
+            }
+            else if (data.rotacaoEmZdeCadaTile[i] == -180)
+            {
+                rotationToPlace = 0;
+            }
+            Quaternion rotation = Quaternion.Euler(new Vector3(0, rotationToPlace, 0));
+            for(int z = 0; z < tiles.Length; z++)
+            {
+                if(tiles[z].index == data.index[i])
+                {
+                    verson3D = tiles[z].version3D;
+                }
+                
+            }
+            Instanc = Instantiate(verson3D, new Vector3(data.PosicoesDeEntradaX[i], 0, data.PosicoesDeEntradaY[i]), rotation);
+            Tracks3D[i] = Instanc;
+            Instanc.transform.localScale = new Vector3(data.EscalaX[i] * (80f / GridSize), data.EscalaY[i] * (80f / GridSize), data.EscalaZ[i] * (80f / GridSize));
+        }
+        FindObjectOfType<PlaceCars>().DistributeCars();
+    }
+    public void Clear3DTrack()
+    {
+        for(int i = 0; i < Tracks3D.Length; i++)
+        {
+            Destroy(Tracks3D[i]);
         }
     }
+    
 }
