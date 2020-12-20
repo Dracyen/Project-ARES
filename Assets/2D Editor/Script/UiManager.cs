@@ -33,6 +33,7 @@ public class UiManager : MonoBehaviour
    List <GameObject> Locks;
 
     MapGenerator.TrackTile[] tracks;
+    MapGenerator.TrackAddOn[] AddOns;
 
     bool canGoR = true;
     bool canGoL = false;
@@ -40,6 +41,7 @@ public class UiManager : MonoBehaviour
     private void Awake()
     {
         tracks = new MapGenerator.TrackTile[5];
+        AddOns = new MapGenerator.TrackAddOn[5];
         TabSelected = Tabs.All;
         Locks = new List<GameObject>();
         MapInfo = FindObjectOfType<MapGenerator>();
@@ -104,8 +106,24 @@ public class UiManager : MonoBehaviour
     {
         buttonPressdIndex = ind;
         
+        if(TabSelected != Tabs.Barriers)
+        {
+            MapInfo.SelectTrack(tracks[buttonPressdIndex]);
+        }
+        else
+        {//caso a Tab selecionada seja a das barreiras ao clicar no botao ele deve verificar se ja esta ativo se nao estiver deve ativar e se estiver deve desativar
+            if (MapInfo.AddOns[buttonPressdIndex].IsSelected)
+            {
+                MapInfo.AddOns[buttonPressdIndex].IsSelected = false;
 
-        MapInfo.SelectTrack(tracks[buttonPressdIndex]);
+            }
+            else
+            {// se ele for ativado deve add o AddOn correspondente a lista de AddOns que serao aleatorizados e uma confirmacao visual deve aparecer
+                Debug.Log("Hi");
+            }
+            
+        }
+       
     }
 
     public void SelectPosToPlace(Vector2 Pos, int x, int y)
@@ -143,6 +161,10 @@ public class UiManager : MonoBehaviour
                 
                 Locks[i].SetActive(true);
                 
+            }
+            if(TabSelected == Tabs.Barriers && AddOns[i].name == "Cone" || AddOns[i].name == "Betao")
+            {
+                //Locks[i].SetActive(true);
             }
         }
     }
@@ -224,7 +246,7 @@ public class UiManager : MonoBehaviour
                     canGoR = false;
                 }
             }
-            else
+            else if(TabSelected != Tabs.Barriers)
             {
                 if (i < MapInfo.tiles.Length && MapInfo.tiles[dex + OffSet + 1].Category == TabSelected && goOn)
                 {
@@ -237,6 +259,21 @@ public class UiManager : MonoBehaviour
                 }
 
 
+            }
+            else if (TabSelected == Tabs.Barriers)
+            {
+                if (dex < MapInfo.AddOns.Length )
+                {
+                    if(MapInfo.AddOns[dex + OffSet].Category == TabSelected && goOn)
+                    {
+                        trackButtons[TabsButtonIndex].enabled = true;
+                        trackButtons[TabsButtonIndex].image.color = new Color(255, 255, 255, 255);
+                        trackButtons[TabsButtonIndex].image.sprite = MapInfo.AddOns[dex + OffSet].image.GetComponent<Image>().sprite;
+                        AddOns[TabsButtonIndex] = MapInfo.AddOns[dex + OffSet];
+                        TabsButtonIndex++;
+                    }
+                    
+                }
             }
             if(dex<= trackButtons.Length)
             {
@@ -258,6 +295,7 @@ public class UiManager : MonoBehaviour
                 trackButtons[i].image.color = new Color(0,0,0,0);
                 trackButtons[i].enabled = false;
                 tracks[i].name = null;
+                AddOns[i].name = null;
             }
         }
         

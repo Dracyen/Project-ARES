@@ -8815,6 +8815,19 @@ MonoBehaviour:
     changeAxis: 0
     rotationOutput: 0
     Category: 2
+  AddOns:
+  - name: Cone
+    index: 0
+    image: {fileID: 7133650596183134190, guid: 5a4d78d8a12e4754b93e03501152a682, type: 3}
+    version3D: {fileID: 0}
+    Category: 3
+    IsSelected: 1
+  - name: Betao
+    index: 1
+    image: {fileID: 7133650596183134190, guid: aa9151ebd7e6db84d9332475c1dea56c, type: 3}
+    version3D: {fileID: 0}
+    Category: 3
+    IsSelected: 0
   posRef: {fileID: 649030784}
   scale: {x: 0, y: 0, z: 0}
   isLoop: 0

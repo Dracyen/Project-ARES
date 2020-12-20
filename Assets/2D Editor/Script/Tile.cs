@@ -28,7 +28,8 @@ public class Tile
 
     public MapGenerator.TrackTile originalInfo;
 
-
+    bool hasRotated = false;
+    public Vector2 stepBack;
     RotationState rotAnterior;
     bool isTheLastACurve;
     public void AddFirstTile(Vector2 entPos, MapGenerator.TrackTile tile, Vector2 direct, RotationState rotState, bool isCurve)
@@ -175,8 +176,9 @@ public class Tile
                 step = new Vector2(originalInfo.StepX, originalInfo.StepY);
             }
         }
-        
+        //Debug.Log("Rotation: " + CurrRotation);
         //Debug.Log("Step: " + step);
+        stepBack = step;
     }
     void RotateTile()
     {
@@ -319,7 +321,7 @@ public class Tile
 
     public void Spin()
     {
-        Debug.Log("Estou");
+        //Debug.Log("Estou");
         if (originalInfo.changeAxis)
         {
            
@@ -394,8 +396,8 @@ public class Tile
                 }
                 
             }
-            if (size.x == 1 || size.y == 1)
-            {
+            //if (size.x == 1 || size.y == 1)
+            //{
                 if (rotation == RotationState.Up)
                 {
                     step = new Vector2(originalInfo.StepY, originalInfo.StepX);
@@ -407,14 +409,17 @@ public class Tile
                 }
                 if (rotation == RotationState.Down)
                 {
-                    step = new Vector2(-originalInfo.StepY, -originalInfo.StepX);
+                    step = new Vector2(originalInfo.StepX, -originalInfo.StepY);
                 }
                 if (rotation == RotationState.Left)
                 {
                     step = new Vector2(originalInfo.StepX, originalInfo.StepY);
                 }
-            }
-               
+            //}
+           /* Debug.Log("rotation: " + rotation);
+            Debug.Log("Step X: " + originalInfo.StepX);
+            Debug.Log("Step Y: " + originalInfo.StepY);
+            Debug.Log("Step: " + step);*/
         }
         else 
         {
@@ -430,12 +435,25 @@ public class Tile
             RotateTile();
         }
         
+        if (!hasRotated)
+        {
+            hasRotated = true;
+        }
+        else
+        {
+            hasRotated = false;
+        }
         ExitPos();
     }
     void ExitPos()
     {
-       
-        //Debug.Log(Scale);
+        
+        if(!hasRotated && originalInfo.changeAxis)
+        {
+            step = stepBack;
+        }
+        Debug.Log(step);
+        Debug.Log(stepBack);
         exitPos.x = entrancePos.x + (GameObject.FindObjectOfType<MapDisplay>().Step * step.x);
         exitPos.y = entrancePos.y + (GameObject.FindObjectOfType<MapDisplay>().Step * step.y);
     }

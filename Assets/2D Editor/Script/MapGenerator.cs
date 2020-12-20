@@ -5,6 +5,7 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
     public TrackTile[] tiles;
+    public TrackAddOn[] AddOns;
 
     TrackTile Selected;
     Vector2 posToPlace;
@@ -95,7 +96,17 @@ public class MapGenerator : MonoBehaviour
         public Tile.RotationState rotationOutput;
         public UiManager.Tabs Category;
     }
+    [System.Serializable]
+    public struct TrackAddOn
+    {
+        public string name;
+        public int index;
+        public GameObject image;
+        public GameObject version3D;
+        public UiManager.Tabs Category;
 
+        public bool IsSelected;
+    }
     public void UpdateGrid(int size)
     {
         posIndex = new int[size, size];
