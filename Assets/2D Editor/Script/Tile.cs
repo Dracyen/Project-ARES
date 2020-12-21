@@ -396,8 +396,8 @@ public class Tile
                 }
                 
             }
-            //if (size.x == 1 || size.y == 1)
-            //{
+            if (size.x == 1 || size.y == 1)
+            {
                 if (rotation == RotationState.Up)
                 {
                     step = new Vector2(originalInfo.StepY, originalInfo.StepX);
@@ -409,13 +409,13 @@ public class Tile
                 }
                 if (rotation == RotationState.Down)
                 {
-                    step = new Vector2(originalInfo.StepX, -originalInfo.StepY);
+                    step = new Vector2(-originalInfo.StepY, originalInfo.StepX);
                 }
                 if (rotation == RotationState.Left)
                 {
                     step = new Vector2(originalInfo.StepX, originalInfo.StepY);
                 }
-            //}
+            }
            /* Debug.Log("rotation: " + rotation);
             Debug.Log("Step X: " + originalInfo.StepX);
             Debug.Log("Step Y: " + originalInfo.StepY);

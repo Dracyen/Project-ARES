@@ -27,7 +27,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         UpdatePlacementPose();
         UpdatePlacementIndicator();
-        if(StartARInteraction && placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && place)
+        if(StartARInteraction && placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && place && FindObjectOfType<MapDisplay>().canGoToAR)
         {
             place = false;
             placementIndicator.SetActive(false);
@@ -39,10 +39,16 @@ public class ARTapToPlaceObject : MonoBehaviour
             placementIndicator.SetActive(false);
         }
     }
-
+    public void PlaceButton()
+    {
+        place = false;
+        placementIndicator.SetActive(false);
+        PlaceObject();
+    }
     private void PlaceObject()
     {
-        Instantiate(ObjectToPlace[ObjectToBePlaced],PlacementPose.position,PlacementPose.rotation);
+        FindObjectOfType<MapDisplay>().GiveListToGenerate();
+       // Instantiate(ObjectToPlace[ObjectToBePlaced],PlacementPose.position,PlacementPose.rotation);
     }
 
     private void UpdatePlacementIndicator()

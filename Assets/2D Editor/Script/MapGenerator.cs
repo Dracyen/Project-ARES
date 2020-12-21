@@ -114,7 +114,10 @@ public class MapGenerator : MonoBehaviour
     }
     public void Generate3DTrack(List<Tile> tiles)
     {
+        Vector3 StartPos = new Vector3(-tiles[0].entrancePos.x, 0,-tiles[0].entrancePos.y);
+        Transform PlacementPos = FindObjectOfType<ARTapToPlaceObject>().placementIndicator.transform;
         Tracks3D = new GameObject[tiles.Count];
+        Debug.Log("TESTANDO123");
         for (int i = 0; i < tiles.Count; i++)
         {
             GameObject Instanc;
@@ -130,11 +133,12 @@ public class MapGenerator : MonoBehaviour
             }
             Quaternion rotation = Quaternion.Euler(new Vector3(0, rotationToPlace, 0));
 
-            Instanc = Instantiate(tiles[i].originalInfo.version3D, new Vector3(tiles[i].entrancePos.x, 0, tiles[i].entrancePos.y), rotation);
+            Instanc = Instantiate(tiles[i].originalInfo.version3D, new Vector3(tiles[i].entrancePos.x + StartPos.x + PlacementPos.position.x, 0+ PlacementPos.position.y, tiles[i].entrancePos.y + StartPos.z+ PlacementPos.position.z), rotation);
             Tracks3D[i] = Instanc;
             Instanc.transform.localScale = new Vector3(tiles[i].Scale.x * (80f / GridSize), tiles[i].Scale.y * (80f / GridSize), tiles[i].Scale.z * (80f / GridSize));
         }
         FindObjectOfType<PlaceCars>().DistributeCars();
+
     }
     public void GenerateSaved3DTrack()
     {

@@ -46,6 +46,8 @@ public class MapDisplay : MonoBehaviour
     public string trackName;
     public InputField inputName;
     public InputField inputNameLoad;
+
+    public bool canGoToAR = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -248,7 +250,7 @@ public class MapDisplay : MonoBehaviour
     }
     public void GiveListToGenerate()
     {
-        
+        canGoToAR = true;
         FindObjectOfType<MapGenerator>().Generate3DTrack(tileTracks);
     }
     public void TrackNameInput()
