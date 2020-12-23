@@ -18,10 +18,12 @@ public class Save
     public float[] EscalaZ;
     public bool isLoop;
     public int numOfLaps;
+    public float SizeOfTheGrid;
     public Save( MapDisplay tiles, MapGenerator TrackInfo)
     {
         isLoop = TrackInfo.isLoop;
         numOfLaps = TrackInfo.numOfLapsOfTheTrack;
+        SizeOfTheGrid = TrackInfo.GridSize;
         index = new int[tiles.tileTracks.Count];
         rotacaoEmZdeCadaTile = new float[tiles.tileTracks.Count];
         PosicoesDeEntradaX = new float[tiles.tileTracks.Count];

@@ -58,8 +58,9 @@ public class MapDisplay : MonoBehaviour
         GridSize = (int)Size.value;
         width = Screen.height - HeightOffset * 2;
         height = Screen.height - HeightOffset * 2;
-        
-       DeleteGrid();
+        Step = height / GridSize;
+        WidthOffset = (Screen.width / 2) - ((Step * GridSize) / 2);
+        DeleteGrid();
     }
 
     // Update is called once per frame
@@ -241,17 +242,26 @@ public class MapDisplay : MonoBehaviour
     {
         SaveSystem.SaveTrack(this, trackName, FindObjectOfType<MapGenerator>());
     }
+    public bool hasBeenLoaded = false;
     public void LoadTrack()
-    {
-        Save data = SaveSystem.LoadTracks(trackName);
-
-        TestIndex = data.index;
-        //TestTileTracks = data.TracksToBeSaved;
+    {// esta notificando o metodo GiveListToGenerate que deve gerar a pista que foi escolhida e nao a que esta no editor
+        
+        hasBeenLoaded = true;
+        
     }
     public void GiveListToGenerate()
     {
         canGoToAR = true;
-        FindObjectOfType<MapGenerator>().Generate3DTrack(tileTracks);
+        if (hasBeenLoaded)
+        {
+            FindObjectOfType<MapGenerator>().GenerateSaved3DTrack();
+            hasBeenLoaded = false;
+        }
+        else
+        {
+            FindObjectOfType<MapGenerator>().Generate3DTrack(tileTracks);
+        }
+        
     }
     public void TrackNameInput()
     {

@@ -1221,7 +1221,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Name
+  m_Text: Name...
 --- !u!222 &180965155
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2053,13 +2053,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 2041173045}
+        m_TargetAssemblyTypeName: MenuManager_UI, Assembly-CSharp
+        m_MethodName: GoToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2305,7 +2305,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Back
 --- !u!222 &263270937
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4592,7 +4592,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &757408428
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6219,7 +6219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1108770783
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7378,9 +7378,9 @@ RectTransform:
   m_Father: {fileID: 1500195407}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -144, y: -95}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 816, y: -95}
   m_SizeDelta: {x: 257.40125, y: 170.08582}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1346624810
@@ -8191,18 +8191,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1818433654}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
-        m_MethodName: GenerateSaved3DTrack
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 922766002}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -8219,6 +8207,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1648781193}
+        m_TargetAssemblyTypeName: MapDisplay, Assembly-CSharp
+        m_MethodName: LoadTrack
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9001,9 +9001,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b11aa26e620324b4f8132e5d4d402dc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestIndex: 
+  TestIndex: 0000000000000000
   GridSize: 10
-  WidthOffset: 600
+  WidthOffset: 650
   HeightOffset: 200
   Dots: {fileID: 8864524283242003095, guid: 5b33a40a13e4f8143a71b7b4d17c21b8, type: 3}
   GridDisplay: {fileID: 479206358}
@@ -9020,6 +9020,7 @@ MonoBehaviour:
   inputNameLoad: {fileID: 1683138066}
   canGoToAR: 0
   Step: 0
+  hasBeenLoaded: 0
 --- !u!4 &1648781194
 Transform:
   m_ObjectHideFlags: 0
@@ -10006,7 +10007,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1729706337
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10389,7 +10390,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1806407769
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10732,6 +10733,7 @@ MonoBehaviour:
   scale: {x: 0, y: 0, z: 0}
   isLoop: 0
   numOfLapsOfTheTrack: 2
+  GridSize: 0
 --- !u!4 &1818433655
 Transform:
   m_ObjectHideFlags: 0
@@ -11699,6 +11701,7 @@ GameObject:
   - component: {fileID: 2041173043}
   - component: {fileID: 2041173042}
   - component: {fileID: 2041173041}
+  - component: {fileID: 2041173045}
   m_Layer: 5
   m_Name: Canvas2DTrackBuilder
   m_TagString: Untagged
@@ -11788,6 +11791,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2041173045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041173040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 206603bb66961b54d9ecc58eed60a3fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2094385276
 GameObject:
   m_ObjectHideFlags: 0

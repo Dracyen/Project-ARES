@@ -42,7 +42,7 @@ public class UiManager : MonoBehaviour
     {
         tracks = new MapGenerator.TrackTile[5];
         AddOns = new MapGenerator.TrackAddOn[5];
-        TabSelected = Tabs.All;
+        TabSelected = Tabs.Straights;
         Locks = new List<GameObject>();
         MapInfo = FindObjectOfType<MapGenerator>();
         maxOffset = MapInfo.tiles.Length - 6;

@@ -15,8 +15,14 @@ EditorBuildSettings:
     path: Assets/Scenes/AR_PlusTrack.unity
     guid: 7ef2e927e64eab146bcf35d7110d693a
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: e6b98704a9e7dde488f1df83fb324fd9
+  - enabled: 1
     path: Assets/Scenes/2DTrackBuilder.unity
     guid: df94490e5f1bb23479fff83c47857f38
+  - enabled: 1
+    path: Assets/_Vitor/Scenes/SimpleCube.unity
+    guid: 9330a0207c5899444ad9ea93e137e7e0
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 660073953ebacae4abbef9de77ffbc14,
       type: 2}
