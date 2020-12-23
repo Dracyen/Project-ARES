@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TrackBuilder : MonoBehaviour
 {
+    public Text _display;
+
     public Object prefab;
 
     public float slotSize = 5;
@@ -72,6 +75,8 @@ public class TrackBuilder : MonoBehaviour
 
                 SlotGrid[x, y] = _objects[index].GetComponent<TrackSlot>();
 
+                SlotGrid[x, y].pos = new Vector2(x, y);
+
                 SlotGrid[x, y].SetPosition(SlotX, SlotY);
                 
                 SlotGrid[x, y].Slot.Resize(slotSize);
@@ -87,5 +92,56 @@ public class TrackBuilder : MonoBehaviour
     {
         hasStart = !hasStart;
         Debug.Log("Start is: " + hasStart);
+    }
+
+    public bool CheckSlots(Vector2 pos, Vector2[] slots)
+    {
+        foreach(Vector2 slot in slots)
+        {
+            float x = pos.x + slot.x;
+            float y = pos.y + slot.y;
+
+            if(x != pos.x && y != pos.y)
+            {
+                if (SlotGrid[(int)x, (int)y].CurrentState == TrackSlot.State.FULL)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public void SetEmpty(Vector2 pos, Vector2[] slots)
+    {
+        foreach (Vector2 slot in slots)
+        {
+            float x = pos.x + slot.x;
+            float y = pos.y + slot.y;
+
+            SlotGrid[(int)x, (int)y].DeletePiece();
+        }
+    }
+
+    public void SetFull(Vector2 pos, Vector2[] slots, Text it)
+    {
+        _display = it;
+
+        _display.text = "Hello";
+
+        int i = 0;
+
+        foreach (Vector2 slot in slots)
+        {
+            float x = pos.x + slot.x;
+            float y = pos.y + slot.y;
+
+            SlotGrid[(int)x, (int)y].SetMultiFull();
+
+            i++;
+
+            _display.text = "Count: " + i.ToString();
+        }
     }
 }
