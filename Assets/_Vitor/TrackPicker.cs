@@ -12,7 +12,7 @@ public class TrackPicker : MonoBehaviour
     public TrackInfo[] _prefabs;
 
     int _selected = 0;
-    
+
     public void InteractPiece(int option)
     {
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));

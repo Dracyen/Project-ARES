@@ -15,7 +15,7 @@ public class TrackSlot : MonoBehaviour
 
     bool hasPiece = false;
 
-    GameObject Piece;
+    public GameObject Piece { get; private set; }
 
     public SlotSize Slot;
 
@@ -39,7 +39,7 @@ public class TrackSlot : MonoBehaviour
 
         DeletePiece();
 
-        Grid.SwitchStart();
+        //Grid.SwitchStart();
 
         CurrentState = State.EMPTY;
     }
@@ -175,7 +175,7 @@ public class TrackSlot : MonoBehaviour
 
             _display.text = "Gonna Full";
 
-            Grid.SetFull(pos, Holder.OriginalSquares, _display);
+            Grid.SetFull(pos, Holder.OriginalSquares);
             hasPiece = true;
             CurrentState = State.FULL;
 

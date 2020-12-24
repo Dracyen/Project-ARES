@@ -18,6 +18,8 @@ public class ARPlaceObject : MonoBehaviour
     private Pose placementPose;
     private bool placementPoseIsValid = false;
 
+    public GameObject TrackCreator;
+
     void Start()
     {
         arRaycastManager = FindObjectOfType<ARRaycastManager>();
@@ -38,7 +40,10 @@ public class ARPlaceObject : MonoBehaviour
 
     private void PlaceObject()
     {
-        Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
+        TrackCreator.SetActive(true);
+        TrackCreator.transform.position = placementPose.position;
+        TrackCreator.transform.rotation = placementPose.rotation;
+        //Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
     }
 
     private void UpdatePlacementIndicator()

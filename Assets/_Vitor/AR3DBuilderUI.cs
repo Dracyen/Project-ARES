@@ -6,33 +6,76 @@ using UnityEngine.SceneManagement;
 
 public class AR3DBuilderUI : MonoBehaviour
 {
-    public GameObject[] Tabs;
     public GameObject[] Tiles;
 
     public GameObject MainPanel;
 
+    public GameObject[] SHButtons;
+
+    public GameObject BuilderCanvas;
+    public GameObject TesterCanvas;
+
+    public GameObject TrackCreator;
+
     private void Start()
     {
-        Show(0);
-    }
-
-    public void Show(int i)
-    {
-        foreach (GameObject Tab in Tabs)
+        foreach (GameObject Tab in Tiles)
         {
             Tab.SetActive(false);
         }
 
-        Tabs[i].SetActive(true);
+        Tiles[0].SetActive(true);
     }
 
-    public void ShowHidePanel()
+    public void Show(int i)
     {
-        MainPanel.SetActive(!MainPanel.activeSelf);
+        if (TrackCreator.activeSelf)
+        {
+            foreach (GameObject Tab in Tiles)
+            {
+                Tab.SetActive(false);
+            }
+
+            Tiles[i].SetActive(true);
+        }
+    }
+
+    public void ShowPanel()
+    {
+        if (TrackCreator.activeSelf)
+        {
+            MainPanel.SetActive(true);
+
+            SHButtons[0].SetActive(true);
+            SHButtons[1].SetActive(false);
+        }
+    }
+
+    public void HidePanel()
+    {
+        if (TrackCreator.activeSelf)
+        {
+            MainPanel.SetActive(false);
+
+            SHButtons[0].SetActive(false);
+            SHButtons[1].SetActive(true);
+        }
     }
 
     public void GoBack(int i)
     {
-        SceneManager.LoadScene(i);
+        if (TrackCreator.activeSelf)
+        {
+            SceneManager.LoadScene(i);
+        }
+    }
+
+    public void TestTrack()
+    {
+        if (TrackCreator.activeSelf)
+        {
+            BuilderCanvas.SetActive(!BuilderCanvas.activeSelf);
+            TesterCanvas.SetActive(!TesterCanvas.activeSelf);
+        }
     }
 }
