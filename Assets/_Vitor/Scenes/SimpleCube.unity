@@ -189,6 +189,10 @@ PrefabInstance:
     - target: {fileID: 1677676022, guid: ce5bedaef12052a4b8badafda02c1b43, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 686322030}
+    - target: {fileID: 1677676022, guid: ce5bedaef12052a4b8badafda02c1b43, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GoBack
       objectReference: {fileID: 0}
     - target: {fileID: 2066981590, guid: ce5bedaef12052a4b8badafda02c1b43, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.size
@@ -221,6 +225,10 @@ PrefabInstance:
     - target: {fileID: 2066981590, guid: ce5bedaef12052a4b8badafda02c1b43, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066981590, guid: ce5bedaef12052a4b8badafda02c1b43, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartTestTrack
       objectReference: {fileID: 0}
     - target: {fileID: 2093556092, guid: ce5bedaef12052a4b8badafda02c1b43, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -520,6 +528,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 686322030}
+    - target: {fileID: 4288815521581043283, guid: ce5bedaef12052a4b8badafda02c1b43,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HidePanel
       objectReference: {fileID: 0}
     - target: {fileID: 4597374733471672080, guid: ce5bedaef12052a4b8badafda02c1b43,
         type: 3}
@@ -600,6 +613,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 686322030}
+    - target: {fileID: 6918742323634063365, guid: ce5bedaef12052a4b8badafda02c1b43,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowPanel
       objectReference: {fileID: 0}
     - target: {fileID: 6970829958682758014, guid: ce5bedaef12052a4b8badafda02c1b43,
         type: 3}
@@ -838,31 +856,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _display: {fileID: 1346985144}
-  _display2: {fileID: 2046534284}
   _prefabs:
   - Name: Start
     Mesh: {fileID: 7965392357200382029, guid: dbc1b1c10ec0701418b281d09d75ebfc, type: 3}
     OriginalSquares:
     - {x: 0, y: 0}
+    CurrentSquares:
+    - {x: 0, y: 0}
     multiTile: 0
+    pieceRotation: 0
     CurrentRotation: 2
   - Name: Finish
     Mesh: {fileID: 3565114116249693840, guid: b47ec0ce35474514fbfcddedd5256ae2, type: 3}
     OriginalSquares:
     - {x: 0, y: 0}
+    CurrentSquares:
+    - {x: 0, y: 0}
     multiTile: 0
+    pieceRotation: 0
     CurrentRotation: 2
   - Name: Reta1
     Mesh: {fileID: 3565114116249693840, guid: 9c70e3bb4768f1e43a0f61720d1ef90e, type: 3}
     OriginalSquares:
     - {x: 0, y: 0}
+    CurrentSquares:
+    - {x: 0, y: 0}
     multiTile: 0
+    pieceRotation: 0
     CurrentRotation: 2
   - Name: Curva90
     Mesh: {fileID: 506970670809920713, guid: 9ce71de0f3c5fe44096d53063c461f36, type: 3}
     OriginalSquares:
     - {x: 0, y: 0}
+    CurrentSquares:
+    - {x: 0, y: 0}
     multiTile: 0
+    pieceRotation: 0
     CurrentRotation: 2
   - Name: CurvaSmooth
     Mesh: {fileID: 3473180575934333357, guid: 30f274d7292e45440b6771807a06ecc7, type: 3}
@@ -870,7 +899,12 @@ MonoBehaviour:
     - {x: 0, y: 0}
     - {x: 0, y: 1}
     - {x: 1, y: 1}
+    CurrentSquares:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
     multiTile: 1
+    pieceRotation: 0
     CurrentRotation: 2
   - Name: Ponte
     Mesh: {fileID: 5006811576079644809, guid: ff5fefeee146a984e9ca989cf086cc20, type: 3}
@@ -879,7 +913,13 @@ MonoBehaviour:
     - {x: 0, y: 1}
     - {x: 0, y: 3}
     - {x: 0, y: 4}
+    CurrentSquares:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 0, y: 3}
+    - {x: 0, y: 4}
     multiTile: 1
+    pieceRotation: 0
     CurrentRotation: 2
 --- !u!114 &686322030
 MonoBehaviour:

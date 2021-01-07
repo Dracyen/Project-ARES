@@ -7,7 +7,7 @@ public class TrackPicker : MonoBehaviour
 {
     public Text _display;
 
-    public Text _display2;
+    //public Text _display2;
 
     public TrackInfo[] _prefabs;
 
@@ -31,7 +31,7 @@ public class TrackPicker : MonoBehaviour
 
                     _target = rayHit.collider.gameObject.GetComponent<TrackSlot>();
 
-                    _target.ClickAction(_prefabs[_selected], option, _display2);
+                    _target.ClickAction(_prefabs[_selected], option);
                 }
                 else
                 {
@@ -48,7 +48,7 @@ public class TrackPicker : MonoBehaviour
     {
         _selected = piece;
 
-        _display.text = _selected.ToString();
+        Debug.Log("Piece Number: " + _selected.ToString());
     }
 
     [System.Serializable]
@@ -60,9 +60,11 @@ public class TrackPicker : MonoBehaviour
 
         public Vector2[] OriginalSquares;
 
-        public Vector2[] CurrentSquares { get; private set; }
+        public Vector2[] CurrentSquares;
 
         public bool multiTile;
+
+        public float pieceRotation;
 
         public enum Rotation { NORTH, WEST, EAST, SOUTH }
 
@@ -70,36 +72,46 @@ public class TrackPicker : MonoBehaviour
 
         public void Rotate(Rotation rot)
         {
-            switch (CurrentRotation) //Original East - X:0 Y:3
+            Debug.Log("Struct - Rotate " + rot);
+
+            CurrentRotation = rot;
+
+            switch (CurrentRotation) //Original East - X:1 Y:3
             {
                 case Rotation.NORTH:
-                    for (int i = 0; i < CurrentSquares.Length; i++) // X:3 Y:0
+                    for (int i = 0; i < CurrentSquares.Length; i++) // X:-3 Y:1
                     {
-                        CurrentSquares[i] = new Vector2(OriginalSquares[i].y, OriginalSquares[i].x);
+                        CurrentSquares[i] = new Vector2(Mathf.Abs(OriginalSquares[i].y) * -1, OriginalSquares[i].x);
+                        pieceRotation = 270;
                     }
                     break;
 
                 case Rotation.WEST:
-                    for (int i = 0; i < CurrentSquares.Length; i++) // X:0 Y:-3
+                    for (int i = 0; i < CurrentSquares.Length; i++) // X:-1 Y:-3
                     {
-                        CurrentSquares[i] = new Vector2(OriginalSquares[i].x, Mathf.Abs(OriginalSquares[i].y) * -1);
+                        CurrentSquares[i] = new Vector2(Mathf.Abs(OriginalSquares[i].x) * -1, Mathf.Abs(OriginalSquares[i].y) * -1);
+                        pieceRotation = 180;
                     }
                     break;
 
                 case Rotation.EAST:
-                    for (int i = 0; i < CurrentSquares.Length; i++) // X:0 Y:3
+                    for (int i = 0; i < CurrentSquares.Length; i++) // X:1 Y:3
                     {
                         CurrentSquares[i] = new Vector2(OriginalSquares[i].x, OriginalSquares[i].y);
+                        pieceRotation = 0;
                     }
                     break;
 
                 case Rotation.SOUTH:
-                    for (int i = 0; i < CurrentSquares.Length; i++) // X:-3 Y:0
+                    for (int i = 0; i < CurrentSquares.Length; i++) // X:3 Y:-1
                     {
-                        CurrentSquares[i] = new Vector2(Mathf.Abs(OriginalSquares[i].y) * -1, OriginalSquares[i].x);
+                        CurrentSquares[i] = new Vector2(OriginalSquares[i].y, Mathf.Abs(OriginalSquares[i].x) * -1);
+                        pieceRotation = 90;
                     }
                     break;
             }
+
+            Debug.Log("Struct - " + CurrentRotation + " / " + pieceRotation);
         }
     }
 }

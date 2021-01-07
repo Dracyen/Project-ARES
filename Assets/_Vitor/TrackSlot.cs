@@ -23,9 +23,7 @@ public class TrackSlot : MonoBehaviour
 
     bool multiTile = false;
 
-    TrackPicker.TrackInfo Holder;
-
-    public Text _display;
+    public TrackPicker.TrackInfo Holder;
 
     TrackSlot()
     {
@@ -40,6 +38,7 @@ public class TrackSlot : MonoBehaviour
         DeletePiece();
 
         //Grid.SwitchStart();
+        //Grid.SwitchFinish();
 
         CurrentState = State.EMPTY;
     }
@@ -49,7 +48,19 @@ public class TrackSlot : MonoBehaviour
         multiTile = true;
         CurrentState = State.FULL;
 
+        Debug.Log("x: " + pos.x + " / y: " + pos.y + " MultiTile is true? " + multiTile);
+
         Slot.mesh.gameObject.SetActive(false);
+    }
+
+    public void SetMultiReady()
+    {
+        multiTile = false;
+        CurrentState = State.READY;
+
+        //Debug.Log("x: " + pos.x + " / y: " + pos.y + " MultiTile is False");
+
+        Slot.mesh.gameObject.SetActive(true);
     }
 
     public void SetReady()
@@ -87,6 +98,15 @@ public class TrackSlot : MonoBehaviour
                     PlacePiece(piece);
                 }
             }
+            else if(piece.name == "Finish")
+            {
+                if (!Grid.hasFinish)
+                {
+                    Grid.SwitchFinish();
+
+                    PlacePiece(piece);
+                }
+            }
             else
             {
                 PlacePiece(piece);
@@ -114,7 +134,12 @@ public class TrackSlot : MonoBehaviour
             Grid.SwitchStart();
         }
 
-        if(Piece != null)
+        if (Piece != null && Piece.name == "Finish" + Sufix)
+        {
+            Grid.SwitchFinish();
+        }
+
+        if (Piece != null)
         {
             Destroy(Piece);
         }
@@ -127,11 +152,9 @@ public class TrackSlot : MonoBehaviour
 
     // MULTI PIECE CODE
 
-    public void ClickAction(TrackPicker.TrackInfo piece, int button, Text it)
+    public void ClickAction(TrackPicker.TrackInfo piece, int button)
     {
-        _display = it;
-
-        if (CurrentState == State.FULL && !multiTile)
+        if (CurrentState == State.FULL)
         {
             switch (button)
             {
@@ -158,82 +181,127 @@ public class TrackSlot : MonoBehaviour
                 }
             }
 
+            if (piece.Mesh.name == "Finish")
+            {
+                if (!Grid.hasFinish)
+                {
+                    Grid.SwitchFinish();
+                }
+            }
+
             PlacePiece(Holder);
         }
     }
 
     void PlacePiece(TrackPicker.TrackInfo piece)
     {
-        //Holder = piece;
-
         int i = 0;
 
-        if (Grid.CheckSlots(pos, Holder.OriginalSquares))
+        bool o = true;
+
+        while(o)
         {
-            Slot.mesh.gameObject.SetActive(false);
-            Piece = (GameObject)Instantiate(piece.Mesh, transform);
-
-            _display.text = "Gonna Full";
-
-            Grid.SetFull(pos, Holder.OriginalSquares);
-            hasPiece = true;
-            CurrentState = State.FULL;
-
-            _display.text = "Is Full";
-        }
-        else
-        {
-            if(i < 4)
+            if (Grid.CheckSlots(pos, Holder.CurrentSquares))
             {
-                RotatePiece(Holder);
-                i++;
+                SubPlacePiece(piece);
 
-                PlacePiece(Holder);
+                Debug.Log("PP - Placed the Piece Normally");
+
+                o = false;
+            }
+            else if (i < 4)
+            {
+                switch (piece.CurrentRotation)
+                {
+                    case TrackPicker.TrackInfo.Rotation.NORTH:
+                        Holder.Rotate(TrackPicker.TrackInfo.Rotation.EAST);
+                        break;
+
+                    case TrackPicker.TrackInfo.Rotation.WEST:
+                        Holder.Rotate(TrackPicker.TrackInfo.Rotation.NORTH);
+                        break;
+
+                    case TrackPicker.TrackInfo.Rotation.EAST:
+                        Holder.Rotate(TrackPicker.TrackInfo.Rotation.SOUTH);
+                        break;
+
+                    case TrackPicker.TrackInfo.Rotation.SOUTH:
+                        Holder.Rotate(TrackPicker.TrackInfo.Rotation.WEST);
+                        break;
+                }
+
+                //Piece.transform.eulerAngles = new Vector3(0, Holder.pieceRotation, 0);
+
+                Debug.Log("PP - Rotated the Piece " + i + " times");
+
+                i++;
             }
             else
             {
                 DeletePiece(Holder);
 
-                Debug.LogError("No space in the grid.");
+                Debug.LogError("PP - No space in the grid.");
+
+                o = false;
             }
         }
+        
+        Debug.Log("PP - Finished Placing");
+    }
+
+    void SubPlacePiece(TrackPicker.TrackInfo piece)
+    {
+        Slot.mesh.gameObject.SetActive(false);
+        Piece = (GameObject)Instantiate(piece.Mesh, transform);
+
+        Piece.transform.eulerAngles = new Vector3(0, Holder.pieceRotation, 0);
+
+        Grid.SetFull(pos, Holder.CurrentSquares);
+        hasPiece = true;
+        CurrentState = State.FULL;
+
+        Debug.Log("Slots are Full");
     }
 
     void RotatePiece(TrackPicker.TrackInfo piece) //Needs Work
     {
-        Piece.transform.Rotate(new Vector3(0, 90, 0), Space.Self);
+        Grid.SetEmpty(pos, Holder.CurrentSquares);
 
+        RotationSwitch(piece);
+
+        if(Grid.CheckSlots(pos, Holder.CurrentSquares) == false)
+        {
+            while(Grid.CheckSlots(pos, Holder.CurrentSquares) == false)
+            {
+                RotationSwitch(piece);
+            }
+        }
+
+        Piece.transform.eulerAngles = new Vector3(0, Holder.pieceRotation, 0);
+
+        Grid.SetFull(pos, Holder.CurrentSquares);
+    }
+
+    void RotationSwitch(TrackPicker.TrackInfo piece)
+    {
         switch (piece.CurrentRotation)
         {
             case TrackPicker.TrackInfo.Rotation.NORTH:
-                for (int i = 0; i < piece.CurrentSquares.Length; i++)
-                {
-                    Holder.Rotate(TrackPicker.TrackInfo.Rotation.EAST);
-                }
+                Holder.Rotate(TrackPicker.TrackInfo.Rotation.EAST);
                 break;
 
             case TrackPicker.TrackInfo.Rotation.WEST:
-                for (int i = 0; i < piece.CurrentSquares.Length; i++)
-                {
-                    Holder.Rotate(TrackPicker.TrackInfo.Rotation.NORTH);
-                }
+                Holder.Rotate(TrackPicker.TrackInfo.Rotation.NORTH);
                 break;
 
             case TrackPicker.TrackInfo.Rotation.EAST:
-                for (int i = 0; i < piece.CurrentSquares.Length; i++)
-                {
-                    Holder.Rotate(TrackPicker.TrackInfo.Rotation.SOUTH);
-                }
+                Holder.Rotate(TrackPicker.TrackInfo.Rotation.SOUTH);
                 break;
 
             case TrackPicker.TrackInfo.Rotation.SOUTH:
-                for (int i = 0; i < piece.CurrentSquares.Length; i++)
-                {
-                    Holder.Rotate(TrackPicker.TrackInfo.Rotation.WEST);
-                }
+                Holder.Rotate(TrackPicker.TrackInfo.Rotation.WEST);
                 break;
         }
-
     }
 
     void DeletePiece(TrackPicker.TrackInfo piece)
@@ -243,14 +311,21 @@ public class TrackSlot : MonoBehaviour
             Grid.SwitchStart();
         }
 
+        if (Piece.name == "Finish" + Sufix)
+        {
+            Grid.SwitchFinish();
+        }
+
         if (Piece != null)
         {
             Destroy(Piece);
         }
 
-        Grid.SetEmpty(pos, Holder.OriginalSquares);
+        Debug.Log("Try Delete");
 
-        Slot.mesh.gameObject.SetActive(true);
+        Grid.SetEmpty(pos, Holder.CurrentSquares);
+        Holder.Rotate(TrackPicker.TrackInfo.Rotation.EAST);
+
         hasPiece = false;
         CurrentState = State.READY;
     }
