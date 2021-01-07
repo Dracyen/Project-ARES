@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TrackBuilder : MonoBehaviour
 {
-    public Text _display;
+    //public Text _display;
 
     public Object prefab;
 
@@ -26,7 +26,10 @@ public class TrackBuilder : MonoBehaviour
 
     public bool hasStart { get; private set; }
 
+    public bool hasFinish { get; private set; }
+
     public Object Car;
+
     GameObject CarRef;
 
     private void Awake()
@@ -43,6 +46,7 @@ public class TrackBuilder : MonoBehaviour
     private void Start()
     {
         hasStart = false;
+        hasFinish = false;
         gridSize = 10;
         CreateGrid(gridSize, gridSize);
     }
@@ -58,11 +62,16 @@ public class TrackBuilder : MonoBehaviour
         {
             CreateGrid(gridSize, gridSize);
         }
+
+        if(CarRef != null)
+            Debug.Log("It's position is x: " + CarRef.transform.position.x + " / y: " + CarRef.transform.position.y + " / z: " + CarRef.transform.position.z);
     }
 
     void CreateGrid(int sizeX, int sizeY)
     {
         hasStart = false;
+
+        hasFinish = false;
 
         currentSize = sizeX;
 
@@ -86,6 +95,8 @@ public class TrackBuilder : MonoBehaviour
 
                 SlotGrid[x, y] = _objects[index].GetComponent<TrackSlot>();
 
+                //SlotGrid[x, y]._display = _display;
+
                 SlotGrid[x, y].pos = new Vector2(x, y);
 
                 SlotGrid[x, y].SetPosition(SlotX, SlotY);
@@ -99,7 +110,7 @@ public class TrackBuilder : MonoBehaviour
         }
     }
 
-    public void TestTrack()
+    public void StartTestTrack()
     {
         int index = 0;
 
@@ -110,18 +121,30 @@ public class TrackBuilder : MonoBehaviour
                 slot.Slot.gameObject.SetActive(false);
             }
 
-            /*
-            if (slot.Piece.name == "Start(Clone)")
+            if(slot.Piece != null)
             {
-                CarRef = (GameObject)Instantiate(Car);
+                if (slot.Piece.name == "Start(Clone)")
+                {
+                    Debug.Log("Found the slot.");
 
-                CarRef.transform.position = slot.Piece.transform.position;
+                    CarRef = (GameObject)Instantiate(Car, slot.Piece.transform);
+
+                    Debug.Log("Car is here!");
+
+                    CarRef.transform.position = new Vector3(slot.Piece.transform.position.x, slot.Piece.transform.position.y, slot.Piece.transform.position.z);
+
+                    Debug.Log("It's position is x: " + CarRef.transform.position.x + " / y: " + CarRef.transform.position.y + " / z: " + CarRef.transform.position.z);
+                }
+                else
+                {
+                    Debug.Log("Didn't find the slot.");
+                }
             }
-            */
 
             index++;
-            Debug.Log("Count: " + index);
         }
+
+        Debug.Log("Count: " + index);
     }
 
     public void StopTestTrack()
@@ -134,10 +157,10 @@ public class TrackBuilder : MonoBehaviour
             {
                 slot.Slot.gameObject.SetActive(true);
             }
-            /*
+
             if(CarRef != null)
             Destroy(CarRef);
-            */
+
             index++;
             Debug.Log("Count: " + index);
         }
@@ -148,20 +171,36 @@ public class TrackBuilder : MonoBehaviour
         hasStart = !hasStart;
     }
 
+    public void SwitchFinish()
+    {
+        hasFinish = !hasFinish;
+    }
+
     public bool CheckSlots(Vector2 pos, Vector2[] slots)
     {
+        int i = 0;
+
         foreach (Vector2 slot in slots)
         {
+            //Debug.Log("Slot " + i + " is x: " + slot.x + " / y: " + slot.y);
+
+            //if (slot.x != 0 && slot.y != 0){}
+
             float x = pos.x + slot.x;
             float y = pos.y + slot.y;
 
-            if (x != pos.x && y != pos.y)
+            Debug.Log("Target Pos is x: " + x + " / y: " + y + " is " + SlotGrid[(int)x, (int)y].CurrentState);
+
+            if (SlotGrid[(int)x, (int)y].CurrentState == TrackSlot.State.FULL)
             {
-                if (SlotGrid[(int)x, (int)y].CurrentState == TrackSlot.State.FULL)
-                {
-                    return false;
-                }
+                //Debug.Log("x: " + x + " / y: " + y + " Is Full");
+
+                return false;
             }
+
+            Debug.Log("x: " + x + " / y: " + y + " is Ready");
+
+            i++;
         }
 
         return true;
@@ -169,18 +208,22 @@ public class TrackBuilder : MonoBehaviour
 
     public void SetEmpty(Vector2 pos, Vector2[] slots)
     {
+        Debug.Log("Start SetEmpty");
+
         foreach (Vector2 slot in slots)
         {
             float x = pos.x + slot.x;
             float y = pos.y + slot.y;
 
-            SlotGrid[(int)x, (int)y].DeletePiece();
+            Debug.Log("SE - Target Pos is x: " + x + " / y: " + y);
+
+            SlotGrid[(int)x, (int)y].SetMultiReady();
         }
     }
 
     public void SetFull(Vector2 pos, Vector2[] slots)
     {
-        _display.text = "Hello";
+        Debug.Log("Start SetFull");
 
         int i = 0;
 
@@ -189,11 +232,11 @@ public class TrackBuilder : MonoBehaviour
             float x = pos.x + slot.x;
             float y = pos.y + slot.y;
 
+            Debug.Log("SF - Target Pos is x: " + x + " / y: " + y);
+
             SlotGrid[(int)x, (int)y].SetMultiFull();
 
             i++;
-
-            _display.text = "Count: " + i.ToString();
         }
     }
 }

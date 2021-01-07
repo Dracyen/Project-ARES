@@ -38,6 +38,8 @@ public class UiManager : MonoBehaviour
     bool canGoR = true;
     bool canGoL = false;
     int dex = 0;
+
+    public GameObject Canvas;
     private void Awake()
     {
         tracks = new MapGenerator.TrackTile[5];
@@ -314,6 +316,18 @@ public class UiManager : MonoBehaviour
         {
             TabsOfTracks.SetActive(true);
             TabsOfTracksHiden.SetActive(false);
+        }
+    }
+
+    public void TestTrack()
+    {
+        if (FindObjectOfType<MapDisplay>().FinalHasBeenPlaced)
+        {
+            Canvas.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("Place The final Tile");
         }
     }
 }
