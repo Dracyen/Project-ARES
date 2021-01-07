@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class AddTrackNames : MonoBehaviour
 {
     List<string> namesOfTheTracks = new List<string>();
@@ -12,11 +13,6 @@ public class AddTrackNames : MonoBehaviour
 
     public void OutPutAllNames()
     {
-        TracksNamesData data = SaveSystem.LoadTrackNames();
-        namesOfTheTracks = data.TracksNames;
-        for(int i = 0; i < data.TracksNames.Count; i++)
-        {
-            Debug.Log(namesOfTheTracks[i]);
-        }
+        SaveSystem.LoadTrackNames();
     }
 }

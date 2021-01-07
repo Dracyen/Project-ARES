@@ -1,13 +1,17 @@
 ﻿using System.IO;
 using UnityEngine;
+using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
+
 
 public static class SaveSystem
 {
+    
     public static void SaveTrack(MapDisplay track,string fileName, MapGenerator TrackInfo)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/" + fileName + ".fun";
+        Debug.Log(path);
         FileStream stream = new FileStream(path, FileMode.Create);
 
         Save SavedTracks = new Save(track, TrackInfo);
@@ -19,6 +23,7 @@ public static class SaveSystem
     public static Save LoadTracks(string fileName)
     {
         string path = Application.persistentDataPath + "/" + fileName + ".fun";
+        Debug.Log(path);
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -40,34 +45,36 @@ public static class SaveSystem
 
     public static void SaveTracksNames(string name)
     {
-        BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/SavedTracks";
-        FileStream stream = new FileStream(path, FileMode.OpenOrCreate);
-
-        TracksNamesData SavedTracksnames = new TracksNamesData(name);
-
-        formatter.Serialize(stream, SavedTracksnames);
-        stream.Close();
+       
     }
-    public static TracksNamesData LoadTrackNames()
+    public static List<string> LoadTrackNames()
     {
-        string path = Application.persistentDataPath + "/SavedTracks";
-        if (File.Exists(path))
+        DirectoryInfo d = new DirectoryInfo(Application.persistentDataPath);//Assuming Test is your Folder
+        FileInfo[] Files = d.GetFiles("*.fun"); //Getting Text files
+        List<string> str = new List<string>();
+        string pre;
+        int i = 0;
+        foreach (FileInfo file in Files)
         {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-
-            TracksNamesData data = formatter.Deserialize(stream) as TracksNamesData;
-            stream.Close();
-
-
-            return data;
+            pre = file.Name;
+            pre = pre.Remove(pre.Length - 4);
+            str.Add(pre);
+            
+           
+            i++;
         }
-        else
-        {
-            Debug.LogError("Save file not found in " + path);
-            return null;
-        }
-
+        return str;
     }
+    public static void RenameTrack(string fileName, string newName)
+    {
+        string path = Application.persistentDataPath + "/" + fileName + ".fun";
+        string newPath = Application.persistentDataPath + "/" + newName + ".fun";
+        System.IO.File.Move(path, newPath);
+    }
+    public static void DeleteTrack(string fileName)
+    {
+        string path = Application.persistentDataPath + "/" + fileName + ".fun";
+        System.IO.File.Delete(path);
+    }
+
 }

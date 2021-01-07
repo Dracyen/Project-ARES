@@ -24,32 +24,42 @@ public class PlaceCars : MonoBehaviour
     }
     public void DistributeCars()
     {
+        Debug.Log("Teste");
         if (!hasBeenPlaced)
         {
             UsedSlots = new List<int>();
             StartPoint = new List<Transform>();
             CarSlots = GameObject.FindGameObjectsWithTag("Start");
-            Cars = new GameObject[numOfAiCars + 1];
-            for (int i = 0; i < numOfAiCars; i++)
+            
+            if(numOfAiCars > 0)
             {
+                Cars = new GameObject[numOfAiCars + 1];
+                for (int i = 0; i < numOfAiCars; i++)
+                {
 
-                StartPoint.Add(CarSlots[i].transform);
-                UsedSlots.Add(i);
+                    StartPoint.Add(CarSlots[i].transform);
+                    UsedSlots.Add(i);
+                }
+
+                for (int i = 0; i < numOfAiCars; i++)
+                {
+                    GameObject CurCar;
+                    int rand = Random.Range(0, UsedSlots.Count);
+                    CurCar = Instantiate(AiCar, StartPoint[UsedSlots[rand]].position + new Vector3(0, 0.3f, 0), Quaternion.identity);
+                    Cars[i] = CurCar;
+                    CurCar.transform.localScale = new Vector3(5, 5, 5);
+                    UsedSlots.Remove(rand);
+                }
             }
-
-            for (int i = 0; i < numOfAiCars; i++)
+            else
             {
-                GameObject CurCar;
-                int rand = Random.Range(0, UsedSlots.Count);
-                CurCar = Instantiate(AiCar, StartPoint[UsedSlots[rand]].position + new Vector3(0,0.3f,0), Quaternion.identity);
-                Cars[i] = CurCar;
-                CurCar.transform.localScale = new Vector3(3, 3, 3);
-                UsedSlots.Remove(rand);
+                Cars = new GameObject[1];
             }
+            
             GameObject PlayC;
             PlayC = Instantiate(PlayerCar, StartPoint[UsedSlots[0]].position + new Vector3(0, 0.3f, 0), Quaternion.Euler(0, 90, 0));
             Cars[numOfAiCars] = PlayC;
-            PlayC.transform.localScale = new Vector3(10, 10, 10);
+            PlayC.transform.localScale = new Vector3(5, 5, 5);
             hasBeenPlaced = true;
         }
        

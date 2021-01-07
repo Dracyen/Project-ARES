@@ -10,6 +10,11 @@ TagManager:
   - Input
   - Slot
   - Start
+  - Flag
+  - Track
+  - PlayerTarget
+  - AiCar
+  - TimeCounter
   layers:
   - Default
   - TransparentFX

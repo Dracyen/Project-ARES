@@ -48,6 +48,7 @@ public class MapDisplay : MonoBehaviour
     public InputField inputNameLoad;
 
     public bool canGoToAR = false;
+    public bool FinalHasBeenPlaced = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -149,7 +150,7 @@ public class MapDisplay : MonoBehaviour
         }
 
         
-        if (canBePlaced)
+        if (canBePlaced && !FinalHasBeenPlaced)
         {
             // A track is beeing placed in the seleceted pos
             tile.Add(Instantiate(Selected.image, posToPlace, Quaternion.identity, posRef));
@@ -178,7 +179,7 @@ public class MapDisplay : MonoBehaviour
             //Debug.Log(TileScale + "Instance");
             if (Selected.name == "Final")
             {
-                
+                FinalHasBeenPlaced = true;
                 for (int i = 0; i < tileTracksIndex; i++)
                 {
                     if (posToPlace == tile[i].transform.position && tileTracks[tileTracksIndex].outPutRot != tileTracks[i].rotation)
@@ -230,6 +231,7 @@ public class MapDisplay : MonoBehaviour
             tileTracks.Remove(tileTracks[z]);
             tileTracksIndex--;
         }
+        FinalHasBeenPlaced = false;
     }
     void SpinLastTrack(int i)
     {
@@ -240,7 +242,15 @@ public class MapDisplay : MonoBehaviour
     }
     public void SaveTrack()
     {
-        SaveSystem.SaveTrack(this, trackName, FindObjectOfType<MapGenerator>());
+        if (FinalHasBeenPlaced)
+        {
+            Debug.Log(trackName);
+            SaveSystem.SaveTrack(this, trackName, FindObjectOfType<MapGenerator>());
+        }
+        else
+        {
+            Debug.Log("Place The final Tile");
+        }
     }
     public bool hasBeenLoaded = false;
     public void LoadTrack()
@@ -263,14 +273,14 @@ public class MapDisplay : MonoBehaviour
         }
         
     }
-    public void TrackNameInput()
+    public void TrackNameInput(string name)
     {
         trackName = inputName.text;
-        Debug.Log(trackName);
+        //Debug.Log(trackName);
     }
-    public void TrackNameInputLoad()
+    public void TrackNameInputLoad(string name)
     {
-        trackName = inputNameLoad.text;
+        trackName = name;
         Debug.Log(trackName);
     }
 }

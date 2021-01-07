@@ -25,6 +25,7 @@ public class MapGenerator : MonoBehaviour
     public float GridSize;
 
     GameObject[] Tracks3D;
+    public GameObject TrackRef;
 
     float StepSize;
     
@@ -119,8 +120,14 @@ public class MapGenerator : MonoBehaviour
         Vector3 StartPos = new Vector3(-tiles[0].entrancePos.x, 0,-tiles[0].entrancePos.y);
         Transform PlacementPos = FindObjectOfType<ARTapToPlaceObject>().placementIndicator.transform;
         Tracks3D = new GameObject[tiles.Count];
-        
-        StepSize = (80 * Screen.width)/1920;
+        if (Screen.height == 1080)
+        {
+            StepSize = 80;
+        }
+        else if (Screen.height == 1440)
+        {
+            StepSize = 122.5f;
+        }
         Debug.Log(StepSize);
         for (int i = 0; i < tiles.Count; i++)
         {
@@ -137,7 +144,7 @@ public class MapGenerator : MonoBehaviour
             }
             Quaternion rotation = Quaternion.Euler(new Vector3(0, rotationToPlace, 0));
             
-            Instanc = Instantiate(tiles[i].originalInfo.version3D, new Vector3((tiles[i].entrancePos.x + StartPos.x + PlacementPos.position.x) , 0+ PlacementPos.position.y, tiles[i].entrancePos.y + StartPos.z+ PlacementPos.position.z), rotation);
+            Instanc = Instantiate(tiles[i].originalInfo.version3D, new Vector3((tiles[i].entrancePos.x + StartPos.x + PlacementPos.position.x) , 0+ PlacementPos.position.y, tiles[i].entrancePos.y + StartPos.z+ PlacementPos.position.z), rotation, TrackRef.transform);
             Tracks3D[i] = Instanc;
             Instanc.transform.localScale = new Vector3(tiles[i].Scale.x * (StepSize / GridSize), tiles[i].Scale.y * (StepSize / GridSize), tiles[i].Scale.z * (StepSize / GridSize));
         }
@@ -151,7 +158,14 @@ public class MapGenerator : MonoBehaviour
         numOfLapsOfTheTrack = data.numOfLaps;
         GameObject verson3D = null;
         Tracks3D = new GameObject[data.numOfTiles];
-        StepSize = (80 * Screen.width) / 1920;
+        if (Screen.height == 1080)
+        {
+            StepSize = 80;
+        }
+        else if (Screen.height == 1440)
+        {
+            StepSize = 122.5f;
+        }
         for (int i = 0; i < data.numOfTiles; i++)
         {
             GameObject Instanc;
@@ -174,7 +188,7 @@ public class MapGenerator : MonoBehaviour
                 }
                 
             }
-            Instanc = Instantiate(verson3D, new Vector3(data.PosicoesDeEntradaX[i], 0, data.PosicoesDeEntradaY[i]), rotation);
+            Instanc = Instantiate(verson3D, new Vector3(data.PosicoesDeEntradaX[i], 0, data.PosicoesDeEntradaY[i]), rotation, TrackRef.transform);
             Tracks3D[i] = Instanc;
             Instanc.transform.localScale = new Vector3(data.EscalaX[i] * (StepSize / data.SizeOfTheGrid), data.EscalaY[i] * (StepSize / data.SizeOfTheGrid), data.EscalaZ[i] * (StepSize / data.SizeOfTheGrid));
         }
