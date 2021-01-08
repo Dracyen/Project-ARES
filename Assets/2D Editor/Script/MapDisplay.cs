@@ -21,7 +21,7 @@ public class MapDisplay : MonoBehaviour
 
     public Transform GridDisplay;
 
-    public Slider Size;
+    public Text Size;
 
     bool GridCreated = false;
 
@@ -56,7 +56,7 @@ public class MapDisplay : MonoBehaviour
         directionFlow = new Vector2(1, 1);
         tile = new List<GameObject>();
         tileTracks = new List<Tile>();
-        GridSize = (int)Size.value;
+        GridSize = 10;
         width = Screen.height - HeightOffset * 2;
         height = Screen.height - HeightOffset * 2;
         Step = height / GridSize;
@@ -94,7 +94,7 @@ public class MapDisplay : MonoBehaviour
             }
             
         }
-        GridSize = (int)Size.value;
+        GridSize = newgridSize;
         MapInfo.UpdateGrid(GridSize);
         DrawGrid();
     }
@@ -276,11 +276,32 @@ public class MapDisplay : MonoBehaviour
     public void TrackNameInput(string name)
     {
         trackName = inputName.text;
-        //Debug.Log(trackName);
+        Debug.Log(trackName);
     }
     public void TrackNameInputLoad(string name)
     {
         trackName = name;
         Debug.Log(trackName);
+    }
+    int newgridSize = 10;
+    public void GridAdd()
+    {
+        if (GridSize < 20)
+        {
+            newgridSize = GridSize + 1;
+            DeleteGrid();
+            GridSize = newgridSize;
+        }
+        Size.text = GridSize.ToString();
+    }
+    public void GridSub()
+    {
+        if (GridSize > 10)
+        {
+            newgridSize = GridSize - 1;
+            DeleteGrid();
+            GridSize = newgridSize;
+        }
+        Size.text = GridSize.ToString();
     }
 }

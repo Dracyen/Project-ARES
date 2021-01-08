@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class SavedTracks_UIManager : MonoBehaviour
 {
-    public Button[] TracksToSelect = new Button[5];
-    public Text[] TracksToSelectText = new Text[5];
+    public Button[] TracksToSelect;
+    public Text[] TracksToSelectText;
     List<string> str = new List<string>();
     List<string> strOutput = new List<string>();
     string newTrackname;
@@ -16,6 +16,8 @@ public class SavedTracks_UIManager : MonoBehaviour
     public string selectedTrack;
 
     public Slider OffSetInput;
+    int OffSetInputValue = 0;
+    int OffSetInputMaxValue;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +31,7 @@ public class SavedTracks_UIManager : MonoBehaviour
     {
         FindObjectOfType<MapDisplay>().TrackNameInputLoad(TracksToSelectText[index].text);
         selectedTrack = TracksToSelectText[index].text;
+        indexOfTheEdit = index;
         Debug.Log(index);
         Debug.Log(TracksToSelectText[index].text);
         
@@ -39,6 +42,7 @@ public class SavedTracks_UIManager : MonoBehaviour
     }
     public void EditTrackName()
     {
+        
         strOutput[indexOfTheEdit] = newTrackname;
         //FindObjectOfType<MapDisplay>().trackName = newTrackname;
     }
@@ -54,16 +58,16 @@ public class SavedTracks_UIManager : MonoBehaviour
     {
         str = SaveSystem.LoadTrackNames();
         strOutput = str;
-        OffSetInput.maxValue = str.Count - TracksToSelect.Length;
+        OffSetInputMaxValue = str.Count - TracksToSelect.Length;
         for (int i = 0; i < TracksToSelect.Length; i++)
         {
             if (i < str.Count)
             {
                 TracksToSelect[i].enabled = true;
                 TracksToSelect[i].image.color = new Color(255, 255, 255, 255);
-                TracksToSelectText[i].color = new Color(0, 0, 0, 255);
-                TracksToSelectText[i].text = str[i + (int)OffSetInput.value];
-                Debug.Log(str[i + (int)OffSetInput.value]);
+                TracksToSelectText[i].color = new Color(255, 255, 255, 255);
+                TracksToSelectText[i].text = str[i + OffSetInputValue];
+                Debug.Log(str[i + OffSetInputValue]);
             }
             else
             {
@@ -77,11 +81,14 @@ public class SavedTracks_UIManager : MonoBehaviour
 
     public void Edit()
     {
+        Debug.Log("Edit: " + indexOfTheEdit);
+        Debug.Log("OffSet: " + OffSetInputValue);
+        str = SaveSystem.LoadTrackNames();
         string newfile = newTrackname;
-        string fileName = str[indexOfTheEdit + (int)OffSetInput.value];
+        string fileName = str[indexOfTheEdit + OffSetInputValue];
         Debug.Log(newfile);
         SaveSystem.RenameTrack(fileName, newfile);
-        str[indexOfTheEdit + (int)OffSetInput.value] = newTrackname;
+        str[indexOfTheEdit + OffSetInputValue] = newTrackname;
         inputNameLoad.text = " ";
         UpdateNames();
     }
@@ -89,15 +96,15 @@ public class SavedTracks_UIManager : MonoBehaviour
     {
         str = SaveSystem.LoadTrackNames();
         strOutput = str;
-        OffSetInput.maxValue = str.Count - 1;
-        for (int i = 0; i < TracksToSelect.Length; i++)
+        OffSetInputMaxValue = str.Count - 1;
+        for (int i = 0; i < 4; i++)
         {
             if (i < str.Count)
             {
                 TracksToSelect[i].enabled = true;
                 TracksToSelect[i].image.color = new Color(255, 255, 255, 255);
-                TracksToSelectText[i].color = new Color(0, 0, 0, 255);
-                TracksToSelectText[i].text = str[i + (int)OffSetInput.value];
+                TracksToSelectText[i].color = new Color(255, 255, 255, 255);
+                TracksToSelectText[i].text = str[i + OffSetInputValue];
             }
             else
             {
@@ -110,9 +117,26 @@ public class SavedTracks_UIManager : MonoBehaviour
 
     public void DeleteTheTrack(int ButtonIndex)
     {
-        string fileName = str[ButtonIndex + (int)OffSetInput.value];
+        string fileName = str[ButtonIndex + OffSetInputValue];
         Debug.Log(fileName);
         SaveSystem.DeleteTrack(fileName);
         UpdateNames();
+    }
+
+    public void AddOffSet()
+    {
+        if(OffSetInputValue < OffSetInputMaxValue)
+        {
+            OffSetInputValue++;
+        }
+        Scroll();
+    }
+    public void SubOffSet()
+    {
+        if(OffSetInputValue > 0)
+        {
+            OffSetInputValue--;
+        }
+        Scroll();
     }
 }
