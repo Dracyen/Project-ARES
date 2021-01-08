@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class TrackBuilder : MonoBehaviour
 {
@@ -22,15 +24,27 @@ public class TrackBuilder : MonoBehaviour
 
     GameObject[] _objects;
 
-    TrackSlot[,] SlotGrid;
+    public TrackSlot[,] SlotGrid;
 
-    public bool hasStart { get; private set; }
+    public bool hasStart;
 
-    public bool hasFinish { get; private set; }
+    public bool hasFinish;
 
     public Object Car;
 
     GameObject CarRef;
+
+    public bool isLoop;
+
+    public int laps = 0;
+
+    public int count = 0;
+
+    //Playable Track
+
+    GameObject[] Tracks3D;
+
+    float StepSize;
 
     private void Awake()
     {
@@ -125,19 +139,7 @@ public class TrackBuilder : MonoBehaviour
             {
                 if (slot.Piece.name == "Start(Clone)")
                 {
-                    Debug.Log("Found the slot.");
-
                     CarRef = (GameObject)Instantiate(Car, slot.Piece.transform);
-
-                    Debug.Log("Car is here!");
-
-                    CarRef.transform.position = new Vector3(slot.Piece.transform.position.x, slot.Piece.transform.position.y, slot.Piece.transform.position.z);
-
-                    Debug.Log("It's position is x: " + CarRef.transform.position.x + " / y: " + CarRef.transform.position.y + " / z: " + CarRef.transform.position.z);
-                }
-                else
-                {
-                    Debug.Log("Didn't find the slot.");
                 }
             }
 
@@ -169,11 +171,30 @@ public class TrackBuilder : MonoBehaviour
     public void SwitchStart()
     {
         hasStart = !hasStart;
+
+        CheckLoop();
     }
 
     public void SwitchFinish()
     {
         hasFinish = !hasFinish;
+
+        CheckLoop();
+    }
+
+    public void CheckLoop()
+    {
+        if (hasStart && hasFinish)
+        {
+            //is finish leading to start?
+            //Yes then show loop
+
+
+        }
+        else
+        {
+            isLoop = false;
+        }
     }
 
     public bool CheckSlots(Vector2 pos, Vector2[] slots)
@@ -238,5 +259,55 @@ public class TrackBuilder : MonoBehaviour
 
             i++;
         }
+    }
+
+    public void SaveTrack(string name)
+    {
+        SaveSystem.SaveTrack(this, name);
+    }
+
+    public void LoadTrack(string name)
+    {
+        TrackPicker picker = FindObjectOfType<TrackPicker>();
+
+        Save data = SaveSystem.LoadTracks(name);
+        isLoop = data.isLoop;
+        laps = data.numOfLaps;
+        GameObject verson3D = null;
+        Tracks3D = new GameObject[data.numOfTiles];
+        if (Screen.height == 1080)
+        {
+            StepSize = 1;
+        }
+        else if (Screen.height == 1440)
+        {
+            StepSize = 1;
+        }
+        for (int i = 0; i < data.numOfTiles; i++)
+        {
+            GameObject Instanc;
+            float rotationToPlace;
+            rotationToPlace = data.rotacaoEmZdeCadaTile[i];
+            if (data.rotacaoEmZdeCadaTile[i] == 0)
+            {
+                rotationToPlace = 180;
+            }
+            else if (data.rotacaoEmZdeCadaTile[i] == -180)
+            {
+                rotationToPlace = 0;
+            }
+            Quaternion rotation = Quaternion.Euler(new Vector3(0, rotationToPlace, 0));
+            for (int z = 0; z < picker._prefabs.Length; z++)
+            {
+                if (picker._prefabs[z].index == data.index[i])
+                {
+                    verson3D = (GameObject)picker._prefabs[z].Mesh;
+                }
+            }
+            Instanc = Instantiate(verson3D, new Vector3(data.PosicoesDeEntradaX[i]/1000, 0, data.PosicoesDeEntradaY[i]/1000), rotation, transform);
+            Tracks3D[i] = Instanc;
+            Instanc.transform.localScale = new Vector3(data.EscalaX[i] * (StepSize / data.SizeOfTheGrid) * 10, data.EscalaY[i] * (StepSize / data.SizeOfTheGrid) * 10, data.EscalaZ[i] * (StepSize / data.SizeOfTheGrid) * 10);
+        }
+        FindObjectOfType<PlaceCars>().DistributeCars();
     }
 }

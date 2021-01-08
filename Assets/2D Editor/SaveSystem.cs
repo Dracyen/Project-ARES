@@ -20,10 +20,23 @@ public static class SaveSystem
         stream.Close();
     }
 
+    public static void SaveTrack(TrackBuilder tiles, string fileName)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/" + fileName + ".fun";
+        Debug.Log("Created File: " + path);
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        Save SavedTracks = new Save(tiles);
+
+        formatter.Serialize(stream, SavedTracks);
+        stream.Close();
+    }
+
     public static Save LoadTracks(string fileName)
     {
         string path = Application.persistentDataPath + "/" + fileName + ".fun";
-        Debug.Log(path);
+        Debug.Log("Loaded file: " + path);
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();

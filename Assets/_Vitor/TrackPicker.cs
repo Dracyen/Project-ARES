@@ -56,6 +56,8 @@ public class TrackPicker : MonoBehaviour
     {
         public string Name;
 
+        public int index;
+
         public Object Mesh;
 
         public Vector2[] OriginalSquares;

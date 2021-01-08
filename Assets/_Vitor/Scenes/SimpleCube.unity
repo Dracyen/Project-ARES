@@ -858,6 +858,7 @@ MonoBehaviour:
   _display: {fileID: 1346985144}
   _prefabs:
   - Name: Start
+    index: -1
     Mesh: {fileID: 7965392357200382029, guid: dbc1b1c10ec0701418b281d09d75ebfc, type: 3}
     OriginalSquares:
     - {x: 0, y: 0}
@@ -867,6 +868,7 @@ MonoBehaviour:
     pieceRotation: 0
     CurrentRotation: 2
   - Name: Finish
+    index: 5
     Mesh: {fileID: 3565114116249693840, guid: b47ec0ce35474514fbfcddedd5256ae2, type: 3}
     OriginalSquares:
     - {x: 0, y: 0}
@@ -876,6 +878,7 @@ MonoBehaviour:
     pieceRotation: 0
     CurrentRotation: 2
   - Name: Reta1
+    index: 4
     Mesh: {fileID: 3565114116249693840, guid: 9c70e3bb4768f1e43a0f61720d1ef90e, type: 3}
     OriginalSquares:
     - {x: 0, y: 0}
@@ -885,6 +888,7 @@ MonoBehaviour:
     pieceRotation: 0
     CurrentRotation: 2
   - Name: Curva90
+    index: 0
     Mesh: {fileID: 506970670809920713, guid: 9ce71de0f3c5fe44096d53063c461f36, type: 3}
     OriginalSquares:
     - {x: 0, y: 0}
@@ -894,6 +898,7 @@ MonoBehaviour:
     pieceRotation: 0
     CurrentRotation: 2
   - Name: CurvaSmooth
+    index: 2
     Mesh: {fileID: 3473180575934333357, guid: 30f274d7292e45440b6771807a06ecc7, type: 3}
     OriginalSquares:
     - {x: 0, y: 0}
@@ -907,6 +912,7 @@ MonoBehaviour:
     pieceRotation: 0
     CurrentRotation: 2
   - Name: Ponte
+    index: 6
     Mesh: {fileID: 5006811576079644809, guid: ff5fefeee146a984e9ca989cf086cc20, type: 3}
     OriginalSquares:
     - {x: 0, y: 0}
@@ -1654,6 +1660,76 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 158420757}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1424337404 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4168821344555359180, guid: ce5bedaef12052a4b8badafda02c1b43,
+    type: 3}
+  m_PrefabInstance: {fileID: 158420757}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1424337406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424337404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 910751059}
+          m_TargetAssemblyTypeName: TrackBuilder, Assembly-CSharp
+          m_MethodName: SaveTrack
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: abc
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!1 &1433379734 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5205876977720796183, guid: ce5bedaef12052a4b8badafda02c1b43,
+    type: 3}
+  m_PrefabInstance: {fileID: 158420757}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1433379736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433379734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 910751059}
+          m_TargetAssemblyTypeName: TrackBuilder, Assembly-CSharp
+          m_MethodName: LoadTrack
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: abc
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1483040376
 GameObject:
   m_ObjectHideFlags: 0

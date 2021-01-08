@@ -3,25 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class TrackSlot : MonoBehaviour
 {
     public enum State { EMPTY, READY, FULL }
 
     public string Sufix = "(Clone)";
 
-    public State CurrentState { get; private set; }
+    public State CurrentState;
 
     public TrackBuilder Grid;
 
-    bool hasPiece = false;
+    public bool hasPiece = false;
 
-    public GameObject Piece { get; private set; }
+    public GameObject Piece;
 
     public SlotSize Slot;
 
     public Vector2 pos;
 
-    bool multiTile = false;
+    public bool multiTile = false;
 
     public TrackPicker.TrackInfo Holder;
 
