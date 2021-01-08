@@ -14,16 +14,16 @@ public class CheckPointCounter : MonoBehaviour
         if(other.tag == "AiCar")
         {
             numOfAiCars++;
-            //Debug.Log(numOfAiCars);
+            Debug.Log(numOfAiCars);
         }
         if(other.tag == "Player")
         {
-            Debug.Log(numOfAiCars);
+            
             FindObjectOfType<InGame_Manager>().playerPos = numOfAiCars + 1;
         }
-        if (numOfAiCars >= FindObjectOfType<InGame_Manager>().num.Length)
+        if (numOfAiCars == 5)
         {
-            numOfAiCars = 1;
+           numOfAiCars = 1;
         }
     }
 }

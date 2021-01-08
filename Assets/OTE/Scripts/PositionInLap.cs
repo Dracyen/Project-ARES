@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PositionInLap : MonoBehaviour
 {
-    int numOfLapsCompleated = 0;
+    public int numOfLapsCompleated = 0;
     int numOfTiles = 0;
     public int TileNum = 0;
     private void Awake()
@@ -16,6 +16,13 @@ public class PositionInLap : MonoBehaviour
     {
        if(other.tag == "Finish")
         {
+           
+            if(numOfLapsCompleated >= FindObjectOfType<PutSelectedTrack>().NumOfLaps)
+            {
+                FindObjectOfType<NewPlayerDrive>().RaceiIsOnGoing = false;
+                GetComponent<Timer>().finished = true;
+                Debug.Log(GetComponent<Timer>().time);
+            }
             numOfLapsCompleated++;
             //Debug.Log("End of Lap");
             //Debug.Log(numOfLapsCompleated);

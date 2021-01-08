@@ -16,6 +16,7 @@ public class NewAIDrive : MonoBehaviour
     public GameObject model3D;
     RaycastHit hit;
     public string CarName;
+    int numOfLapsFinished = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -67,14 +68,24 @@ public class NewAIDrive : MonoBehaviour
     {
         if (other.tag == "Finish")
         {
-            GetComponent<NavMeshAgent>().speed = Random.Range(110, 130);
-            AddTargetsToList();
+            GetComponent<NavMeshAgent>().speed = Random.Range(80, 100 + FindObjectOfType<UI_MenuManager_OTE>().Dif);
+            numOfLapsFinished++;
+            if (numOfLapsFinished < FindObjectOfType<PutSelectedTrack>().NumOfLaps)
+            {
+                AddTargetsToList();
+            }
+            else
+            {
+                GetComponent<Timer>().finished = true;
+            }
+            
+            
         }
         if (other.tag == AllRefPoints[index].tag)
         {
             index++;
             target = AllRefPoints[index];
-            GetComponent<NavMeshAgent>().speed = Random.Range(110, 130);
+            GetComponent<NavMeshAgent>().speed = Random.Range(80, 100+FindObjectOfType<UI_MenuManager_OTE>().Dif);
         }
     }
 }

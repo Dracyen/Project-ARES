@@ -16,6 +16,7 @@ public class NewPlayerDrive : MonoBehaviour
     public GameObject wheel1;
     public GameObject wheel2;
     RaycastHit hit;
+    public bool RaceiIsOnGoing = true;
 
     private void Awake()
     {
@@ -118,8 +119,12 @@ public class NewPlayerDrive : MonoBehaviour
                 target.transform.localPosition += new Vector3(0.01f, 0, 0);
             }
         }
-        //O carro anda sempre para frente independente da sua rotacao ao seguir o target
-        playerCar.destination = target.position;
+        if (RaceiIsOnGoing)
+        {
+            //O carro anda sempre para frente independente da sua rotacao ao seguir o target
+            playerCar.destination = target.position;
+        }
+        
         //Caso nao esteja virando para nenhum lado a roda deve voltar ao centro
         if (!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
         {

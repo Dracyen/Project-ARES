@@ -23,6 +23,9 @@ public class UI_MenuManager_OTE : MonoBehaviour
     public Sprite[] CarsImages;
     public int CarIndexOffSet;
 
+
+    //Laps
+    public Text numOfLapsText;
     private void Start()
     {
         //Seeks in the Bank Script the num of coins and Writes in the coins Text space in the top right corner
@@ -80,25 +83,14 @@ public class UI_MenuManager_OTE : MonoBehaviour
     {
         UpdateTracksImage();
         UpdateCarsImage();
-
+        numOfLapsText.text = FindObjectOfType<PutSelectedTrack>().NumOfLaps.ToString();
 
     }
-    //Toggle Ativar AI ou n
-    //Se ativo enviar ao codigo Game Manager um num aleatorio de AIs
-    //Slider para o nivel de dificuldade do AI
-    //Salvar info em Player Prefs para que na proxima scene possa ser visto
-
-    //Image para trocar os PNGs das pistas
-    //Button Next para as imagens das pistas
-    //Button Previews para as imagens das pistas
-
-    // Image para trocar os PNGs das carros
-    //Button Next para as imagens das carros
-    //Button Previews para as imagens das carros
-
-    //Text do num de Coins
-
-    //Button Start
+    public int Dif;
+    public void Dificulty(int d)
+    {
+        Dif = d;
+    }
 
 
 

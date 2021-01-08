@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-    float time = 0;
+    public float time = 0;
     float[] lapTimes;
     int lapIndex = 0;
     public Text TimeCounter;
@@ -13,6 +13,7 @@ public class Timer : MonoBehaviour
     float CheckPointTime;
     GameObject[] AllCheckPoints;
     public string CarName;
+    public bool finished = false;
 
 
     private void Start()
@@ -26,16 +27,21 @@ public class Timer : MonoBehaviour
     {
         //Debug.Log(time);
         yield return new WaitForSeconds(0.1f);
-        time+= 0.1f;
-        if(this.tag == "Player")
+        if (!finished)
         {
-            string t = ((int) time).ToString();
-            
-            TimeCounter.text = "Time: " + t;
-            
+            time += 0.1f;
+            if (this.tag == "Player")
+            {
+                string t = ((int)time).ToString();
+
+                TimeCounter.text = "Time: " + t;
+
+            }
+            StartCoroutine("Time");
         }
         
-        StartCoroutine("Time");
+        
+        
     }
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other)
@@ -43,9 +49,9 @@ public class Timer : MonoBehaviour
         if(other.tag == "Finish")
         {
             lapTimes[lapIndex] = time;
-            CarName = GetComponent<NewAIDrive>().CarName;
+           // CarName = GetComponent<NewAIDrive>().CarName;
            // Debug.Log(lapTimes[lapIndex]+ "Car: " + GetComponent<NewAIDrive>().CarName) ;
-            time = 0;
+            //time = 0;
             lapIndex++;
             
         }
