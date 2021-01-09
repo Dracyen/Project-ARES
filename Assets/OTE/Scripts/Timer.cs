@@ -23,11 +23,13 @@ public class Timer : MonoBehaviour
         lapTimes = new float[3];
         StartCoroutine("Time");
     }
+   
     IEnumerator Time()
     {
         //Debug.Log(time);
         yield return new WaitForSeconds(0.1f);
-        if (!finished)
+        bool pause = FindObjectOfType<InGame_Manager>().pause;
+        if (!finished && !pause)
         {
             time += 0.1f;
             if (this.tag == "Player")

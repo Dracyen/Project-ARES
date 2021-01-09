@@ -11,7 +11,7 @@ public class PutSelectedTrack : MonoBehaviour
     Transform target;
     GameObject car;
     int numOfAi = 4;
-    int countDownTimer = 3;
+    int countDownTimer = 4;
     public Text CountDownText;
     public Image AIToggle;
     public int NumOfLaps = 1;
@@ -30,13 +30,15 @@ public class PutSelectedTrack : MonoBehaviour
         else if(countDownTimer <= 0)
         {
             CountDownText.gameObject.SetActive(false);
-            car = Instantiate(PlayerCar, target.position + new Vector3(5, 1, 1), Quaternion.Euler(0, -90, 0));
-            car.transform.localScale = new Vector3(3, 3, 3);
+            Debug.Log(numOfAi);
             for (int i = 0; i < numOfAi; i++)
             {
                 car = Instantiate(AiCar, target.position + new Vector3(2, 1, i), Quaternion.Euler(0, -90, 0));
                 car.transform.localScale = new Vector3(3, 3, 3);
             }
+            car = Instantiate(PlayerCar, target.position + new Vector3(5, 1, 1), Quaternion.Euler(0, -90, 0));
+            car.transform.localScale = new Vector3(3, 3, 3);
+            FindObjectOfType<InGame_Manager>().StartGame(car);
         }
     }
    public void SelectedTrack()
@@ -74,14 +76,16 @@ public class PutSelectedTrack : MonoBehaviour
         Debug.Log("Toggle");
         if (!Ai)
         {
-            AIToggle.gameObject.SetActive(false);
+            //AIToggle.gameObject.SetActive(false);
             Ai = true;
+            numOfAi = 4;
         }
-        if (Ai)
+        else if (Ai)
         {
-            AIToggle.gameObject.SetActive(true);
+            //AIToggle.gameObject.SetActive(true);
             Ai = false;
             numOfAi = 0;
         }
     }
+    
 }

@@ -7,25 +7,38 @@ public class PositionInLap : MonoBehaviour
     public int numOfLapsCompleated = 0;
     int numOfTiles = 0;
     public int TileNum = 0;
+    bool coolDown = true;
     private void Awake()
     {
         numOfTiles = GameObject.FindGameObjectsWithTag("TargetToAi").Length;
-        //Debug.Log("Num of Tiles: " + numOfTiles);
+        
+    }
+    IEnumerator CoolDown()
+    {
+        yield return new WaitForSeconds(1);
+        coolDown = true;
+
     }
     private void OnTriggerEnter(Collider other)
     {
        if(other.tag == "Finish")
         {
-            Debug.Log(FindObjectOfType<PutSelectedTrack>().NumOfLaps);
+            //Debug.Log(FindObjectOfType<PutSelectedTrack>().NumOfLaps);
             if (numOfLapsCompleated >= FindObjectOfType<PutSelectedTrack>().NumOfLaps)
             {
                 FindObjectOfType<NewPlayerDrive>().RaceiIsOnGoing = false;
                 GetComponent<Timer>().finished = true;
+                FindObjectOfType<InGame_Manager>().PauseMenu.SetActive(true);
                 //Debug.Log(FindObjectOfType<PutSelectedTrack>().NumOfLaps);
             }
-            numOfLapsCompleated++;
-            //Debug.Log("End of Lap");
-            //Debug.Log(numOfLapsCompleated);
+            if (coolDown)
+            {
+                numOfLapsCompleated++;
+                coolDown = false;
+                StartCoroutine("CoolDown");
+            }
+            
+ 
         }
         if (other.tag == "TargetToAi")
         {

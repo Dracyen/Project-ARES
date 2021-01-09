@@ -30,10 +30,14 @@ public class NewAIDrive : MonoBehaviour
 
         target = AllRefPoints[index];
     }
-
+    public bool canGo = true;
     void Update()
-    {     
+    {
+        if (canGo)
+        {
             car.destination = target.transform.position;
+        }
+            
     }
     public void AddTargetsToList()
     {

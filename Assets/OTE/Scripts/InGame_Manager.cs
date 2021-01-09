@@ -14,21 +14,30 @@ public class InGame_Manager : MonoBehaviour
    public int playerPos;
     public Text PlayerPosInRace;
     public Text NumOfLaps;
-    GameObject Player;
+    GameObject PlayerCar;
+    public GameObject PauseMenu;
     private void Start()
     {
-        Player = GameObject.FindGameObjectWithTag("Player");
+        
         carsTimers = FindObjectsOfType<Timer>();
         cars = FindObjectsOfType<PositionInLap>();
         num = new int[cars.Length];
+        
+    }
+    IEnumerator UpdateText()
+    {
+        yield return new WaitForSeconds(0.5f);
+        
+        NumOfLaps.text = "Lap " + PlayerCar.GetComponent<PositionInLap>().numOfLapsCompleated.ToString() + "/" + FindObjectOfType<PutSelectedTrack>().NumOfLaps;
+        PlayerPosInRace.text = playerPos.ToString() + " st";
+        StartCoroutine("UpdateText");
     }
     private void Update()
     {
-        Debug.Log("In game manager is working");
-        Player = GameObject.FindGameObjectWithTag("Player");
-        NumOfLaps.text = "Lap " + Player.GetComponent<PositionInLap>().numOfLapsCompleated.ToString() + "/" + FindObjectOfType<PutSelectedTrack>().NumOfLaps;
+        //Debug.Log("In game manager is working");
+       
 
-        PlayerPosInRace.text = playerPos.ToString() + " st";
+        
             for (int i = 0; i< num.Length; i++)
         {
             num[i] = cars[i].TileNum;
@@ -41,5 +50,35 @@ public class InGame_Manager : MonoBehaviour
             }
         }
     }
-
+    public void StartGame(GameObject Player)
+    {
+        PlayerCar = Player;
+        StartCoroutine("UpdateText");
+    }
+    public bool pause;
+    public void Pause()
+    {
+        if (pause)
+        {
+            pause = false;
+            NewAIDrive[] Ais;
+            Ais = FindObjectsOfType<NewAIDrive>();
+            for (int i = 0; i < Ais.Length; i++)
+            {
+                Ais[i].canGo = true;
+            }
+            FindObjectOfType<NewPlayerDrive>().RaceiIsOnGoing = true;
+        }
+        else if (!pause)
+        {
+            pause = true;
+            NewAIDrive[] Ais;
+            Ais = FindObjectsOfType<NewAIDrive>();
+            for(int i = 0; i < Ais.Length; i++)
+            {
+                Ais[i].canGo = false;
+            }
+            FindObjectOfType<NewPlayerDrive>().RaceiIsOnGoing = false;
+        }
+    }
 }

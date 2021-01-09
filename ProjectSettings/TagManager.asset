@@ -15,6 +15,7 @@ TagManager:
   - PlayerTarget
   - AiCar
   - TimeCounter
+  - Pause
   layers:
   - Default
   - TransparentFX
