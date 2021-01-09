@@ -16,12 +16,12 @@ public class PositionInLap : MonoBehaviour
     {
        if(other.tag == "Finish")
         {
-           
-            if(numOfLapsCompleated >= FindObjectOfType<PutSelectedTrack>().NumOfLaps)
+            Debug.Log(FindObjectOfType<PutSelectedTrack>().NumOfLaps);
+            if (numOfLapsCompleated >= FindObjectOfType<PutSelectedTrack>().NumOfLaps)
             {
                 FindObjectOfType<NewPlayerDrive>().RaceiIsOnGoing = false;
                 GetComponent<Timer>().finished = true;
-                Debug.Log(GetComponent<Timer>().time);
+                //Debug.Log(FindObjectOfType<PutSelectedTrack>().NumOfLaps);
             }
             numOfLapsCompleated++;
             //Debug.Log("End of Lap");

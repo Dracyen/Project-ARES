@@ -27,7 +27,7 @@ public class PutSelectedTrack : MonoBehaviour
             CountDownText.text = countDownTimer.ToString();
             StartCoroutine("CountDown");
         }
-        else if(countDownTimer == 0)
+        else if(countDownTimer <= 0)
         {
             CountDownText.gameObject.SetActive(false);
             car = Instantiate(PlayerCar, target.position + new Vector3(5, 1, 1), Quaternion.Euler(0, -90, 0));
