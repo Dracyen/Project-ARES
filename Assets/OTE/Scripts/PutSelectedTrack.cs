@@ -22,7 +22,6 @@ public class PutSelectedTrack : MonoBehaviour
         yield return new WaitForSeconds(1);
         if(countDownTimer > 0)
         {
-           
             countDownTimer--;
             CountDownText.text = countDownTimer.ToString();
             StartCoroutine("CountDown");
@@ -34,10 +33,10 @@ public class PutSelectedTrack : MonoBehaviour
             for (int i = 0; i < numOfAi; i++)
             {
                 car = Instantiate(AiCar, target.position + new Vector3(2, 1, i), Quaternion.Euler(0, -90, 0));
-                car.transform.localScale = new Vector3(3, 3, 3);
+                car.transform.localScale = new Vector3(4, 4, 4);
             }
             car = Instantiate(PlayerCar, target.position + new Vector3(5, 1, 1), Quaternion.Euler(0, -90, 0));
-            car.transform.localScale = new Vector3(3, 3, 3);
+            car.transform.localScale = new Vector3(4, 4, 4);
             FindObjectOfType<InGame_Manager>().StartGame(car);
         }
     }
