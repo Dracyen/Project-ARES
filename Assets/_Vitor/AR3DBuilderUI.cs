@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class AR3DBuilderUI : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class AR3DBuilderUI : MonoBehaviour
 
     public GameObject TrackCreator;
 
+    public Text GridSizeDisplay;
+
     private void Start()
     {
         foreach (GameObject Tab in Tiles)
@@ -25,6 +28,30 @@ public class AR3DBuilderUI : MonoBehaviour
         }
 
         Tiles[0].SetActive(true);
+    }
+
+    public void UpOne()
+    {
+        int i = System.Int32.Parse(GridSizeDisplay.text);
+
+        if (i < 20)
+        {
+            i++;
+
+            GridSizeDisplay.text = i.ToString();
+        }
+    }
+
+    public void DownOne()
+    {
+        int i = System.Int32.Parse(GridSizeDisplay.text);
+
+        if (i > 10)
+        {
+            i--;
+
+            GridSizeDisplay.text = i.ToString();
+        }
     }
 
     public void Show(int i)

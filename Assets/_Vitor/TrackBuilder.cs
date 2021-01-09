@@ -40,6 +40,8 @@ public class TrackBuilder : MonoBehaviour
 
     public int count = 0;
 
+    public Text gridSizeDisplay;
+
     //Playable Track
 
     GameObject[] Tracks3D;
@@ -65,13 +67,17 @@ public class TrackBuilder : MonoBehaviour
         CreateGrid(gridSize, gridSize);
     }
 
+    /*
     public void ChangeSize(float value)
     {
         gridSize = (int)value;
     }
+    */
 
     private void Update()
     {
+        gridSize = System.Int32.Parse(gridSizeDisplay.text);
+
         if (gridSize != currentSize)
         {
             CreateGrid(gridSize, gridSize);

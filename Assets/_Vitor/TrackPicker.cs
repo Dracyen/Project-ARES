@@ -44,6 +44,38 @@ public class TrackPicker : MonoBehaviour
         }
     }
 
+    /*
+    public void InteractPiece(int option)
+    {
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+        RaycastHit rayHit;
+
+        if (Physics.Raycast(ray, out rayHit, 100.0f))
+        {
+            if (rayHit.collider.tag == "Slot")
+            {
+                TrackSlot _target;
+
+                if (_prefabs[_selected].multiTile)
+                {
+                    //Do Multi Tile Action = Send TrackInfo
+
+                    _target = rayHit.collider.gameObject.GetComponent<TrackSlot>();
+
+                    _target.ClickAction(_prefabs[_selected], option);
+                }
+                else
+                {
+                    //Do Single Tile Action = Send TrackInfo Mesh
+                    _target = rayHit.collider.gameObject.GetComponent<TrackSlot>();
+
+                    _target.ClickAction(_prefabs[_selected].Mesh, option);
+                }
+            }
+        }
+    }*/
+
     public void SwitchPiece(int piece)
     {
         _selected = piece;

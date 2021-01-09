@@ -7439,7 +7439,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1500195406}
+      - m_Target: {fileID: 62959631}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -15060,7 +15060,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2041173045}
         m_TargetAssemblyTypeName: MenuManager_UI, Assembly-CSharp
         m_MethodName: GoToBuilders
         m_Mode: 1
