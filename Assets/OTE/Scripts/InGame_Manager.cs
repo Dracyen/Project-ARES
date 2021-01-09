@@ -24,10 +24,11 @@ public class InGame_Manager : MonoBehaviour
     }
     private void Update()
     {
+        Debug.Log("In game manager is working");
         Player = GameObject.FindGameObjectWithTag("Player");
-        NumOfLaps.text = Player.GetComponent<PositionInLap>().numOfLapsCompleated.ToString() + "/" + FindObjectOfType<PutSelectedTrack>().NumOfLaps;
+        NumOfLaps.text = "Lap " + Player.GetComponent<PositionInLap>().numOfLapsCompleated.ToString() + "/" + FindObjectOfType<PutSelectedTrack>().NumOfLaps;
 
-    PlayerPosInRace.text = playerPos.ToString();
+        PlayerPosInRace.text = playerPos.ToString() + " st";
             for (int i = 0; i< num.Length; i++)
         {
             num[i] = cars[i].TileNum;
