@@ -31,7 +31,7 @@ public class PositionInLap : MonoBehaviour
                 FindObjectOfType<InGame_Manager>().PauseMenu.SetActive(true);
                 //Debug.Log(FindObjectOfType<PutSelectedTrack>().NumOfLaps);
             }
-            if (coolDown)
+            else if (coolDown)
             {
                 numOfLapsCompleated++;
                 coolDown = false;

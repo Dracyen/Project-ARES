@@ -30,7 +30,11 @@ public class InGame_Manager : MonoBehaviour
         
         NumOfLaps.text = "Lap " + PlayerCar.GetComponent<PositionInLap>().numOfLapsCompleated.ToString() + "/" + FindObjectOfType<PutSelectedTrack>().NumOfLaps;
         PlayerPosInRace.text = playerPos.ToString() + " st";
-        StartCoroutine("UpdateText");
+        if (FindObjectOfType<NewPlayerDrive>().RaceiIsOnGoing)
+        {
+            StartCoroutine("UpdateText");
+        }
+        
     }
     private void Update()
     {
