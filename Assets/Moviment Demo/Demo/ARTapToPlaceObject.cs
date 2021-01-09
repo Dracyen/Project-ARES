@@ -18,6 +18,8 @@ public class ARTapToPlaceObject : MonoBehaviour
     private bool placementPoseIsValid = false;
     private bool place = true;
 
+    public GameObject button;
+
     void Start()
     {
         aRRaycastManager = FindObjectOfType<ARRaycastManager>();
@@ -44,6 +46,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         place = false;
         placementIndicator.SetActive(false);
         PlaceObject();
+        button.SetActive(false);
     }
     private void PlaceObject()
     {

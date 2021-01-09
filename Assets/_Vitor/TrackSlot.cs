@@ -255,7 +255,31 @@ public class TrackSlot : MonoBehaviour
         Slot.mesh.gameObject.SetActive(false);
         Piece = (GameObject)Instantiate(piece.Mesh, transform);
 
-        Piece.transform.eulerAngles = new Vector3(0, Holder.pieceRotation, 0);
+        if (Piece.name == "Ponte" + Sufix)
+        {
+            switch (Holder.pieceRotation)
+            {
+                case 0:
+                    Piece.transform.localEulerAngles = new Vector3(0, 270, 0);
+                    break;
+
+                case 90:
+                    Piece.transform.localEulerAngles = new Vector3(0, 0, 0);
+                    break;
+
+                case 180:
+                    Piece.transform.localEulerAngles = new Vector3(0, 90, 0);
+                    break;
+
+                case 270:
+                    Piece.transform.localEulerAngles = new Vector3(0, 180, 0);
+                    break;
+            }
+        }
+        else
+        {
+            Piece.transform.localEulerAngles = new Vector3(0, Holder.pieceRotation, 0);
+        }
 
         Grid.SetFull(pos, Holder.CurrentSquares);
         hasPiece = true;
@@ -278,7 +302,32 @@ public class TrackSlot : MonoBehaviour
             }
         }
 
-        Piece.transform.eulerAngles = new Vector3(0, Holder.pieceRotation, 0);
+        if (Piece.name == "Ponte" + Sufix)
+        {
+            switch (Holder.pieceRotation)
+            {
+                case 0:
+                    Piece.transform.localEulerAngles = new Vector3(0, 270, 0);
+                    break;
+
+                case 90:
+                    Piece.transform.localEulerAngles = new Vector3(0, 0, 0);
+                    break;
+
+                case 180:
+                    Piece.transform.localEulerAngles = new Vector3(0, 90, 0);
+                    break;
+
+                case 270:
+                    Piece.transform.localEulerAngles = new Vector3(0, 180, 0);
+                    break;
+            }
+        }
+        else
+        {
+            Piece.transform.localEulerAngles = new Vector3(0, Holder.pieceRotation, 0);
+        }
+
 
         Grid.SetFull(pos, Holder.CurrentSquares);
     }
