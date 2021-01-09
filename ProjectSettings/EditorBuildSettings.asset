@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Builder3D.unity
     guid: 4f029b3f366f09745b6f36af27a2e745
   - enabled: 1
+    path: Assets/OTE/MenuOTE.unity
+    guid: 52f6672afa8b5be499ba7e98c1944e5d
+  - enabled: 0
     path: Assets/Scenes/PlayMenu.unity
     guid: e6b98704a9e7dde488f1df83fb324fd9
   - enabled: 1

@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8275545802787365867
 Transform:
   m_ObjectHideFlags: 0
@@ -332,6 +332,7 @@ MonoBehaviour:
   model3D: {fileID: 3373817722736581980}
   wheel1: {fileID: 1341376917701650068}
   wheel2: {fileID: 8044078967831494518}
+  RaceiIsOnGoing: 1
 --- !u!65 &4567513657387196892
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -357,6 +358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16a4d068fe1506e438e3911bf1543528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numOfLapsCompleated: 0
   TileNum: 0
 --- !u!114 &2570715440530314189
 MonoBehaviour:
@@ -370,8 +372,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c592dcb5e642c924183a749ad4b7863e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  time: 0
   TimeCounter: {fileID: 0}
   CarName: 
+  finished: 0
 --- !u!1001 &5786990575063612549
 PrefabInstance:
   m_ObjectHideFlags: 0

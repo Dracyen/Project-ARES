@@ -68,7 +68,7 @@ public class NewAIDrive : MonoBehaviour
     {
         if (other.tag == "Finish")
         {
-            GetComponent<NavMeshAgent>().speed = Random.Range(80, 100 + FindObjectOfType<UI_MenuManager_OTE>().Dif);
+            GetComponent<NavMeshAgent>().speed = Random.Range(20, 50 + FindObjectOfType<UI_MenuManager_OTE>().Dif);
             numOfLapsFinished++;
             if (numOfLapsFinished < FindObjectOfType<PutSelectedTrack>().NumOfLaps)
             {
@@ -85,7 +85,7 @@ public class NewAIDrive : MonoBehaviour
         {
             index++;
             target = AllRefPoints[index];
-            GetComponent<NavMeshAgent>().speed = Random.Range(80, 100+FindObjectOfType<UI_MenuManager_OTE>().Dif);
+            GetComponent<NavMeshAgent>().speed = Random.Range(20, 50+FindObjectOfType<UI_MenuManager_OTE>().Dif);
         }
     }
 }

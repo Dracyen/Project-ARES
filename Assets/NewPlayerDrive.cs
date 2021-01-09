@@ -64,6 +64,32 @@ public class NewPlayerDrive : MonoBehaviour
         }
         //Garante que o modelo do carro esta olhando para o target e o acompanhara em caso de curvas
         model3D.transform.LookAt(target.transform);
+        if (Input.touchCount > 0)
+        {
+            if (Input.touches[0].position.x < Screen.width / 2 || Input.GetKey(KeyCode.A))
+            {
+                //Debug.Log("L");
+                MoveR();
+            }
+            else if(Input.touches[0].phase == TouchPhase.Ended)
+            {
+                UnMoveR();
+            }
+
+            if (Input.touches[0].position.x > Screen.width / 2 || Input.GetKey(KeyCode.D))
+            {
+                //Debug.Log("R");
+                MoveL();
+            }
+            else if (Input.touches[0].phase == TouchPhase.Ended)
+            {
+                UnMoveL();
+            }
+        }
+        else
+        {
+            UnMove();
+        }
         //Input para virar a direita
         if (Input.GetKey(KeyCode.D))
         {
@@ -133,6 +159,65 @@ public class NewPlayerDrive : MonoBehaviour
                 wheel1.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
                 wheel2.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
             }
+        }
+    }
+
+    void MoveR()
+    {
+        if (target.transform.localPosition.x > -1 && Input.GetKey(KeyCode.Space))
+        {
+
+            target.transform.localPosition -= new Vector3(0.01f, 0, 0);
+        }
+        else
+        {
+            transform.Rotate(new Vector3(0, -5f, 0));
+            if (wheel1.transform.localRotation.y > -0.3f)
+            {
+                wheel1.transform.Rotate(new Vector3(0, -5f, 0));
+                wheel2.transform.Rotate(new Vector3(0, -5f, 0));
+            }
+        }
+    }
+    void UnMoveR()
+    {
+        if (target.transform.localPosition.x < 0)
+        {
+            target.transform.localPosition += new Vector3(0.01f, 0, 0);
+        }
+    }
+    void MoveL()
+    {
+        //Ao reposicionar o Target o carro faz a curva parecendo um drift
+        if (target.transform.localPosition.x < 1 && Input.GetKey(KeyCode.Space))
+        {
+            target.transform.localPosition += new Vector3(0.01f, 0, 0);
+        }
+        else
+        {
+            //Caso nao tenha a intencao de fazer a curva com drift o carro apenas ira rodar em seu eixo acompanhado pelas rodas
+            transform.Rotate(new Vector3(0, 5f, 0));
+            if (wheel1.transform.localRotation.y < 0.3f)
+            {
+                wheel1.transform.Rotate(new Vector3(0, 5f, 0));
+                wheel2.transform.Rotate(new Vector3(0, 5f, 0));
+            }
+
+        }
+    }
+    void UnMoveL()
+    {
+        if (target.transform.localPosition.x > 0)
+        {
+            target.transform.localPosition -= new Vector3(0.01f, 0, 0);
+        }
+    }
+    void UnMove()
+    {
+        if (wheel1.transform.localRotation.y != 0)
+        {
+            wheel1.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            wheel2.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
         }
     }
 }
