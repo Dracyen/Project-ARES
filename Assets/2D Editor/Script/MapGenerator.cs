@@ -153,6 +153,7 @@ public class MapGenerator : MonoBehaviour
     }
     public void GenerateSaved3DTrack()
     {
+        Debug.Log(FindObjectOfType<MapDisplay>().trackName);
         Save data = SaveSystem.LoadTracks(FindObjectOfType<MapDisplay>().trackName);
         isLoop = data.isLoop;
         numOfLapsOfTheTrack = data.numOfLaps;
