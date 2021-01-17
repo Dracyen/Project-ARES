@@ -76,7 +76,7 @@ public class NewPlayerDrive : MonoBehaviour
                 UnMoveR();
             }
 
-            if (Input.touches[0].position.x > Screen.width / 2 || Input.GetKey(KeyCode.D))
+            else if (Input.touches[0].position.x > Screen.width / 2 || Input.GetKey(KeyCode.D))
             {
                 //Debug.Log("R");
                 MoveL();
