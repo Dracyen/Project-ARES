@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PutSelectedTrack : MonoBehaviour
 {
     public GameObject[] Tracks;
-    public GameObject PlayerCar;
+    public GameObject[] PlayerCar;
     public GameObject AiCar;
     Transform target;
     GameObject car;
@@ -35,7 +35,7 @@ public class PutSelectedTrack : MonoBehaviour
                 car = Instantiate(AiCar, target.position + new Vector3(2, 1, i), Quaternion.Euler(0, -90, 0));
                 car.transform.localScale = new Vector3(4, 4, 4);
             }
-            car = Instantiate(PlayerCar, target.position + new Vector3(5, 1, 1), Quaternion.Euler(0, -90, 0));
+            car = Instantiate(PlayerCar[FindObjectOfType<UI_MenuManager_OTE>().CarIndexOffSet], target.position + new Vector3(5, 1, 1), Quaternion.Euler(0, -90, 0));
             car.transform.localScale = new Vector3(4, 4, 4);
             FindObjectOfType<InGame_Manager>().StartGame(car);
         }

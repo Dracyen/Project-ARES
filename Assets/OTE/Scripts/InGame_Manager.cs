@@ -29,7 +29,23 @@ public class InGame_Manager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         
         NumOfLaps.text = "Lap " + PlayerCar.GetComponent<PositionInLap>().numOfLapsCompleated.ToString() + "/" + FindObjectOfType<PutSelectedTrack>().NumOfLaps;
-        PlayerPosInRace.text = playerPos.ToString() + " st";
+        if(playerPos == 1)
+        {
+            PlayerPosInRace.text = playerPos.ToString() + " st";
+        }
+        else if (playerPos == 2)
+        {
+            PlayerPosInRace.text = playerPos.ToString() + " nd";
+        }
+        else if (playerPos == 3)
+        {
+            PlayerPosInRace.text = playerPos.ToString() + " rd";
+        }
+        else if (playerPos > 3)
+        {
+            PlayerPosInRace.text = playerPos.ToString() + " th";
+        }
+        
         if (FindObjectOfType<NewPlayerDrive>().RaceiIsOnGoing)
         {
             StartCoroutine("UpdateText");

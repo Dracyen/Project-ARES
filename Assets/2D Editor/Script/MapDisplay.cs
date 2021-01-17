@@ -148,8 +148,34 @@ public class MapDisplay : MonoBehaviour
                 canBePlaced = true;
             }           
         }
-
-        
+        canBePlaced = false;
+        for(int x = 0; x < GridSize; x++)
+        {
+            for (int y = 0; y < GridSize; y++)
+            {
+                Debug.Log("Pos to Place: " + posToPlace + "Grid Pos: " + Grid[x, y].transform.position);
+                if(posToPlace == Grid[x, y].transform.position)
+                {
+                    Debug.Log("Pos to Place: " + posToPlace);
+                    canBePlaced = true;
+                    break;
+                    
+                }
+                else
+                {
+                    canBePlaced = false;
+                }
+            }
+            if (canBePlaced)
+            {
+                break;
+            }
+        }
+        if (!canBePlaced)
+        {
+           erroScreen.SetActive(true);
+            ClearTrackFromTouchPos(tileTracksIndex - 2);
+        }
         if (canBePlaced && !FinalHasBeenPlaced)
         {
             // A track is beeing placed in the seleceted pos

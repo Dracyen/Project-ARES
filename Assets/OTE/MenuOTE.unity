@@ -11256,6 +11256,7 @@ MonoBehaviour:
   - {fileID: 0}
   ObjectToBePlaced: 0
   StartARInteraction: 0
+  button: {fileID: 0}
 --- !u!4 &276915311
 Transform:
   m_ObjectHideFlags: 0
@@ -14716,15 +14717,16 @@ MonoBehaviour:
   TracksImage: {fileID: 1120242210}
   TracksImages:
   - {fileID: 21300000, guid: 943cc28bceeb6964db25d773429747a8, type: 3}
-  - {fileID: 21300000, guid: c5436abb5bca7ed4393c007f68f104df, type: 3}
+  - {fileID: 21300000, guid: e9849d48eaf933347b39886fa29b35d2, type: 3}
   - {fileID: 21300000, guid: 253dbb4001db6754b8df9ae77441b070, type: 3}
   TrackIndexOffSet: 0
   NextCarButton: {fileID: 1629212088}
   PreviewsCarButton: {fileID: 574102888}
   CarImage: {fileID: 256589456}
   CarsImages:
-  - {fileID: 21300000, guid: 610e01a559f1a564a86b0bb21cf034ae, type: 3}
-  - {fileID: 21300000, guid: 610e01a559f1a564a86b0bb21cf034ae, type: 3}
+  - {fileID: 21300000, guid: 9478a09576849c040bc561d64d1a3bb6, type: 3}
+  - {fileID: 21300000, guid: 91d09bc5349e26f408b5eeff79011ede, type: 3}
+  - {fileID: 21300000, guid: 03dc407382fb0bb49b0f1d5994acdac7, type: 3}
   CarIndexOffSet: 0
   numOfLapsText: {fileID: 1028539692}
   Dif: 0
@@ -19164,6 +19166,12 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 378036465}
+    - target: {fileID: 8386419085207136374, guid: 44480e5f40192284585dbf626bd2993d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9478a09576849c040bc561d64d1a3bb6,
+        type: 3}
     - target: {fileID: 8426577050616116607, guid: 44480e5f40192284585dbf626bd2993d,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -64574,8 +64582,10 @@ MonoBehaviour:
   - {fileID: 273321535}
   - {fileID: 1456339723}
   - {fileID: 1122009028}
-  PlayerCar: {fileID: 4482683755221676876, guid: 2787b54f5a06e5b4085a7774dfe763a5,
-    type: 3}
+  PlayerCar:
+  - {fileID: 4482683755221676876, guid: 37e23e409d7b38949b0d7eff34f24a94, type: 3}
+  - {fileID: 4482683755221676876, guid: eeae9fa275c44f74a8e6bea78514ee29, type: 3}
+  - {fileID: 4482683755221676876, guid: 2787b54f5a06e5b4085a7774dfe763a5, type: 3}
   AiCar: {fileID: 4482683755221676876, guid: c88ab9b527cb75143b414046ca1368e8, type: 3}
   CountDownText: {fileID: 1827685148}
   AIToggle: {fileID: 0}
