@@ -152,15 +152,8 @@ public class TrackBuilder : MonoBehaviour
 
     public void StartTestTrack()
     {
-        int index = 0;
-
         foreach (TrackSlot slot in SlotGrid)
         {
-            if (slot.CurrentState != TrackSlot.State.FULL)
-            {
-                slot.Slot.gameObject.SetActive(false);
-            }
-
             if (slot.Piece != null)
             {
                 if (slot.Piece.name == "Start(Clone)")
@@ -168,30 +161,13 @@ public class TrackBuilder : MonoBehaviour
                     CarRef = (GameObject)Instantiate(Car, slot.Piece.transform);
                 }
             }
-
-            index++;
         }
-
-        Debug.Log("Count: " + index);
     }
 
     public void StopTestTrack()
     {
-        int index = 0;
-
-        foreach (TrackSlot slot in SlotGrid)
-        {
-            if (slot.CurrentState != TrackSlot.State.FULL)
-            {
-                slot.Slot.gameObject.SetActive(true);
-            }
-
-            if (CarRef != null)
-                Destroy(CarRef);
-
-            index++;
-            Debug.Log("Count: " + index);
-        }
+        if (CarRef != null)
+            Destroy(CarRef);
     }
 
     public void SwitchStart()
@@ -330,7 +306,7 @@ public class TrackBuilder : MonoBehaviour
         {
             GameObject Instanc;
             float rotationToPlace;
-            rotationToPlace = data.rotacaoEmZdeCadaTile[i];
+            rotationToPlace = data.rotacaoEmZdeCadaTile[i] + 5;
             
             Debug.Log("Load/ Each Z rot: " + rotationToPlace);
             /*
@@ -344,6 +320,7 @@ public class TrackBuilder : MonoBehaviour
             }
             */
             Quaternion rotation = Quaternion.Euler(new Vector3(0, rotationToPlace, 0));
+
             for (int z = 0; z < picker._prefabs.Length; z++)
             {
                 if (picker._prefabs[z].index == data.index[i])
@@ -365,7 +342,8 @@ public class TrackBuilder : MonoBehaviour
         Debug.Log("Loaded!");
 
         TrackRef.transform.localScale = new Vector3(0.0003f, 0.0003f, 0.0003f);
-        //FindObjectOfType<PlaceCars>().DistributeCars();
+        FindObjectOfType<PlaceCars>().DistributeCars();
+        FindObjectOfType<PlaceCars>().ResizeCars();
     }
 
     public void GridToList()
@@ -440,7 +418,8 @@ public class TrackBuilder : MonoBehaviour
 
         //TrackRef.transform.localScale = new Vector3(0.0003f, 0.0003f, 0.0003f);
 
-        //FindObjectOfType<PlaceCars>().DistributeCars();
+        FindObjectOfType<PlaceCars>().DistributeCars();
+        FindObjectOfType<PlaceCars>().ResizeCars();
     }
 
     public void DeletePreview()

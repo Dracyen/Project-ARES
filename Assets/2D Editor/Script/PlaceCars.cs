@@ -16,12 +16,7 @@ public class PlaceCars : MonoBehaviour
     GameObject[] Cars;
 
     public bool hasBeenPlaced = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-       
-        
-    }
+
     public void DistributeCars()
     {
         Debug.Log("Teste");
@@ -30,6 +25,8 @@ public class PlaceCars : MonoBehaviour
             UsedSlots = new List<int>();
             StartPoint = new List<Transform>();
             CarSlots = GameObject.FindGameObjectsWithTag("Start");
+
+            Debug.Log("PlaceCars/ " + CarSlots.Length + " Car Slots found.");
             
             if(numOfAiCars > 0)
             {
@@ -64,12 +61,28 @@ public class PlaceCars : MonoBehaviour
         }
        
     }
-    // Update is called once per frame
+
     public void DestroyCars()
     {
         for(int i = 0; i< Cars.Length; i++)
         {
+            Debug.Log(Cars[i].transform.localScale);
+
             Destroy(Cars[i]);
         }
+    }
+
+    public void ResizeCars()
+    {
+        foreach(GameObject car in Cars)
+        {
+            car.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+        }
+    }
+
+
+    public void Unplace()
+    {
+        hasBeenPlaced = false;
     }
 }
