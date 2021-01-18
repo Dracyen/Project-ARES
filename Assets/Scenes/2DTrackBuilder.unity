@@ -1187,9 +1187,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33066ddae11a4264faacfdc07d586dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerCar: {fileID: 4482683755221676876, guid: f144363c80632cb45bc4eb8fcd60d0d3,
+  PlayerCar: {fileID: 4482683755221676876, guid: 2787b54f5a06e5b4085a7774dfe763a5,
     type: 3}
-  AiCar: {fileID: 4482683755221676876, guid: a613302906fc9b94ea54bc80cf1a1dec, type: 3}
+  AiCar: {fileID: 4482683755221676876, guid: c88ab9b527cb75143b414046ca1368e8, type: 3}
   numOfAiCars: 5
   CarSlots: []
   hasBeenPlaced: 0

@@ -2192,9 +2192,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33066ddae11a4264faacfdc07d586dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerCar: {fileID: 4482683755221676876, guid: f144363c80632cb45bc4eb8fcd60d0d3,
+  PlayerCar: {fileID: 4482683755221676876, guid: d2027556afa38ff45b564893caa4b9c4,
     type: 3}
-  AiCar: {fileID: 4482683755221676876, guid: a613302906fc9b94ea54bc80cf1a1dec, type: 3}
+  AiCar: {fileID: 4482683755221676876, guid: c88ab9b527cb75143b414046ca1368e8, type: 3}
   numOfAiCars: 5
   CarSlots: []
   hasBeenPlaced: 0
@@ -4839,7 +4839,7 @@ Transform:
   m_GameObject: {fileID: 1253125208}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children:
   - {fileID: 1483040381}
   m_Father: {fileID: 0}

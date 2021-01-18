@@ -34,6 +34,7 @@ public class NewPlayerDrive : MonoBehaviour
         //Procura pelo objeto "Pai" na qual a track sera instanciada para buscar como referencia para o NavMesh
         Track = GameObject.FindGameObjectWithTag("Track").GetComponent<NavMeshSurface>();
         Track.BuildNavMesh();
+        Debug.Log("Has found: " + Track.name);
        
 
     }

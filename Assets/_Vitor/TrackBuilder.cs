@@ -414,7 +414,7 @@ public class TrackBuilder : MonoBehaviour
 
         Debug.Log("Testing!");
 
-        //TrackRef.transform.localScale = new Vector3(0.1f,0.1f, 0.1f);
+        TrackRef.transform.localScale = new Vector3(0.01f,0.01f, 0.01f);
 
         //TrackRef.transform.localScale = new Vector3(0.0003f, 0.0003f, 0.0003f);
 
