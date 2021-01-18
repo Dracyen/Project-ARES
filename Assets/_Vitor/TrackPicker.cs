@@ -17,30 +17,33 @@ public class TrackPicker : MonoBehaviour
 
     public void InteractPiece(int option)
     {
-        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-
-        RaycastHit rayHit;
-
-        if (Physics.Raycast(ray, out rayHit, 100.0f))
+        if(!debug)
         {
-            if (rayHit.collider.tag == "Slot")
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+            RaycastHit rayHit;
+
+            if (Physics.Raycast(ray, out rayHit, 100.0f))
             {
-                TrackSlot _target;
-
-                if (_prefabs[_selected].multiTile)
+                if (rayHit.collider.tag == "Slot")
                 {
-                    //Do Multi Tile Action = Send TrackInfo
+                    TrackSlot _target;
 
-                    _target = rayHit.collider.gameObject.GetComponent<TrackSlot>();
+                    if (_prefabs[_selected].multiTile)
+                    {
+                        //Do Multi Tile Action = Send TrackInfo
 
-                    _target.ClickAction(_prefabs[_selected], option);
-                }
-                else
-                {
-                    //Do Single Tile Action = Send TrackInfo Mesh
-                    _target = rayHit.collider.gameObject.GetComponent<TrackSlot>();
+                        _target = rayHit.collider.gameObject.GetComponent<TrackSlot>();
 
-                    _target.ClickAction(_prefabs[_selected].Mesh, option, _prefabs[_selected]);
+                        _target.ClickAction(_prefabs[_selected], option);
+                    }
+                    else
+                    {
+                        //Do Single Tile Action = Send TrackInfo Mesh
+                        _target = rayHit.collider.gameObject.GetComponent<TrackSlot>();
+
+                        _target.ClickAction(_prefabs[_selected].Mesh, option, _prefabs[_selected]);
+                    }
                 }
             }
         }
