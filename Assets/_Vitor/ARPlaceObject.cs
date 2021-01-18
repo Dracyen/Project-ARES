@@ -8,6 +8,9 @@ using System;
 
 public class ARPlaceObject : MonoBehaviour
 {
+    public bool debug = false;
+    public bool debug2 = false;
+
     public GameObject objectToPlace;
     public GameObject placementIndicator;
     public GameObject centerIndicator;
@@ -27,9 +30,18 @@ public class ARPlaceObject : MonoBehaviour
 
     void Update()
     {
-        UpdatePlacementPose();
+        if(debug2)
+        {
+            UpdatePlacementPose();
+        }
 
         UpdatePlacementIndicator();
+
+        if(debug)
+        {
+            debug = false;
+            PlaceObject();
+        }
 
         if (placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !objectPlaced)
         {
@@ -63,6 +75,7 @@ public class ARPlaceObject : MonoBehaviour
         }
     }
 
+    
     private void UpdatePlacementPose()
     {
         var screenCenter = Camera.current.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));

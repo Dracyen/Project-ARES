@@ -38,7 +38,72 @@ public class TrackPicker : MonoBehaviour
                     //Do Single Tile Action = Send TrackInfo Mesh
                     _target = rayHit.collider.gameObject.GetComponent<TrackSlot>();
 
-                    _target.ClickAction(_prefabs[_selected].Mesh, option);
+                    _target.ClickAction(_prefabs[_selected].Mesh, option, _prefabs[_selected]);
+                }
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            RaycastHit rayHit;
+
+            if (Physics.Raycast(ray, out rayHit, 100.0f))
+            {
+                if (rayHit.collider.tag == "Slot")
+                {
+                    TrackSlot _target;
+
+                    if (_prefabs[_selected].multiTile)
+                    {
+                        //Do Multi Tile Action = Send TrackInfo
+
+                        _target = rayHit.collider.gameObject.GetComponent<TrackSlot>();
+
+                        _target.ClickAction(_prefabs[_selected], 0);
+                    }
+                    else
+                    {
+                        //Do Single Tile Action = Send TrackInfo Mesh
+                        _target = rayHit.collider.gameObject.GetComponent<TrackSlot>();
+
+                        _target.ClickAction(_prefabs[_selected].Mesh, 0, _prefabs[_selected]);
+                    }
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            RaycastHit rayHit;
+
+            if (Physics.Raycast(ray, out rayHit, 100.0f))
+            {
+                if (rayHit.collider.tag == "Slot")
+                {
+                    TrackSlot _target;
+
+                    if (_prefabs[_selected].multiTile)
+                    {
+                        //Do Multi Tile Action = Send TrackInfo
+
+                        _target = rayHit.collider.gameObject.GetComponent<TrackSlot>();
+
+                        _target.ClickAction(_prefabs[_selected], 1);
+                    }
+                    else
+                    {
+                        //Do Single Tile Action = Send TrackInfo Mesh
+                        _target = rayHit.collider.gameObject.GetComponent<TrackSlot>();
+
+                        _target.ClickAction(_prefabs[_selected].Mesh, 1, _prefabs[_selected]);
+                    }
                 }
             }
         }

@@ -26,6 +26,8 @@ public class TrackBuilder : MonoBehaviour
 
     public TrackSlot[,] SlotGrid;
 
+    public List<TrackSlot> SlotList;
+
     public bool hasStart;
 
     public bool hasFinish;
@@ -42,9 +44,17 @@ public class TrackBuilder : MonoBehaviour
 
     public Text gridSizeDisplay;
 
+    public string trackName = "";
+
+    public GameObject TrackRef;
+
+    public GameObject TrackCenter;
+
     //Playable Track
 
     GameObject[] Tracks3D;
+
+    List<GameObject> Preview;
 
     float StepSize;
 
@@ -54,13 +64,17 @@ public class TrackBuilder : MonoBehaviour
 
         for (int i = 0; i < _objects.Length; i++)
         {
-            _objects[i] = (GameObject)Instantiate(prefab, transform);
+            _objects[i] = (GameObject)Instantiate(prefab, TrackCenter.transform);
             _objects[i].GetComponent<TrackSlot>().Grid = this;
         }
     }
 
     private void Start()
     {
+        SlotList = new List<TrackSlot>();
+
+        Preview = new List<GameObject>();
+
         hasStart = false;
         hasFinish = false;
         gridSize = 10;
@@ -74,6 +88,12 @@ public class TrackBuilder : MonoBehaviour
     }
     */
 
+    public void TrackNameInputLoad(string name)
+    {
+        trackName = name;
+        Debug.Log(trackName);
+    }
+
     private void Update()
     {
         gridSize = System.Int32.Parse(gridSizeDisplay.text);
@@ -83,7 +103,7 @@ public class TrackBuilder : MonoBehaviour
             CreateGrid(gridSize, gridSize);
         }
 
-        if(CarRef != null)
+        if (CarRef != null)
             Debug.Log("It's position is x: " + CarRef.transform.position.x + " / y: " + CarRef.transform.position.y + " / z: " + CarRef.transform.position.z);
     }
 
@@ -141,7 +161,7 @@ public class TrackBuilder : MonoBehaviour
                 slot.Slot.gameObject.SetActive(false);
             }
 
-            if(slot.Piece != null)
+            if (slot.Piece != null)
             {
                 if (slot.Piece.name == "Start(Clone)")
                 {
@@ -166,8 +186,8 @@ public class TrackBuilder : MonoBehaviour
                 slot.Slot.gameObject.SetActive(true);
             }
 
-            if(CarRef != null)
-            Destroy(CarRef);
+            if (CarRef != null)
+                Destroy(CarRef);
 
             index++;
             Debug.Log("Count: " + index);
@@ -267,16 +287,30 @@ public class TrackBuilder : MonoBehaviour
         }
     }
 
-    public void SaveTrack(string name)
+    public void SaveTrack()
     {
-        SaveSystem.SaveTrack(this, name);
+        for (int x = 0; x < gridSize; x++)
+        {
+            for (int y = 0; y < gridSize; y++)
+            {
+                if (SlotGrid[x, y].CurrentState == TrackSlot.State.FULL)
+                {
+                    if (SlotGrid[x, y].hasPiece == true)
+                        count++;
+                }
+            }
+        }
+
+        SaveSystem.SaveTrack(this, trackName);
     }
 
-    public void LoadTrack(string name)
+    public void LoadTrack()
     {
         TrackPicker picker = FindObjectOfType<TrackPicker>();
 
-        Save data = SaveSystem.LoadTracks(name);
+        Debug.Log("Load Track: " + trackName);
+
+        Save data = SaveSystem.LoadTracks(trackName);
         isLoop = data.isLoop;
         laps = data.numOfLaps;
         GameObject verson3D = null;
@@ -289,11 +323,17 @@ public class TrackBuilder : MonoBehaviour
         {
             StepSize = 1;
         }
+
+        Debug.Log(data.numOfTiles);
+
         for (int i = 0; i < data.numOfTiles; i++)
         {
             GameObject Instanc;
             float rotationToPlace;
             rotationToPlace = data.rotacaoEmZdeCadaTile[i];
+            
+            Debug.Log("Load/ Each Z rot: " + rotationToPlace);
+            /*
             if (data.rotacaoEmZdeCadaTile[i] == 0)
             {
                 rotationToPlace = 180;
@@ -302,6 +342,7 @@ public class TrackBuilder : MonoBehaviour
             {
                 rotationToPlace = 0;
             }
+            */
             Quaternion rotation = Quaternion.Euler(new Vector3(0, rotationToPlace, 0));
             for (int z = 0; z < picker._prefabs.Length; z++)
             {
@@ -310,10 +351,91 @@ public class TrackBuilder : MonoBehaviour
                     verson3D = (GameObject)picker._prefabs[z].Mesh;
                 }
             }
-            Instanc = Instantiate(verson3D, new Vector3(data.PosicoesDeEntradaX[i]/1000, 0, data.PosicoesDeEntradaY[i]/1000), rotation, transform);
+            Instanc = Instantiate(verson3D, new Vector3(data.PosicoesDeEntradaX[i] / 100, 0, data.PosicoesDeEntradaY[i] / 100) / 100, rotation, TrackRef.transform);
+            //Instanc.transform.localPosition =
             Tracks3D[i] = Instanc;
-            Instanc.transform.localScale = new Vector3(data.EscalaX[i] * (StepSize / data.SizeOfTheGrid) * 10, data.EscalaY[i] * (StepSize / data.SizeOfTheGrid) * 10, data.EscalaZ[i] * (StepSize / data.SizeOfTheGrid) * 10);
+            Instanc.transform.localScale = new Vector3(data.EscalaX[i] * (StepSize / data.SizeOfTheGrid) * 0.1f, data.EscalaY[i] * (StepSize / data.SizeOfTheGrid) * 0.1f, data.EscalaZ[i] * (StepSize / data.SizeOfTheGrid) * 0.1f);
+            Preview.Add(Instanc);
         }
-        FindObjectOfType<PlaceCars>().DistributeCars();
+
+        TrackRef.transform.localScale = new Vector3(1, 1, 1);
+        //FindObjectOfType<PlaceCars>().DistributeCars();
+    }
+
+    public void GridToList()
+    {
+        for (int x = 0; x < gridSize; x++)
+        {
+            for (int y = 0; y < gridSize; y++)
+            {
+                if (SlotGrid[x, y].CurrentState == TrackSlot.State.FULL)
+                {
+                    if (SlotGrid[x, y].hasPiece == true)
+                        SlotList.Add(SlotGrid[x, y]);
+                }
+            }
+        }
+
+        Generate3DBuilder(SlotList);
+    }
+
+    public void Generate3DBuilder(List<TrackSlot> tiles)
+    {
+
+        Vector3 StartPos = new Vector3(-tiles[0].pos.x, 0, -tiles[0].pos.y);
+        Transform PlacementPos = FindObjectOfType<ARTapToPlaceObject>().placementIndicator.transform;
+        Tracks3D = new GameObject[tiles.Count];
+        if (Screen.height == 1080)
+        {
+            StepSize = 80;
+        }
+        else if (Screen.height == 1440)
+        {
+            StepSize = 122.5f;
+        }
+        Debug.Log(StepSize);
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            GameObject Instanc;
+            float rotationToPlace;
+            rotationToPlace = tiles[i].Piece.transform.localEulerAngles.y;
+
+            Debug.Log(tiles[i].Holder.pieceRotation);
+            /*
+            if (tiles[i].Holder.pieceRotation == 0)
+            {
+                rotationToPlace = 180;
+            }
+            else if (tiles[i].Holder.pieceRotation == -180)
+            {
+                rotationToPlace = 0;
+            }
+            */
+            Quaternion rotation = Quaternion.Euler(new Vector3(0, rotationToPlace, 0));
+
+            Instanc = Instantiate(tiles[i].Piece, new Vector3((tiles[i].pos.x + StartPos.x + PlacementPos.position.x) / 100, 0 + PlacementPos.position.y, (tiles[i].pos.y + StartPos.z + PlacementPos.position.z) / 100) /100, rotation, TrackRef.transform);
+            Tracks3D[i] = Instanc;
+            //Instanc.transform.localScale = new Vector3(slotSize * (StepSize / gridSize) * 0.01f, slotSize * (StepSize / gridSize) * 0.01f, slotSize * (StepSize / gridSize) * 0.01f);
+            Instanc.transform.localScale = new Vector3(0.12f, 0.12f, 0.12f);
+
+            Preview.Add(Instanc);
+        }
+
+
+        TrackRef.transform.localScale = new Vector3(0.1f,0.1f, 0.1f);
+
+        //FindObjectOfType<PlaceCars>().DistributeCars();
+    }
+
+    public void DeletePreview()
+    {
+        foreach (GameObject piece in Preview)
+        {
+            Destroy(piece.gameObject);
+        }
+
+        TrackRef.transform.localScale = new Vector3(0.0001f, 0.0001f, 0.0001f);
+
+        Preview.Clear();
     }
 }

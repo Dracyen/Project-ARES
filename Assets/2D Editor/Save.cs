@@ -67,15 +67,25 @@ public class Save
                 {
                     if(tiles.SlotGrid[x,y].CurrentState == TrackSlot.State.FULL)
                     {
-                        index[i] = tiles.SlotGrid[x,y].Holder.index;
-                        rotacaoEmZdeCadaTile[i] = tiles.SlotGrid[x, y].Piece.transform.rotation.z;
-                        PosicoesDeEntradaX[i] = tiles.SlotGrid[x, y].transform.position.x;
-                        PosicoesDeEntradaY[i] = tiles.SlotGrid[x, y].transform.position.y;
-                        EscalaX[i] = tiles.SlotGrid[x, y].transform.localScale.x;
-                        EscalaY[i] = tiles.SlotGrid[x, y].transform.localScale.y;
-                        EscalaZ[i] = tiles.SlotGrid[x, y].transform.localScale.z;
+                        if(tiles.SlotGrid[x, y].hasPiece == true)
+                        {
+                            Debug.Log("Tile Index: " + tiles.SlotGrid[x, y].Holder.index);
 
-                        i++;
+                            index[i] = tiles.SlotGrid[x, y].Holder.index;
+                            rotacaoEmZdeCadaTile[i] = tiles.SlotGrid[x, y].Piece.transform.localEulerAngles.y;
+
+                            Debug.Log("Save/ Piece rot: " + tiles.SlotGrid[x, y].Piece.transform.localEulerAngles.y);
+                            Debug.Log("Save/ supposed rot: " + tiles.SlotGrid[x, y].Holder.pieceRotation);
+                            Debug.Log("Save/ Each Z rot: " + rotacaoEmZdeCadaTile[i]);
+
+                            PosicoesDeEntradaX[i] = tiles.SlotGrid[x, y].transform.position.x;
+                            PosicoesDeEntradaY[i] = tiles.SlotGrid[x, y].transform.position.z;
+                            EscalaX[i] = tiles.SlotGrid[x, y].transform.localScale.x;
+                            EscalaY[i] = tiles.SlotGrid[x, y].transform.localScale.y;
+                            EscalaZ[i] = tiles.SlotGrid[x, y].transform.localScale.z;
+
+                            i++;
+                        }
                     }
                 } 
             }

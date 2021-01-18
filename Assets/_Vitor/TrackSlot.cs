@@ -71,8 +71,10 @@ public class TrackSlot : MonoBehaviour
 
     // SINGLE PIECE CODE
 
-    public void ClickAction(Object piece, int button)
+    public void ClickAction(Object piece, int button, TrackPicker.TrackInfo holder)
     {
+        Holder = holder;
+
         if (CurrentState == State.FULL)
         {
             switch (button)
@@ -126,6 +128,10 @@ public class TrackSlot : MonoBehaviour
     void RotatePiece() //Needs Work
     {
         Piece.transform.Rotate(new Vector3(0, 90, 0), Space.Self);
+
+        Debug.Log("Y Rotation: " + Piece.transform.rotation.y);
+
+        Holder.pieceRotation += 90;
     }
 
     public void DeletePiece()
@@ -246,7 +252,9 @@ public class TrackSlot : MonoBehaviour
                 o = false;
             }
         }
-        
+
+        Debug.Log("PP - Index: "+ Holder.index);
+
         Debug.Log("PP - Finished Placing");
     }
 
@@ -255,6 +263,7 @@ public class TrackSlot : MonoBehaviour
         Slot.mesh.gameObject.SetActive(false);
         Piece = (GameObject)Instantiate(piece.Mesh, transform);
 
+        /*
         if (Piece.name == "Ponte" + Sufix)
         {
             switch (Holder.pieceRotation)
@@ -280,6 +289,9 @@ public class TrackSlot : MonoBehaviour
         {
             Piece.transform.localEulerAngles = new Vector3(0, Holder.pieceRotation, 0);
         }
+        */
+
+        Piece.transform.localEulerAngles = new Vector3(0, Holder.pieceRotation, 0);
 
         Grid.SetFull(pos, Holder.CurrentSquares);
         hasPiece = true;
@@ -302,6 +314,7 @@ public class TrackSlot : MonoBehaviour
             }
         }
 
+        /*
         if (Piece.name == "Ponte" + Sufix)
         {
             switch (Holder.pieceRotation)
@@ -327,7 +340,9 @@ public class TrackSlot : MonoBehaviour
         {
             Piece.transform.localEulerAngles = new Vector3(0, Holder.pieceRotation, 0);
         }
+        */
 
+        Piece.transform.localEulerAngles = new Vector3(0, Holder.pieceRotation, 0);
 
         Grid.SetFull(pos, Holder.CurrentSquares);
     }

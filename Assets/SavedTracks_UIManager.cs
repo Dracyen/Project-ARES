@@ -36,6 +36,17 @@ public class SavedTracks_UIManager : MonoBehaviour
         Debug.Log(TracksToSelectText[index].text);
         
     }
+
+    public void ButtonPress2(int index)
+    {
+        FindObjectOfType<TrackBuilder>().TrackNameInputLoad(TracksToSelectText[index].text);
+        selectedTrack = TracksToSelectText[index].text;
+        indexOfTheEdit = index;
+        Debug.Log(index);
+        Debug.Log(TracksToSelectText[index].text);
+
+    }
+
     public void GetIndex(int index)
     {
         indexOfTheEdit = index;
