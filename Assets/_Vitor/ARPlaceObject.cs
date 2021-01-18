@@ -30,7 +30,7 @@ public class ARPlaceObject : MonoBehaviour
 
     void Update()
     {
-        if(debug2)
+        if(!debug2)
         {
             UpdatePlacementPose();
         }
@@ -58,6 +58,7 @@ public class ARPlaceObject : MonoBehaviour
         //Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
 
         Debug.Log("Debug Working");
+        Debug.Log("Debug: " + placementPose.position);
     }
 
     private void UpdatePlacementIndicator()

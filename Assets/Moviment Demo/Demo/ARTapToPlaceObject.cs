@@ -27,7 +27,7 @@ public class ARTapToPlaceObject : MonoBehaviour
    
     void Update()
     {
-        //UpdatePlacementPose();
+        UpdatePlacementPose();
         UpdatePlacementIndicator();
         if(StartARInteraction && placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && place /*&& FindObjectOfType<MapDisplay>().canGoToAR*/)
         {
@@ -55,6 +55,8 @@ public class ARTapToPlaceObject : MonoBehaviour
         placementIndicator.SetActive(false);
         FindObjectOfType<TrackBuilder>().GridToList();
         button.SetActive(false);
+
+        Debug.Log("TestPos: " + placementIndicator.transform.position);
     }
 
     public void PlaceButton3()
@@ -63,6 +65,9 @@ public class ARTapToPlaceObject : MonoBehaviour
         placementIndicator.SetActive(false);
         FindObjectOfType<TrackBuilder>().LoadTrack();
         button.SetActive(false);
+
+
+        Debug.Log("LoadPos: " + placementIndicator.transform.position);
     }
 
     private void PlaceObject()
@@ -84,7 +89,6 @@ public class ARTapToPlaceObject : MonoBehaviour
         }
     }
 
-    /*
     private void UpdatePlacementPose()
     {
         var screenCenter = Camera.current.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
@@ -96,5 +100,5 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             PlacementPose = hits[0].pose;
         }
-    }*/
+    }
 }

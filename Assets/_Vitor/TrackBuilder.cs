@@ -351,14 +351,20 @@ public class TrackBuilder : MonoBehaviour
                     verson3D = (GameObject)picker._prefabs[z].Mesh;
                 }
             }
-            Instanc = Instantiate(verson3D, new Vector3(data.PosicoesDeEntradaX[i] / 100, 0, data.PosicoesDeEntradaY[i] / 100) / 100, rotation, TrackRef.transform);
-            //Instanc.transform.localPosition =
+            Instanc = Instantiate(verson3D, new Vector3(), rotation, TrackRef.transform);
+            Instanc.transform.localPosition = new Vector3((data.PosicoesDeEntradaX[i] * 15000), 0, (data.PosicoesDeEntradaY[i] * 20000) - 10000);
+
+            Debug.Log("Instance Local Pos: " + Instanc.transform.localPosition);
+
             Tracks3D[i] = Instanc;
-            Instanc.transform.localScale = new Vector3(data.EscalaX[i] * (StepSize / data.SizeOfTheGrid) * 0.1f, data.EscalaY[i] * (StepSize / data.SizeOfTheGrid) * 0.1f, data.EscalaZ[i] * (StepSize / data.SizeOfTheGrid) * 0.1f);
+            //Instanc.transform.localScale = new Vector3(data.EscalaX[i] * (StepSize / data.SizeOfTheGrid) , data.EscalaY[i] * (StepSize / data.SizeOfTheGrid), data.EscalaZ[i] * (StepSize / data.SizeOfTheGrid));
+            Instanc.transform.localScale = new Vector3(150, 150, 150);
             Preview.Add(Instanc);
         }
 
-        TrackRef.transform.localScale = new Vector3(1, 1, 1);
+        Debug.Log("Loaded!");
+
+        TrackRef.transform.localScale = new Vector3(0.0003f, 0.0003f, 0.0003f);
         //FindObjectOfType<PlaceCars>().DistributeCars();
     }
 
@@ -382,7 +388,8 @@ public class TrackBuilder : MonoBehaviour
     public void Generate3DBuilder(List<TrackSlot> tiles)
     {
 
-        Vector3 StartPos = new Vector3(-tiles[0].pos.x, 0, -tiles[0].pos.y);
+        //Vector3 StartPos = new Vector3(-tiles[0].pos.x, 0, -tiles[0].pos.y);
+        Vector3 StartPos = TrackRef.transform.position;
         Transform PlacementPos = FindObjectOfType<ARTapToPlaceObject>().placementIndicator.transform;
         Tracks3D = new GameObject[tiles.Count];
         if (Screen.height == 1080)
@@ -393,7 +400,7 @@ public class TrackBuilder : MonoBehaviour
         {
             StepSize = 122.5f;
         }
-        Debug.Log(StepSize);
+
         for (int i = 0; i < tiles.Count; i++)
         {
             GameObject Instanc;
@@ -413,16 +420,25 @@ public class TrackBuilder : MonoBehaviour
             */
             Quaternion rotation = Quaternion.Euler(new Vector3(0, rotationToPlace, 0));
 
-            Instanc = Instantiate(tiles[i].Piece, new Vector3((tiles[i].pos.x + StartPos.x + PlacementPos.position.x) / 100, 0 + PlacementPos.position.y, (tiles[i].pos.y + StartPos.z + PlacementPos.position.z) / 100) /100, rotation, TrackRef.transform);
+            //Instanc = Instantiate(tiles[i].Piece, new Vector3((tiles[i].pos.x + StartPos.x + PlacementPos.position.x), TrackRef.transform.position.y, (tiles[i].pos.y + StartPos.z + PlacementPos.position.z)), rotation, TrackRef.transform);
+            Instanc = Instantiate(tiles[i].Piece, new Vector3(), rotation, TrackRef.transform);
+            //Instanc.transform.localPosition = new Vector3((tiles[i].pos.x + StartPos.x + PlacementPos.position.x) * 1500, TrackRef.transform.position.y, (tiles[i].pos.y + StartPos.z + PlacementPos.position.z) * 1500);
+            Instanc.transform.localPosition = new Vector3(((tiles[i].pos.x + StartPos.x) * 1300) - 7500, TrackRef.transform.position.y, ((tiles[i].pos.y + StartPos.z) * 1300) - 7500);
+
+            Debug.Log("Instance Local Pos: " + Instanc.transform.localPosition);
+
             Tracks3D[i] = Instanc;
-            //Instanc.transform.localScale = new Vector3(slotSize * (StepSize / gridSize) * 0.01f, slotSize * (StepSize / gridSize) * 0.01f, slotSize * (StepSize / gridSize) * 0.01f);
-            Instanc.transform.localScale = new Vector3(0.12f, 0.12f, 0.12f);
+            //Instanc.transform.localScale = new Vector3(slotSize * (StepSize / gridSize), slotSize * (StepSize / gridSize), slotSize * (StepSize / gridSize));
+            Instanc.transform.localScale = new Vector3(150, 150, 150);
 
             Preview.Add(Instanc);
         }
 
+        Debug.Log("Testing!");
 
-        TrackRef.transform.localScale = new Vector3(0.1f,0.1f, 0.1f);
+        //TrackRef.transform.localScale = new Vector3(0.1f,0.1f, 0.1f);
+
+        //TrackRef.transform.localScale = new Vector3(0.0003f, 0.0003f, 0.0003f);
 
         //FindObjectOfType<PlaceCars>().DistributeCars();
     }
