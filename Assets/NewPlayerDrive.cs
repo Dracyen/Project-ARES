@@ -35,8 +35,8 @@ public class NewPlayerDrive : MonoBehaviour
         Track = GameObject.FindGameObjectWithTag("Track").GetComponent<NavMeshSurface>();
         Track.BuildNavMesh();
         Debug.Log("Has found: " + Track.name);
-       
-
+        
+        
     }
     
     

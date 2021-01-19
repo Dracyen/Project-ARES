@@ -189,7 +189,7 @@ public class MapGenerator : MonoBehaviour
                 }
                 
             }
-            Instanc = Instantiate(verson3D, new Vector3(data.PosicoesDeEntradaX[i], 0, data.PosicoesDeEntradaY[i]), rotation, TrackRef.transform);
+            Instanc = Instantiate(verson3D, new Vector3(data.PosicoesDeEntradaX[i] - data.PosicoesDeEntradaX[0], 0, data.PosicoesDeEntradaY[i]- data.PosicoesDeEntradaY[0]), rotation, TrackRef.transform);
             Tracks3D[i] = Instanc;
             Instanc.transform.localScale = new Vector3(data.EscalaX[i] * (StepSize / data.SizeOfTheGrid), data.EscalaY[i] * (StepSize / data.SizeOfTheGrid), data.EscalaZ[i] * (StepSize / data.SizeOfTheGrid));
         }

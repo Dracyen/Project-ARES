@@ -16,6 +16,7 @@ TagManager:
   - AiCar
   - TimeCounter
   - Pause
+  - Debug
   layers:
   - Default
   - TransparentFX

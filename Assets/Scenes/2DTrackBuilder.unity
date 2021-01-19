@@ -1189,7 +1189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerCar: {fileID: 4482683755221676876, guid: 2787b54f5a06e5b4085a7774dfe763a5,
     type: 3}
-  AiCar: {fileID: 4482683755221676876, guid: c88ab9b527cb75143b414046ca1368e8, type: 3}
+  AiCar: {fileID: 4482683755221676876, guid: 4aedb11218467f740a6b578fa2162c7a, type: 3}
   numOfAiCars: 5
   CarSlots: []
   hasBeenPlaced: 0
@@ -1475,7 +1475,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: What is your Tack name?
+  m_Text: New name
 --- !u!222 &128970413
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1686,7 +1686,7 @@ RectTransform:
   m_GameObject: {fileID: 130462416}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.2854, y: 2.2854, z: 2.2854}
   m_Children:
   - {fileID: 1361529266}
   m_Father: {fileID: 505019191}
@@ -1694,7 +1694,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 420, y: 0}
+  m_AnchoredPosition: {x: 0, y: -226}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &130462418
@@ -3673,9 +3673,9 @@ RectTransform:
   m_Father: {fileID: 2041173044}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -149, y: -126.900024}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 150, y: 147}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &274484208
@@ -15467,7 +15467,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: OK
 --- !u!222 &1361529268
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -22520,8 +22520,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -226}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 495, y: 1}
+  m_SizeDelta: {x: 75, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1955332063
 MonoBehaviour:

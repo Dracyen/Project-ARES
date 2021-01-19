@@ -89,7 +89,7 @@ public class NewAIDrive : MonoBehaviour
         {
             index++;
             target = AllRefPoints[index];
-            GetComponent<NavMeshAgent>().speed = Random.Range(20, 50+FindObjectOfType<UI_MenuManager_OTE>().Dif);
+            GetComponent<NavMeshAgent>().speed = Random.Range(20, 50/*+FindObjectOfType<UI_MenuManager_OTE>().Dif*/);
         }
     }
 }

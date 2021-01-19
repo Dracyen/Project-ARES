@@ -53,10 +53,28 @@ public class UiManager : MonoBehaviour
         AjustButton();
         SeeIfIsLocked();
     }
+    bool isEnabled = false;
     private void Update()
     {
         OffSetCheck();
-
+        if (FindObjectOfType<MapDisplay>().tileTracksIndex <= 0)
+        {
+            for(int i = 0; i < trackButtons.Length; i++)
+            {
+                trackButtons[i].enabled = false;
+                trackButtons[i].image.color = Color.gray;
+            }
+        }
+        else if (!isEnabled)
+        {
+            for (int i = 0; i < trackButtons.Length; i++)
+            {
+                trackButtons[i].enabled = true;
+                trackButtons[i].image.color = Color.white;
+            }
+            isEnabled = true;
+            AjustButton();
+        }
 
     }
     void OffSetCheck()

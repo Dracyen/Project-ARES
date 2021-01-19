@@ -40,12 +40,12 @@ public class PlaceCars : MonoBehaviour
 
                 for (int i = 0; i < numOfAiCars; i++)
                 {
-                    GameObject CurCar;
-                    int rand = Random.Range(0, UsedSlots.Count);
-                    CurCar = Instantiate(AiCar, StartPoint[UsedSlots[rand]].position + new Vector3(0, 0.3f, 0), Quaternion.identity);
-                    Cars[i] = CurCar;
-                    CurCar.transform.localScale = new Vector3(2, 2, 2);
-                    UsedSlots.Remove(rand);
+                    //GameObject CurCar;
+                    //int rand = Random.Range(0, UsedSlots.Count);
+                    //CurCar = Instantiate(AiCar, StartPoint[UsedSlots[rand]].position + new Vector3(0, 0.3f, 0), Quaternion.identity);
+                    //Cars[i] = CurCar;
+                    //CurCar.transform.localScale = new Vector3(2, 2, 2);
+                    //UsedSlots.Remove(rand);
                 }
             }
             else
@@ -54,8 +54,8 @@ public class PlaceCars : MonoBehaviour
             }
             
             GameObject PlayC;
-            PlayC = Instantiate(PlayerCar, StartPoint[UsedSlots[0]].position + new Vector3(0, 0, 0), Quaternion.Euler(0, 90, 0));
-            Cars[numOfAiCars] = PlayC;
+            PlayC = Instantiate(PlayerCar, StartPoint[UsedSlots[0]].position + new Vector3(-1, 0, -1), Quaternion.Euler(0, 90, 0));
+            Cars[0] = PlayC;
             PlayC.transform.localScale = new Vector3(2, 2, 2);
             hasBeenPlaced = true;
         }
