@@ -329,8 +329,7 @@ public class TrackBuilder : MonoBehaviour
                 }
             }
             Instanc = Instantiate(verson3D, new Vector3(), rotation, TrackRef.transform);
-            //Instanc.transform.localPosition = new Vector3((data.PosicoesDeEntradaX[i] * 15000), 0, (data.PosicoesDeEntradaY[i] * 20000) - 10000);
-            Instanc.transform.localPosition = new Vector3((data.PosicoesDeEntradaX[i]) - (data.PosicoesDeEntradaX[0]), 0, (data.PosicoesDeEntradaY[i]) - (data.PosicoesDeEntradaY[0]));
+            Instanc.transform.localPosition = new Vector3((data.PosicoesDeEntradaX[i] * 15000), 0, (data.PosicoesDeEntradaY[i] * 20000) - 10000);
 
             Debug.Log("Instance Local Pos: " + Instanc.transform.localPosition);
 
