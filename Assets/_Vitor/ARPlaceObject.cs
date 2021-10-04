@@ -55,7 +55,6 @@ public class ARPlaceObject : MonoBehaviour
         TrackCreator.SetActive(true);
         TrackCreator.transform.position = placementPose.position;
         TrackCreator.transform.rotation = placementPose.rotation;
-        //Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
 
         Debug.Log("Debug Working");
         Debug.Log("Debug: " + placementPose.position);
